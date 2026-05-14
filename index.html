@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MindColor — Bạn nhớ màu brand giỏi tới đâu?</title>
+  <meta name="description" content="Game đoán màu logo thương hiệu. Test xem mắt bạn có phải designer thực thụ không." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main id="app">
+    <!-- Home Screen -->
+    <section id="screen-home" class="screen active">
+      <header class="home-header">
+        <h1 class="logo">MindColor</h1>
+        <p class="tagline">Bạn nhớ màu brand giỏi tới đâu?</p>
+      </header>
+
+      <div class="home-actions">
+        <button class="btn btn-primary" data-action="play-classic">
+          <span class="btn-title">Classic</span>
+          <span class="btn-sub">10 brand ngẫu nhiên</span>
+        </button>
+
+        <button class="btn btn-secondary" data-action="play-daily" disabled>
+          <span class="btn-title">Daily Challenge</span>
+          <span class="btn-sub">Sắp ra mắt</span>
+        </button>
+      </div>
+
+      <footer class="home-footer">
+        <p>v0.2 — demo</p>
+      </footer>
+    </section>
+
+    <!-- Round Screen -->
+    <section id="screen-round" class="screen">
+      <div class="round-top">
+        <div class="round-progress" id="round-progress">1 / 10</div>
+        <button class="link-btn" data-action="back-home">Thoát</button>
+      </div>
+
+      <div class="round-question">
+        <p class="question-label">Màu chủ đạo của</p>
+        <h2 class="brand-name" id="brand-name">—</h2>
+      </div>
+
+      <div class="picker-wrap" id="picker-wrap">
+        <div id="color-picker"></div>
+        <div class="swatch-preview">
+          <span class="swatch-label">Bạn chọn</span>
+          <div class="swatch" id="user-swatch"></div>
+          <code class="swatch-hex" id="user-hex">#000000</code>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" data-action="submit-color" id="submit-btn">
+        <span class="btn-title">Submit</span>
+      </button>
+
+      <!-- Reveal -->
+      <div class="reveal" id="reveal" hidden>
+        <h3 class="reveal-title">Đáp án</h3>
+        <div class="compare">
+          <div class="compare-col">
+            <span class="compare-label">Bạn</span>
+            <div class="swatch swatch-lg" id="reveal-user"></div>
+            <code class="swatch-hex" id="reveal-user-hex">—</code>
+          </div>
+          <div class="compare-col">
+            <span class="compare-label">Đúng</span>
+            <div class="swatch swatch-lg" id="reveal-brand"></div>
+            <code class="swatch-hex" id="reveal-brand-hex">—</code>
+          </div>
+        </div>
+        <p class="reveal-note">Scoring chi tiết sẽ có ở Session 3</p>
+        <button class="btn btn-primary" data-action="next-round" id="next-btn">
+          <span class="btn-title">Tiếp theo</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Final Screen (placeholder) -->
+    <section id="screen-final" class="screen">
+      <h2 class="final-title">Hoàn thành!</h2>
+      <p class="final-sub">Bạn đã chơi xong 10 brand. Final screen sẽ build ở Session 4.</p>
+      <button class="btn btn-secondary" data-action="back-home">← Về Home</button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
