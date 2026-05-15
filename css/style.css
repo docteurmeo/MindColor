@@ -149,11 +149,41 @@ html, body {
 .question-label {
   font-size: 14px;
   color: #a1a1aa;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  margin-bottom: 12px;
+}
+
+.brand-logo-img {
+  max-height: 80px;
+  max-width: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+.brand-logo-fallback {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  background: #27272a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 800;
 }
 
 .brand-name {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }

@@ -4,6 +4,7 @@
   const screens = document.querySelectorAll(".screen");
   let picker = null;
   let currentUserHex = "#ffffff";
+  let currentBrand = null;
 
   function showScreen(id) {
     screens.forEach((s) => s.classList.toggle("active", s.id === id));
@@ -11,12 +12,18 @@
 
   function initPicker() {
     if (picker) return;
+    // Picker rộng tối đa, layout Box (saturation/value 2D) + Hue slider.
+    const maxWidth = Math.min(420, window.innerWidth - 48);
     picker = new iro.ColorPicker("#color-picker", {
-      width: Math.min(260, window.innerWidth - 80),
+      width: maxWidth,
+      boxHeight: maxWidth,
       color: "#ffffff",
+      borderWidth: 1,
+      borderColor: "rgba(255,255,255,0.1)",
+      handleRadius: 10,
       layout: [
-        { component: iro.ui.Wheel },
-        { component: iro.ui.Slider, options: { sliderType: "value" } },
+        { component: iro.ui.Box },
+        { component: iro.ui.Slider, options: { sliderType: "hue" } },
       ],
     });
     picker.on("color:change", (color) => {
@@ -29,7 +36,10 @@
   }
 
   function renderRound(brand) {
+    currentBrand = brand;
     document.getElementById("brand-name").textContent = brand.name;
+    Logo.render(document.getElementById("brand-logo"), brand, "mono");
+
     const p = Game.progress();
     document.getElementById("round-progress").textContent = `${p.current} / ${p.total}`;
     document.getElementById("reveal").hidden = true;
@@ -40,6 +50,9 @@
   function renderReveal(result) {
     document.getElementById("picker-wrap").hidden = true;
     document.getElementById("submit-btn").hidden = true;
+
+    // Đổi logo sang full màu
+    Logo.render(document.getElementById("brand-logo"), currentBrand, "color");
 
     const revealEl = document.getElementById("reveal");
     document.getElementById("reveal-user").style.background = result.userColor;

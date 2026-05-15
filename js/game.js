@@ -4,10 +4,24 @@ const Game = (() => {
   const ROUNDS_PER_GAME = 10;
 
   let state = null;
+  let brandCache = null;
 
   async function loadBrands() {
-    const res = await fetch("data/brands.json");
-    return res.json();
+    if (brandCache) return brandCache;
+    const manifest = await fetch("data/brands/index.json").then((r) => r.json());
+    const all = [];
+    for (const file of manifest.files) {
+      try {
+        const list = await fetch(`data/brands/${file}`).then((r) => r.json());
+        for (const b of list) {
+          all.push({ ...b, _source: file });
+        }
+      } catch (e) {
+        console.warn(`Không load được ${file}`, e);
+      }
+    }
+    brandCache = all;
+    return all;
   }
 
   function shuffle(arr) {
@@ -26,7 +40,7 @@ const Game = (() => {
       mode: "classic",
       brands: picked,
       index: 0,
-      results: [], // {brandId, userColor, brandColor, score}
+      results: [],
     };
     return currentBrand();
   }
@@ -40,12 +54,12 @@ const Game = (() => {
     return { current: state.index + 1, total: state.brands.length };
   }
 
-  // Phase 2: chưa có scoring thật. Trả về null cho score, sẽ thêm Session 3.
   function submit(userColor) {
     const brand = currentBrand();
     const result = {
       brandId: brand.id,
       brandName: brand.name,
+      logo: brand.logo,
       userColor,
       brandColor: brand.color,
       score: null, // TBD Session 3

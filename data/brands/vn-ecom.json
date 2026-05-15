@@ -1,0 +1,5 @@
+[
+  { "id": "shopee", "name": "Shopee", "color": "#EE4D2D", "logo": "shopee", "difficulty": 1 },
+  { "id": "lazada", "name": "Lazada", "color": "#0F146D", "logo": "lazada", "difficulty": 3 },
+  { "id": "tiki",   "name": "Tiki",   "color": "#1A94FF", "logo": null,     "difficulty": 2 }
+]
