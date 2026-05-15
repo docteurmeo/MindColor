@@ -1,6 +1,0 @@
-[
-  { "id": "cocacola",  "name": "Coca-Cola",  "color": "#F40009", "logo": "cocacola",  "difficulty": 1 },
-  { "id": "pepsi",     "name": "Pepsi",      "color": "#004B93", "logo": "pepsi",     "difficulty": 2 },
-  { "id": "starbucks", "name": "Starbucks",  "color": "#006241", "logo": "starbucks", "difficulty": 2 },
-  { "id": "mcdonalds", "name": "McDonald's", "color": "#FFC72C", "logo": "mcdonalds", "difficulty": 1 }
-]

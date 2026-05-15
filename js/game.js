@@ -8,20 +8,14 @@ const Game = (() => {
 
   async function loadBrands() {
     if (brandCache) return brandCache;
-    const manifest = await fetch("data/brands/index.json").then((r) => r.json());
-    const all = [];
-    for (const file of manifest.files) {
-      try {
-        const list = await fetch(`data/brands/${file}`).then((r) => r.json());
-        for (const b of list) {
-          all.push({ ...b, _source: file });
-        }
-      } catch (e) {
-        console.warn(`Không load được ${file}`, e);
-      }
+    try {
+      const all = await fetch('data/brands.json').then(r => r.json());
+      brandCache = Array.isArray(all) ? all : [];
+    } catch (e) {
+      console.error('Không load được data/brands.json', e);
+      brandCache = [];
     }
-    brandCache = all;
-    return all;
+    return brandCache;
   }
 
   function shuffle(arr) {
@@ -35,9 +29,13 @@ const Game = (() => {
 
   async function startClassic() {
     const all = await loadBrands();
-    const picked = shuffle(all).slice(0, ROUNDS_PER_GAME);
+    if (all.length === 0) {
+      throw new Error('Chưa có brand nào. Hãy thêm file SVG vào assets/logos/');
+    }
+    const rounds = Math.min(ROUNDS_PER_GAME, all.length);
+    const picked = shuffle(all).slice(0, rounds);
     state = {
-      mode: "classic",
+      mode: 'classic',
       brands: picked,
       index: 0,
       results: [],
@@ -59,10 +57,9 @@ const Game = (() => {
     const result = {
       brandId: brand.id,
       brandName: brand.name,
-      logo: brand.logo,
       userColor,
       brandColor: brand.color,
-      score: null, // TBD Session 3
+      score: null,
     };
     state.results.push(result);
     return result;

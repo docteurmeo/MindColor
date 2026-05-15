@@ -1,8 +1,0 @@
-[
-  { "id": "facebook",  "name": "Facebook",    "color": "#1877F2", "logo": "facebook",  "difficulty": 1 },
-  { "id": "youtube",   "name": "YouTube",     "color": "#FF0000", "logo": "youtube",   "difficulty": 1 },
-  { "id": "spotify",   "name": "Spotify",     "color": "#1DB954", "logo": "spotify",   "difficulty": 2 },
-  { "id": "instagram", "name": "Instagram",   "color": "#E1306C", "logo": "instagram", "difficulty": 3 },
-  { "id": "twitter",   "name": "Twitter (X)", "color": "#000000", "logo": "x",         "difficulty": 2 },
-  { "id": "netflix",   "name": "Netflix",     "color": "#E50914", "logo": "netflix",   "difficulty": 2 }
-]

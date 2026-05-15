@@ -162,11 +162,19 @@ html, body {
 
 .brand-logo-img {
   max-height: 80px;
-  max-width: 200px;
+  max-width: 240px;
   width: auto;
   height: auto;
   object-fit: contain;
-  transition: filter 0.4s ease, opacity 0.4s ease;
+  transition: filter 0.4s ease;
+}
+
+.logo-mono .brand-logo-img {
+  filter: brightness(0) invert(1);
+}
+
+.logo-color .brand-logo-img {
+  filter: none;
 }
 
 .brand-logo-fallback {

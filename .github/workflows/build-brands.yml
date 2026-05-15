@@ -1,0 +1,37 @@
+name: Build brands manifest
+
+on:
+  push:
+    paths:
+      - 'assets/logos/**'
+      - 'scripts/build-brands.mjs'
+      - '.github/workflows/build-brands.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build brands.json from SVG files
+        run: node scripts/build-brands.mjs
+
+      - name: Commit generated manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/brands.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "auto: rebuild data/brands.json from assets/logos"
+            git push
+          fi
