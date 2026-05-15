@@ -47,19 +47,65 @@
     document.getElementById("submit-btn").hidden = false;
   }
 
+  function animateScore(targetScore, durationMs) {
+    const el = document.getElementById("score-big");
+    const bar = document.getElementById("score-bar-fill");
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min(1, (now - start) / durationMs);
+      // ease-out
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(eased * targetScore);
+      el.firstChild.nodeValue = val;
+      bar.style.width = `${eased * targetScore}%`;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function renderReveal(result) {
     document.getElementById("picker-wrap").hidden = true;
     document.getElementById("submit-btn").hidden = true;
 
-    // Đổi logo sang full màu
+    // Logo full color
     Logo.render(document.getElementById("brand-logo"), currentBrand, "color");
 
-    const revealEl = document.getElementById("reveal");
+    // Swatches
     document.getElementById("reveal-user").style.background = result.userColor;
     document.getElementById("reveal-user-hex").textContent = result.userColor.toUpperCase();
     document.getElementById("reveal-brand").style.background = result.brandColor;
     document.getElementById("reveal-brand-hex").textContent = result.brandColor.toUpperCase();
-    revealEl.hidden = false;
+
+    // Reaction + feedback
+    document.getElementById("reaction").textContent = result.reaction;
+    const fbList = document.getElementById("feedback");
+    fbList.innerHTML = "";
+    result.detailLines.forEach((line, i) => {
+      const li = document.createElement("li");
+      li.textContent = line;
+      li.style.animationDelay = `${300 + i * 150}ms`;
+      fbList.appendChild(li);
+    });
+
+    // Color the score bar fill based on score
+    const fill = document.getElementById("score-bar-fill");
+    fill.style.background = scoreBarColor(result.score);
+
+    // Reset score display
+    document.getElementById("score-big").firstChild.nodeValue = "0";
+    fill.style.width = "0%";
+
+    document.getElementById("reveal").hidden = false;
+    // animate
+    animateScore(result.score, 700);
+  }
+
+  function scoreBarColor(score) {
+    // Red → yellow → green gradient point
+    if (score >= 85) return "linear-gradient(90deg, #34d399, #10b981)";
+    if (score >= 60) return "linear-gradient(90deg, #fbbf24, #f59e0b)";
+    if (score >= 35) return "linear-gradient(90deg, #fb923c, #f97316)";
+    return "linear-gradient(90deg, #f87171, #ef4444)";
   }
 
   async function handlePlayClassic() {

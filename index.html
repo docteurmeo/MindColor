@@ -61,22 +61,31 @@
 
       <!-- Reveal -->
       <div class="reveal" id="reveal" hidden>
-        <h3 class="reveal-title">Đáp án</h3>
+        <div class="score-wrap">
+          <div class="score-big" id="score-big">0<span class="score-pct">%</span></div>
+          <div class="score-bar">
+            <div class="score-bar-fill" id="score-bar-fill"></div>
+          </div>
+          <p class="reaction" id="reaction">—</p>
+        </div>
+
         <div class="compare">
           <div class="compare-col">
-            <span class="compare-label">Bạn</span>
+            <span class="compare-label">Bạn chọn</span>
             <div class="swatch swatch-lg" id="reveal-user"></div>
             <code class="swatch-hex" id="reveal-user-hex">—</code>
           </div>
           <div class="compare-col">
-            <span class="compare-label">Đúng</span>
+            <span class="compare-label">Brand</span>
             <div class="swatch swatch-lg" id="reveal-brand"></div>
             <code class="swatch-hex" id="reveal-brand-hex">—</code>
           </div>
         </div>
-        <p class="reveal-note">Scoring chi tiết sẽ có ở Session 3</p>
+
+        <ul class="feedback" id="feedback"></ul>
+
         <button class="btn btn-primary" data-action="next-round" id="next-btn">
-          <span class="btn-title">Tiếp theo</span>
+          <span class="btn-title">Tiếp theo →</span>
         </button>
       </div>
     </section>
@@ -91,6 +100,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
   <script src="js/logo.js"></script>
+  <script src="js/scoring.js"></script>
   <script src="js/game.js"></script>
   <script src="js/ui.js"></script>
 </body>

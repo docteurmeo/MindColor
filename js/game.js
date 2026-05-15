@@ -54,12 +54,13 @@ const Game = (() => {
 
   function submit(userColor) {
     const brand = currentBrand();
+    const evalResult = Scoring.evaluate(userColor, brand.color);
     const result = {
       brandId: brand.id,
       brandName: brand.name,
       userColor,
       brandColor: brand.color,
-      score: null,
+      ...evalResult,
     };
     state.results.push(result);
     return result;
