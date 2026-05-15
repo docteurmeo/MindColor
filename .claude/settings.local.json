@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/build-brands.mjs)",
+      "Bash(xargs -n1 basename)"
+    ]
+  }
+}

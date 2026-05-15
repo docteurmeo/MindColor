@@ -63,10 +63,19 @@
   }
 
   async function handlePlayClassic() {
-    const brand = await Game.startClassic();
-    showScreen("screen-round");
-    initPicker();
-    renderRound(brand);
+    try {
+      const brand = await Game.startClassic();
+      showScreen("screen-round");
+      initPicker();
+      renderRound(brand);
+    } catch (e) {
+      alert(
+        "Chưa có brand nào để chơi!\n\n" +
+        "Hãy drop file SVG vào assets/logos/ rồi push lên GitHub. " +
+        "Sau ~2 phút GitHub Action sẽ tự build data."
+      );
+      console.error(e);
+    }
   }
 
   function handleSubmit() {

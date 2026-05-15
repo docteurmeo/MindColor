@@ -1,1 +1,380 @@
-[]
+[
+  {
+    "id": "acer",
+    "name": "Acer",
+    "color": "#83B81A",
+    "difficulty": 2
+  },
+  {
+    "id": "airbnb",
+    "name": "Airbnb",
+    "color": "#FF5A5F",
+    "difficulty": 2
+  },
+  {
+    "id": "android",
+    "name": "Android",
+    "color": "#3DDC84",
+    "difficulty": 2
+  },
+  {
+    "id": "atlassian",
+    "name": "Atlassian",
+    "color": "#0052CC",
+    "difficulty": 2
+  },
+  {
+    "id": "behance",
+    "name": "Behance",
+    "color": "#1769FF",
+    "difficulty": 2
+  },
+  {
+    "id": "binance",
+    "name": "Binance",
+    "color": "#F0B90B",
+    "difficulty": 2
+  },
+  {
+    "id": "bitcoin",
+    "name": "Bitcoin",
+    "color": "#F7931A",
+    "difficulty": 2
+  },
+  {
+    "id": "cloudflare",
+    "name": "Cloudflare",
+    "color": "#F38020",
+    "difficulty": 2
+  },
+  {
+    "id": "coca-cola",
+    "name": "Coca-Cola",
+    "color": "#D00013",
+    "difficulty": 2
+  },
+  {
+    "id": "coinbase",
+    "name": "Coinbase",
+    "color": "#0052FF",
+    "difficulty": 2
+  },
+  {
+    "id": "dell",
+    "name": "Dell",
+    "color": "#007DB8",
+    "difficulty": 2
+  },
+  {
+    "id": "digitalocean",
+    "name": "DigitalOcean",
+    "color": "#0080FF",
+    "difficulty": 2
+  },
+  {
+    "id": "discord",
+    "name": "Discord",
+    "color": "#5865F2",
+    "difficulty": 2
+  },
+  {
+    "id": "dribbble",
+    "name": "Dribbble",
+    "color": "#EA4C89",
+    "difficulty": 2
+  },
+  {
+    "id": "dropbox",
+    "name": "Dropbox",
+    "color": "#0061FF",
+    "difficulty": 2
+  },
+  {
+    "id": "etsy",
+    "name": "Etsy",
+    "color": "#F16521",
+    "difficulty": 2
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook",
+    "color": "#0866FF",
+    "difficulty": 2
+  },
+  {
+    "id": "ford",
+    "name": "Ford",
+    "color": "#00274E",
+    "difficulty": 2
+  },
+  {
+    "id": "honda",
+    "name": "Honda",
+    "color": "#E40521",
+    "difficulty": 2
+  },
+  {
+    "id": "huawei",
+    "name": "Huawei",
+    "color": "#FF0000",
+    "difficulty": 2
+  },
+  {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "color": "#FF7A59",
+    "difficulty": 2
+  },
+  {
+    "id": "intel",
+    "name": "Intel",
+    "color": "#0071C5",
+    "difficulty": 2
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "color": "#0052CC",
+    "difficulty": 2
+  },
+  {
+    "id": "kickstarter",
+    "name": "Kickstarter",
+    "color": "#05CE78",
+    "difficulty": 2
+  },
+  {
+    "id": "lenovo",
+    "name": "Lenovo",
+    "color": "#E2231A",
+    "difficulty": 2
+  },
+  {
+    "id": "mailchimp",
+    "name": "Mailchimp",
+    "color": "#FFE01B",
+    "difficulty": 2
+  },
+  {
+    "id": "mcdonalds",
+    "name": "McDonald's",
+    "color": "#FBC817",
+    "difficulty": 2
+  },
+  {
+    "id": "mozilla",
+    "name": "Mozilla",
+    "color": "#161616",
+    "difficulty": 2
+  },
+  {
+    "id": "netflix",
+    "name": "Netflix",
+    "color": "#E50914",
+    "difficulty": 2
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "color": "#00C7B7",
+    "difficulty": 2
+  },
+  {
+    "id": "nvidia",
+    "name": "NVIDIA",
+    "color": "#76B900",
+    "difficulty": 2
+  },
+  {
+    "id": "paypal",
+    "name": "PayPal",
+    "color": "#002991",
+    "difficulty": 2
+  },
+  {
+    "id": "pinterest",
+    "name": "Pinterest",
+    "color": "#BD081C",
+    "difficulty": 2
+  },
+  {
+    "id": "razer",
+    "name": "Razer",
+    "color": "#00FF00",
+    "difficulty": 2
+  },
+  {
+    "id": "reddit",
+    "name": "Reddit",
+    "color": "#FF4500",
+    "difficulty": 2
+  },
+  {
+    "id": "riot-games",
+    "name": "Riot Games",
+    "color": "#EB0029",
+    "difficulty": 2
+  },
+  {
+    "id": "samsung",
+    "name": "Samsung",
+    "color": "#1428A0",
+    "difficulty": 2
+  },
+  {
+    "id": "sega",
+    "name": "Sega",
+    "color": "#0089CF",
+    "difficulty": 2
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "color": "#7AB55C",
+    "difficulty": 2
+  },
+  {
+    "id": "snapchat",
+    "name": "Snapchat",
+    "color": "#FFFC00",
+    "difficulty": 2
+  },
+  {
+    "id": "soundcloud",
+    "name": "SoundCloud",
+    "color": "#FF5500",
+    "difficulty": 2
+  },
+  {
+    "id": "spotify",
+    "name": "Spotify",
+    "color": "#1ED760",
+    "difficulty": 2
+  },
+  {
+    "id": "stack-overflow",
+    "name": "Stack Overflow",
+    "color": "#F58025",
+    "difficulty": 2
+  },
+  {
+    "id": "starbucks",
+    "name": "Starbucks",
+    "color": "#006241",
+    "difficulty": 2
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "color": "#635BFF",
+    "difficulty": 2
+  },
+  {
+    "id": "target",
+    "name": "Target",
+    "color": "#CC0000",
+    "difficulty": 2
+  },
+  {
+    "id": "telegram",
+    "name": "Telegram",
+    "color": "#26A5E4",
+    "difficulty": 2
+  },
+  {
+    "id": "tesla",
+    "name": "Tesla",
+    "color": "#CC0000",
+    "difficulty": 2
+  },
+  {
+    "id": "toyota",
+    "name": "Toyota",
+    "color": "#EB0A1E",
+    "difficulty": 2
+  },
+  {
+    "id": "trello",
+    "name": "Trello",
+    "color": "#0052CC",
+    "difficulty": 2
+  },
+  {
+    "id": "tumblr",
+    "name": "Tumblr",
+    "color": "#36465D",
+    "difficulty": 2
+  },
+  {
+    "id": "twitch",
+    "name": "Twitch",
+    "color": "#9146FF",
+    "difficulty": 2
+  },
+  {
+    "id": "verizon",
+    "name": "Verizon",
+    "color": "#CD040B",
+    "difficulty": 2
+  },
+  {
+    "id": "vimeo",
+    "name": "Vimeo",
+    "color": "#1AB7EA",
+    "difficulty": 2
+  },
+  {
+    "id": "visa",
+    "name": "Visa",
+    "color": "#1A1F71",
+    "difficulty": 2
+  },
+  {
+    "id": "vodafone",
+    "name": "Vodafone",
+    "color": "#E60000",
+    "difficulty": 2
+  },
+  {
+    "id": "volkswagen",
+    "name": "Volkswagen",
+    "color": "#151F5D",
+    "difficulty": 2
+  },
+  {
+    "id": "whatsapp",
+    "name": "WhatsApp",
+    "color": "#25D366",
+    "difficulty": 2
+  },
+  {
+    "id": "wordpress",
+    "name": "WordPress",
+    "color": "#21759B",
+    "difficulty": 2
+  },
+  {
+    "id": "xiaomi",
+    "name": "Xiaomi",
+    "color": "#FF6900",
+    "difficulty": 2
+  },
+  {
+    "id": "yelp",
+    "name": "Yelp",
+    "color": "#FF1A1A",
+    "difficulty": 2
+  },
+  {
+    "id": "youtube",
+    "name": "YouTube",
+    "color": "#FF0000",
+    "difficulty": 2
+  },
+  {
+    "id": "zoom",
+    "name": "Zoom",
+    "color": "#0B5CFF",
+    "difficulty": 2
+  }
+]
