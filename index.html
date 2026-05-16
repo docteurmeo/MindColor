@@ -3,131 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>MindColor — Bạn nhớ màu brand giỏi tới đâu?</title>
+  <title>MindColor — Bạn nhớ màu sắc của các brand giỏi tới đâu?</title>
   <meta name="description" content="Game đoán màu logo thương hiệu. Test xem mắt bạn có phải designer thực thụ không." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <main id="app">
-    <!-- Home Screen -->
+
+    <!-- ============== HOME ============== -->
     <section id="screen-home" class="screen active">
-      <header class="home-header">
-        <h1 class="logo">MindColor</h1>
-        <p class="tagline">Bạn nhớ màu brand giỏi tới đâu?</p>
-      </header>
+      <h1 class="home-logo">
+        <span class="word">Mind</span><span class="word">Color</span>
+      </h1>
+      <p class="home-tagline">Bạn nhớ màu sắc của các brand<br/>giỏi tới đâu?</p>
 
       <div class="home-actions">
-        <button class="btn btn-primary" data-action="play-classic">
-          <span class="btn-title">Classic</span>
-          <span class="btn-sub">10 brand ngẫu nhiên</span>
+        <button class="btn-card btn-classic" data-action="play-classic">
+          <span class="title">Classic</span>
+          <span class="sub">10 brand ngẫu nhiên</span>
         </button>
-
-        <button class="btn btn-secondary" data-action="play-daily" disabled>
-          <span class="btn-title">Daily Challenge</span>
-          <span class="btn-sub">Sắp ra mắt</span>
+        <button class="btn-card btn-daily" data-action="play-daily" disabled>
+          <span class="title">Daily challenge</span>
+          <span class="sub">Sắp ra mắt</span>
         </button>
       </div>
-
-      <footer class="home-footer">
-        <p>v0.2 — demo</p>
-      </footer>
     </section>
 
-    <!-- Round Screen -->
+    <!-- ============== ROUND (Step 1 + Step 2 Result) ============== -->
     <section id="screen-round" class="screen">
-      <div class="round-top">
-        <div class="round-progress" id="round-progress">1 / 10</div>
-        <button class="link-btn" data-action="back-home">Thoát</button>
+      <!-- Header -->
+      <div class="app-header">
+        <span class="progress" id="round-progress">1/10</span>
+        <span class="title" id="brand-name">—</span>
       </div>
 
-      <div class="round-question">
-        <p class="question-label">Màu chủ đạo của</p>
-        <div class="brand-logo" id="brand-logo"></div>
-        <h2 class="brand-name" id="brand-name">—</h2>
+      <!-- Brand logo (idle gray → user-color preview → reveal answer) -->
+      <div class="brand-logo-large" id="brand-logo"></div>
+
+      <!-- ===== Step 1: Picker (hidden on reveal) ===== -->
+      <div id="picker-stage">
+        <div class="color-picker-wrap" id="color-picker"></div>
+        <div class="hue-slider-wrap" id="hue-slider"></div>
+        <button class="btn-cta" data-action="submit-color" id="submit-btn">Submit</button>
       </div>
 
-      <div class="picker-wrap" id="picker-wrap">
-        <div id="color-picker"></div>
-        <div class="swatch-preview">
-          <span class="swatch-label">Bạn chọn</span>
-          <div class="swatch" id="user-swatch"></div>
-          <code class="swatch-hex" id="user-hex">#000000</code>
-        </div>
-      </div>
-
-      <button class="btn btn-primary" data-action="submit-color" id="submit-btn">
-        <span class="btn-title">Submit</span>
-      </button>
-
-      <!-- Reveal -->
-      <div class="reveal" id="reveal" hidden>
-        <div class="score-wrap">
-          <div class="score-big" id="score-big">0<span class="score-pct">%</span></div>
-          <div class="score-bar">
-            <div class="score-bar-fill" id="score-bar-fill"></div>
-          </div>
-          <p class="reaction" id="reaction">—</p>
-        </div>
+      <!-- ===== Step 2: Result (hidden until submit) ===== -->
+      <div id="result-stage" hidden>
+        <div class="result-score" id="score-big">0%</div>
+        <div class="result-ruler"><div class="result-ruler-fill" id="score-bar-fill"></div></div>
+        <p class="result-reaction" id="reaction">—</p>
 
         <div class="compare">
-          <div class="compare-col">
-            <span class="compare-label">Bạn chọn</span>
-            <div class="swatch swatch-lg" id="reveal-user"></div>
-            <code class="swatch-hex" id="reveal-user-hex">—</code>
+          <div class="compare-card">
+            <div class="logo-wrap" id="reveal-user-logo"></div>
+            <div class="swatch-bar" id="reveal-user-bar">
+              <span class="swatch-hex" id="reveal-user-hex">—</span>
+            </div>
+            <div class="label">Bạn chọn</div>
           </div>
-          <div class="compare-col">
-            <span class="compare-label">Brand</span>
-            <div class="swatch swatch-lg" id="reveal-brand"></div>
-            <code class="swatch-hex" id="reveal-brand-hex">—</code>
+          <div class="compare-card">
+            <div class="logo-wrap" id="reveal-brand-logo"></div>
+            <div class="swatch-bar" id="reveal-brand-bar">
+              <span class="swatch-hex" id="reveal-brand-hex">—</span>
+            </div>
+            <div class="label">Đáp án</div>
           </div>
         </div>
 
-        <ul class="feedback" id="feedback"></ul>
+        <div class="result-feedback" id="feedback"></div>
 
-        <button class="btn btn-primary" data-action="next-round" id="next-btn">
-          <span class="btn-title">Tiếp theo →</span>
-        </button>
+        <button class="btn-cta" data-action="next-round">Next</button>
       </div>
     </section>
 
-    <!-- Final Screen -->
+    <!-- ============== FINAL ============== -->
     <section id="screen-final" class="screen">
-      <header class="final-header">
-        <p class="final-eyebrow">Kết quả</p>
-        <div class="final-score" id="final-score">0<span class="final-score-pct">%</span></div>
-        <div class="final-rank">
-          <span class="final-rank-emoji" id="final-rank-emoji">🎨</span>
-          <span class="final-rank-label" id="final-rank-label">—</span>
-        </div>
-        <p class="final-comment" id="final-comment">—</p>
-      </header>
+      <div class="app-header center-only">
+        <span class="title">MindColor</span>
+      </div>
 
-      <section class="final-section">
-        <h3 class="final-section-title">10 lượt vừa rồi</h3>
-        <ul class="recap" id="recap"></ul>
-      </section>
+      <div class="final-score" id="final-score">0%</div>
 
-      <section class="final-section">
-        <h3 class="final-section-title">Khoe thành tích</h3>
-        <pre class="share-grid" id="share-grid">—</pre>
-        <div class="share-actions">
-          <button class="btn btn-secondary" data-action="copy-grid" id="copy-grid-btn">
-            <span class="btn-title">📋 Copy text</span>
-          </button>
-          <button class="btn btn-secondary" data-action="download-card">
-            <span class="btn-title">🖼️ Tải ảnh</span>
-          </button>
-        </div>
-      </section>
+      <div class="final-rank-pill">
+        <span id="final-rank-emoji">🎨</span>
+        <span id="final-rank-label">—</span>
+      </div>
 
-      <div class="final-cta">
-        <button class="btn btn-primary" data-action="play-again">
-          <span class="btn-title">Chơi lại</span>
-          <span class="btn-sub">10 brand mới ngẫu nhiên</span>
-        </button>
-        <button class="btn btn-secondary" data-action="back-home">
-          <span class="btn-title">Về Home</span>
-        </button>
+      <p class="final-comment" id="final-comment">—</p>
+
+      <ul class="recap" id="recap"></ul>
+
+      <div class="final-actions">
+        <button class="btn-cta-half btn-share" disabled>Share</button>
+        <button class="btn-cta-half btn-again" data-action="back-home">Again?</button>
       </div>
     </section>
   </main>

@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(node scripts/build-brands.mjs)",
-      "Bash(xargs -n1 basename)"
+      "Bash(xargs -n1 basename)",
+      "mcp__d9597a98-026a-414a-977c-16d2bba46285__get_metadata",
+      "mcp__d9597a98-026a-414a-977c-16d2bba46285__get_design_context"
     ]
   }
 }

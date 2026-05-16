@@ -1,0 +1,117 @@
+ID,Brand Name,Region,Category,SVG Status,Source / Note
+acer,Acer,Foreign,Tech,Done,Simple Icons
+airbnb,Airbnb,Foreign,Tech,Done,Simple Icons
+android,Android,Foreign,Tech,Done,Simple Icons
+atlassian,Atlassian,Foreign,Tech,Done,Simple Icons
+behance,Behance,Foreign,Design,Done,Simple Icons
+binance,Binance,Foreign,Crypto,Done,Simple Icons
+bitcoin,Bitcoin,Foreign,Crypto,Done,Simple Icons
+cloudflare,Cloudflare,Foreign,Tech,Done,Simple Icons
+coca-cola,Coca-Cola,Foreign,F&B,Done,Simple Icons
+coinbase,Coinbase,Foreign,Crypto,Done,Simple Icons
+dell,Dell,Foreign,Tech,Done,Simple Icons
+digitalocean,DigitalOcean,Foreign,Tech,Done,Simple Icons
+discord,Discord,Foreign,Tech,Done,Simple Icons
+dribbble,Dribbble,Foreign,Design,Done,Simple Icons
+dropbox,Dropbox,Foreign,Tech,Done,Simple Icons
+etsy,Etsy,Foreign,Retail,Done,Simple Icons
+facebook,Facebook,Foreign,Tech,Done,Simple Icons
+ford,Ford,Foreign,Auto,Done,Simple Icons
+honda,Honda,Foreign,Auto,Done,Simple Icons
+huawei,Huawei,Foreign,Tech,Done,Simple Icons
+hubspot,HubSpot,Foreign,Tech,Done,Simple Icons
+intel,Intel,Foreign,Tech,Done,Simple Icons
+jira,Jira,Foreign,Tech,Done,Simple Icons
+kickstarter,Kickstarter,Foreign,Tech,Done,Simple Icons
+lenovo,Lenovo,Foreign,Tech,Done,Simple Icons
+mailchimp,Mailchimp,Foreign,Tech,Done,Simple Icons
+mcdonalds,McDonald's,Foreign,F&B,Done,Simple Icons
+mozilla,Mozilla,Foreign,Tech,Done,Simple Icons
+netflix,Netflix,Foreign,Media,Done,Simple Icons
+netlify,Netlify,Foreign,Tech,Done,Simple Icons
+nvidia,NVIDIA,Foreign,Tech,Done,Simple Icons
+paypal,PayPal,Foreign,Finance,Done,Simple Icons
+pinterest,Pinterest,Foreign,Tech,Done,Simple Icons
+razer,Razer,Foreign,Tech,Done,Simple Icons
+reddit,Reddit,Foreign,Tech,Done,Simple Icons
+riot-games,Riot Games,Foreign,Gaming,Done,Simple Icons
+samsung,Samsung,Foreign,Tech,Done,Simple Icons
+sega,Sega,Foreign,Gaming,Done,Simple Icons
+shopify,Shopify,Foreign,Tech,Done,Simple Icons
+snapchat,Snapchat,Foreign,Tech,Done,Simple Icons
+soundcloud,SoundCloud,Foreign,Media,Done,Simple Icons
+spotify,Spotify,Foreign,Media,Done,Simple Icons
+stack-overflow,Stack Overflow,Foreign,Tech,Done,Simple Icons
+starbucks,Starbucks,Foreign,F&B,Done,Simple Icons
+stripe,Stripe,Foreign,Finance,Done,Simple Icons
+target,Target,Foreign,Retail,Done,Simple Icons
+telegram,Telegram,Foreign,Tech,Done,Simple Icons
+tesla,Tesla,Foreign,Auto,Done,Simple Icons
+toyota,Toyota,Foreign,Auto,Done,Simple Icons
+trello,Trello,Foreign,Tech,Done,Simple Icons
+tumblr,Tumblr,Foreign,Tech,Done,Simple Icons
+twitch,Twitch,Foreign,Media,Done,Simple Icons
+verizon,Verizon,Foreign,Telecom,Done,Simple Icons
+vimeo,Vimeo,Foreign,Media,Done,Simple Icons
+visa,Visa,Foreign,Finance,Done,Simple Icons
+vodafone,Vodafone,Foreign,Telecom,Done,Simple Icons
+volkswagen,Volkswagen,Foreign,Auto,Done,Simple Icons
+whatsapp,WhatsApp,Foreign,Tech,Done,Simple Icons
+wordpress,WordPress,Foreign,Tech,Done,Simple Icons
+xiaomi,Xiaomi,Foreign,Tech,Done,Simple Icons
+yelp,Yelp,Foreign,Tech,Done,Simple Icons
+youtube,YouTube,Foreign,Media,Done,Simple Icons
+zoom,Zoom,Foreign,Tech,Done,Simple Icons
+shopee,Shopee,Vietnam,E-commerce,Done,Simple Icons (dùng rộng ở VN)
+grab,Grab,Vietnam,Ride-hailing,Done,Simple Icons (dùng rộng ở VN)
+zalo,Zalo,Vietnam,Tech,Done,Simple Icons
+vng,VNG,Vietnam,Tech,Missing,Tải tay từ vng.com.vn (press kit) hoặc Wikipedia
+tiki,Tiki,Vietnam,E-commerce,Missing,Tải tay từ tiki.vn hoặc Wikipedia (logo xanh dương)
+lazada-vn,Lazada,Vietnam,E-commerce,Missing,Tải tay từ press.lazada.com
+sendo,Sendo,Vietnam,E-commerce,Missing,Tải tay từ sendo.vn (logo đỏ)
+fpt,FPT,Vietnam,Tech,Missing,Tải tay từ fpt.com.vn (logo 3 màu - cần check single color version)
+fpt-shop,FPT Shop,Vietnam,Retail,Missing,Tải tay từ fptshop.com.vn
+the-gioi-di-dong,Thế Giới Di Động,Vietnam,Retail,Missing,Tải tay từ thegioididong.com (logo vàng)
+dien-may-xanh,Điện Máy Xanh,Vietnam,Retail,Missing,Tải tay từ dienmayxanh.com (logo xanh lá)
+bach-hoa-xanh,Bách Hóa Xanh,Vietnam,Retail,Missing,Tải tay từ bachhoaxanh.com
+winmart,WinMart,Vietnam,Retail,Missing,Tải tay từ winmart.vn
+vingroup,Vingroup,Vietnam,Conglomerate,Missing,Tải tay từ vingroup.net
+vincom,Vincom,Vietnam,Retail,Missing,Tải tay từ vincom.com.vn
+vinfast,VinFast,Vietnam,Auto,Missing,Tải tay từ vinfastauto.com
+vinhomes,Vinhomes,Vietnam,Real Estate,Missing,Tải tay từ vinhomes.vn
+vinpearl,Vinpearl,Vietnam,Hospitality,Missing,Tải tay từ vinpearl.com
+vinamilk,Vinamilk,Vietnam,F&B,Missing,Tải tay từ vinamilk.com.vn (logo xanh dương)
+th-true-milk,TH True Milk,Vietnam,F&B,Missing,Tải tay từ thmilk.vn
+masan,Masan Group,Vietnam,F&B,Missing,Tải tay từ masangroup.com
+acecook,Acecook (Hảo Hảo),Vietnam,F&B,Missing,Tải tay từ acecookvietnam.com
+bia-saigon,Bia Saigon,Vietnam,F&B,Missing,Tải tay từ sabeco.com.vn
+bia-ha-noi,Bia Hà Nội,Vietnam,F&B,Missing,Tải tay từ habeco.com.vn
+highlands-coffee,Highlands Coffee,Vietnam,F&B,Missing,Tải tay từ highlandscoffee.com.vn (logo đỏ)
+phuc-long,Phúc Long,Vietnam,F&B,Missing,Tải tay từ phuclong.com.vn (logo xanh lá)
+trung-nguyen,Trung Nguyên Legend,Vietnam,F&B,Missing,Tải tay từ trungnguyenlegend.com
+the-coffee-house,The Coffee House,Vietnam,F&B,Missing,Tải tay từ thecoffeehouse.com (logo nâu/cam)
+cong-caphe,Cộng Cà Phê,Vietnam,F&B,Missing,Tải tay từ congcaphe.com
+katinat,Katinat,Vietnam,F&B,Missing,Tải tay từ katinat.vn
+vietcombank,Vietcombank,Vietnam,Banking,Missing,Tải tay từ vietcombank.com.vn (logo xanh lá)
+bidv,BIDV,Vietnam,Banking,Missing,Tải tay từ bidv.com.vn
+techcombank,Techcombank,Vietnam,Banking,Missing,Tải tay từ techcombank.com.vn (logo đỏ)
+vpbank,VPBank,Vietnam,Banking,Missing,Tải tay từ vpbank.com.vn
+mbbank,MB Bank,Vietnam,Banking,Missing,Tải tay từ mbbank.com.vn
+acb,ACB,Vietnam,Banking,Missing,Tải tay từ acb.com.vn (logo xanh dương)
+sacombank,Sacombank,Vietnam,Banking,Missing,Tải tay từ sacombank.com.vn
+tpbank,TPBank,Vietnam,Banking,Missing,Tải tay từ tpb.vn (logo tím)
+vib,VIB,Vietnam,Banking,Missing,Tải tay từ vib.com.vn
+agribank,Agribank,Vietnam,Banking,Missing,Tải tay từ agribank.com.vn
+momo,MoMo,Vietnam,Fintech,Missing,Tải tay từ momo.vn (logo hồng/đỏ)
+zalopay,ZaloPay,Vietnam,Fintech,Missing,Tải tay từ zalopay.vn
+vnpay,VNPay,Vietnam,Fintech,Missing,Tải tay từ vnpay.vn
+viettel,Viettel,Vietnam,Telecom,Missing,Tải tay từ viettel.com.vn (logo đỏ)
+vinaphone,Vinaphone,Vietnam,Telecom,Missing,Tải tay từ vinaphone.com.vn
+mobifone,Mobifone,Vietnam,Telecom,Missing,Tải tay từ mobifone.vn
+vnpt,VNPT,Vietnam,Telecom,Missing,Tải tay từ vnpt.com.vn
+vietnam-airlines,Vietnam Airlines,Vietnam,Aviation,Missing,Tải tay từ vietnamairlines.com (logo xanh)
+vietjet,VietJet Air,Vietnam,Aviation,Missing,Tải tay từ vietjetair.com (logo đỏ)
+bamboo-airways,Bamboo Airways,Vietnam,Aviation,Missing,Tải tay từ bambooairways.com
+be,Be,Vietnam,Ride-hailing,Missing,Tải tay từ be.com.vn (logo vàng)
+vtv,VTV,Vietnam,Media,Missing,Tải tay từ vtv.vn
+vietnamnet,VnExpress,Vietnam,Media,Missing,Tải tay từ vnexpress.net
