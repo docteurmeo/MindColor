@@ -1,6 +1,24 @@
 // MindColor — UI controller (Figma redesign)
 
 (function () {
+  // ---------- Scale-to-fit the 390x844 Figma frame on any viewport ----------
+  function fitApp() {
+    const probe = document.getElementById("safe-probe");
+    const cs = probe ? getComputedStyle(probe) : null;
+    const safeTop = cs ? parseFloat(cs.paddingTop) || 0 : 0;
+    const safeBot = cs ? parseFloat(cs.paddingBottom) || 0 : 0;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - safeTop - safeBot;
+    const scale = Math.min(vw / 390, vh / 844);
+    document.documentElement.style.setProperty("--app-scale", scale);
+  }
+  fitApp();
+  window.addEventListener("resize", fitApp);
+  window.addEventListener("orientationchange", fitApp);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", fitApp);
+  }
+
   const screens = document.querySelectorAll(".screen");
   let pickerBox = null;
   let pickerHue = null;

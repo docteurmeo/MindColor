@@ -13,13 +13,20 @@
 }
 
 html, body {
-  min-height: 100%;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
   background: #ffffff;
   color: #000000;
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 button {
@@ -31,21 +38,36 @@ button {
 
 img { display: block; }
 
-/* ---------- App frame: 390 mobile-first, centered ---------- */
+/* Hidden probe để đọc safe-area-inset values trong JS */
+#safe-probe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  visibility: hidden;
+  pointer-events: none;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------- App frame: 390x844 Figma, scale-to-fit viewport ---------- */
 #app {
-  position: relative;
-  width: 100%;
-  max-width: 390px;
-  margin: 0 auto;
-  min-height: 844px;
+  position: absolute;
+  top: env(safe-area-inset-top, 0px);
+  left: 50%;
+  width: 390px;
+  height: 844px;
+  transform-origin: top center;
+  transform: translateX(-50%) scale(var(--app-scale, 1));
+  overflow: hidden;
+  background: #fff;
 }
 
 .screen {
   display: none;
-  position: relative;
-  width: 100%;
-  min-height: 844px;
-  padding: 0;
+  position: absolute;
+  inset: 0;
+  width: 390px;
+  height: 844px;
 }
 .screen.active { display: block; }
 
@@ -72,6 +94,7 @@ img { display: block; }
   display: block;
   font-size: 152px;
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 .home-logo .word:nth-child(2) { letter-spacing: 0; }
 
@@ -527,19 +550,6 @@ img { display: block; }
 
 /* Hidden helper */
 [hidden] { display: none !important; }
-
-/* ============================================================
-   DESKTOP — Home logo 1 line
-   ============================================================ */
-@media (min-width: 600px) {
-  .home-logo .word {
-    display: inline;
-    font-size: 120px;
-  }
-  .home-logo .word:nth-child(1)::after {
-    content: "";
-  }
-}
 
 /* iro.js dot styling — keep visible on light bg */
 .IroHandle circle { stroke: #fff; stroke-width: 2; }
