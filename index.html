@@ -9,26 +9,24 @@
 </head>
 <body>
   <div id="safe-probe"></div>
+
+  <!-- ============== HOME (viewport-native, ngoài frame scale) ============== -->
+  <section id="screen-home" class="active">
+    <img class="home-logo-svg" src="assets/mindcolor-logo.svg" alt="MindColor" />
+    <p class="home-tagline">Bạn nhớ màu sắc của các brand<br/>giỏi tới đâu?</p>
+    <div class="home-actions">
+      <button class="btn-card btn-classic" data-action="play-classic">
+        <span class="title">Classic</span>
+        <span class="sub">10 brand ngẫu nhiên</span>
+      </button>
+      <button class="btn-card btn-daily" data-action="play-daily" disabled>
+        <span class="title">Daily challenge</span>
+        <span class="sub">Sắp ra mắt</span>
+      </button>
+    </div>
+  </section>
+
   <main id="app">
-
-    <!-- ============== HOME ============== -->
-    <section id="screen-home" class="screen active">
-      <h1 class="home-logo">
-        <span class="word">Mind</span><span class="word">Color</span>
-      </h1>
-      <p class="home-tagline">Bạn nhớ màu sắc của các brand<br/>giỏi tới đâu?</p>
-
-      <div class="home-actions">
-        <button class="btn-card btn-classic" data-action="play-classic">
-          <span class="title">Classic</span>
-          <span class="sub">10 brand ngẫu nhiên</span>
-        </button>
-        <button class="btn-card btn-daily" data-action="play-daily" disabled>
-          <span class="title">Daily challenge</span>
-          <span class="sub">Sắp ra mắt</span>
-        </button>
-      </div>
-    </section>
 
     <!-- ============== ROUND (Step 1 + Step 2 Result) ============== -->
     <section id="screen-round" class="screen">

@@ -19,7 +19,6 @@
     window.visualViewport.addEventListener("resize", fitApp);
   }
 
-  const screens = document.querySelectorAll(".screen");
   let pickerBox = null;
   let pickerHue = null;
   let currentUserHex = "#ffffff";
@@ -27,8 +26,17 @@
   let userHasPicked = false;
 
   function showScreen(id) {
-    screens.forEach((s) => s.classList.toggle("active", s.id === id));
+    // Toggle game-mode class on body to switch between Home (viewport-native) and #app (scaled frame)
+    if (id === "screen-home") {
+      document.body.classList.remove("on-game");
+    } else {
+      document.body.classList.add("on-game");
+    }
+    document.querySelectorAll(".screen, #screen-home").forEach((s) => {
+      s.classList.toggle("active", s.id === id);
+    });
     window.scrollTo(0, 0);
+    if (typeof fitApp === "function") fitApp();
   }
 
   function initPickers() {
