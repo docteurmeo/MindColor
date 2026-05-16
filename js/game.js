@@ -80,6 +80,42 @@ const Game = (() => {
     return state ? state.results : [];
   }
 
+  function getFinalSummary() {
+    if (!state || state.results.length === 0) return null;
+    const results = state.results;
+    const totalScore = Math.round(
+      results.reduce((sum, r) => sum + (r.score || 0), 0) / results.length
+    );
+    return {
+      mode: state.mode,
+      totalScore,
+      rank: rankFor(totalScore),
+      results,
+      gameNumber: classicGameNumber(),
+    };
+  }
+
+  function rankFor(score) {
+    if (score >= 95) return { tier: "S",  label: "Trùm cuối màu sắc",  emoji: "🏆", comment: "Trời ơi, mắt bạn là máy đo Pantone hả? Trùm rồi nha!" };
+    if (score >= 85) return { tier: "A",  label: "Mắt designer",        emoji: "🎨", comment: "Đỉnh quá đỉnh. Đi học design đi là vừa, phí tài năng!" };
+    if (score >= 70) return { tier: "B",  label: "Cũng có nghề",        emoji: "👀", comment: "Khá đó nha bro, nhìn brand nào cũng nhớ kha khá rồi!" };
+    if (score >= 50) return { tier: "C",  label: "Thường dân",          emoji: "😎", comment: "Tà tà thôi, không quá tệ, nhưng cũng chưa có gì để khoe." };
+    if (score >= 30) return { tier: "D",  label: "Mắt hơi yếu",         emoji: "😅", comment: "Hơi lú rồi đó cha. Chắc nhìn brand qua kính áp tròng à?" };
+    return                  { tier: "F",  label: "Mù màu nặng",         emoji: "🌫️", comment: "Bạn ơi, đi khám mắt gấp đi. Hoặc chơi lại cho đỡ quê 😂" };
+  }
+
+  // Số game đã chơi (lưu localStorage cho vui)
+  function classicGameNumber() {
+    try {
+      const key = "mindcolor:classic-count";
+      const n = parseInt(localStorage.getItem(key) || "0", 10) + 1;
+      localStorage.setItem(key, n);
+      return n;
+    } catch (e) {
+      return 1;
+    }
+  }
+
   return {
     startClassic,
     currentBrand,
@@ -88,5 +124,6 @@ const Game = (() => {
     next,
     isFinished,
     getResults,
+    getFinalSummary,
   };
 })();

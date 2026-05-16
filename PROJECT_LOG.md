@@ -12,7 +12,7 @@ User là non-coder, có ý tưởng web game viral đoán màu logo brand. Mục
 ## Phase 0 — Định hướng & chiến lược
 
 - **Lựa chọn hướng:** Casual viral (Wordle-style), không phải pro designer tool
-- **MVP scope:** Classic mode 10 brand random + Delay Daily Challenge cho phase 2
+- **MVP scope:** Classic mode 10 brand random + Daily Challenge cho phase sau
 - **Brand viral chiến lược:** Daily Challenge với share grid emoji + Delta-E scoring (wow factor)
 - **Pool brand mục tiêu:** 150-300 ở launch
 - **Stack quyết định:** Vanilla HTML/CSS/JS + GitHub Pages, không framework, không backend. Lý do: load nhanh, dễ viral, không build step.
@@ -77,6 +77,35 @@ Mình rework:
   - 2 swatch so sánh
   - Feedback list fade-in stagger 150ms
 
+### Session 4 — Final screen + Share (grid + card)
+
+- **`Game.getFinalSummary()`** tính tổng:
+  - `totalScore` = trung bình điểm 10 round
+  - `rank` = 1 trong 6 tier dựa vào totalScore
+  - `gameNumber` = đếm số lần chơi Classic (lưu localStorage)
+- **Rank tier system (6 mức):**
+  - 95-100: 🏆 Trùm cuối màu sắc — "Trời ơi, mắt bạn là máy đo Pantone hả? Trùm rồi nha!"
+  - 85-94: 🎨 Mắt designer — "Đỉnh quá đỉnh. Đi học design đi là vừa, phí tài năng!"
+  - 70-84: 👀 Cũng có nghề — "Khá đó nha bro, nhìn brand nào cũng nhớ kha khá rồi!"
+  - 50-69: 😎 Thường dân — "Tà tà thôi, không quá tệ, nhưng cũng chưa có gì để khoe."
+  - 30-49: 😅 Mắt hơi yếu — "Hơi lú rồi đó cha. Chắc nhìn brand qua kính áp tròng à?"
+  - <30: 🌫️ Mù màu nặng — "Bạn ơi, đi khám mắt gấp đi. Hoặc chơi lại cho đỡ quê 😂"
+- **`js/share.js`** module mới:
+  - `buildShareGrid(summary)` → text Wordle-style (header + 10 emoji + URL)
+  - `copyShareGrid(summary)` → clipboard API + fallback
+  - `buildShareCard(summary)` → Canvas 1200×630 PNG (OG image format)
+  - `downloadShareCard(summary)` → trigger download `mindcolor-<score>.png`
+- **Emoji ngưỡng share grid:** 🟩 ≥85, 🟨 60-84, 🟧 35-59, 🟥 <35
+- **Final screen UI:**
+  - Score 96px count-up animation 900ms với gradient text
+  - Rank pill (emoji + label)
+  - Comment dân dã max 360px
+  - Recap list: 10 row (emoji | brand name | 2 mini swatch | %)
+  - Share grid block (pre, mono font)
+  - 2 button grid 50/50: Copy text / Tải ảnh
+  - 2 CTA stack: Chơi lại / Về Home
+- Button "Copy text" feedback: đổi label "✓ Đã copy!" 1.8s rồi reset
+
 ## Trạng thái hiện tại
 
 **Đã có:**
@@ -85,29 +114,33 @@ Mình rework:
 - ✅ 63 brand single-color (mostly global)
 - ✅ Color picker Box + Hue
 - ✅ Logo mono → color reveal
-- ✅ Delta-E CIEDE2000 scoring
-- ✅ Feedback Việt suồng sã
+- ✅ Delta-E CIEDE2000 scoring + feedback Việt suồng sã
+- ✅ Final screen với rank + comment dân dã
+- ✅ Share grid text (Wordle-style)
+- ✅ Share card PNG (1200×630 OG image)
+- ✅ Play again / Back home
 - ✅ SVG-driven brand system + auto-build CI
 
 **Chưa có:**
-- ❌ Final screen (tổng 10 round + rank + comment)
-- ❌ Share grid + Share card PNG
-- ❌ Daily Challenge
+- ❌ Daily Challenge (5 brand cố định/ngày + lịch 365 ngày)
 - ❌ Brand Việt (kế hoạch sau khi UI ổn)
 - ❌ Domain riêng
-- ❌ Figma final UI
+- ❌ Figma final UI (đang chờ user design)
+- ❌ OG meta tags + favicon
+- ❌ Analytics
 
 ## Cấu trúc dự án hiện tại
 
 ```
 mindcolor/
-├── index.html                       # Entry — Home + Round + Final placeholder
+├── index.html                       # Entry — Home + Round + Final
 ├── css/style.css                    # Demo styling (sẽ thay bằng Figma)
 ├── js/
 │   ├── ui.js                        # UI controller, swap được khi đổi design
-│   ├── game.js                      # Game state machine
+│   ├── game.js                      # Game state + rank system + final summary
 │   ├── logo.js                      # Logo render (mono/color)
-│   └── scoring.js                   # CIEDE2000 + feedback engine
+│   ├── scoring.js                   # CIEDE2000 + feedback engine
+│   └── share.js                     # Share grid + Share card PNG
 ├── data/
 │   └── brands.json                  # Auto-generated, KHÔNG sửa tay
 ├── assets/logos/                    # Drop SVG vào đây
@@ -134,31 +167,54 @@ mindcolor/
 | Logo via SVG local (không Simple Icons runtime) | Full control, không lệ thuộc CDN ngoài |
 | Auto-build qua GitHub Action | User non-coder chỉ cần drop SVG |
 | Daily Challenge static (không backend) | Wordle pattern, không cần server |
+| Share card via Canvas API (không server-render) | Free, instant, không cần backend |
 | Tiếng Việt only ở phase demo | Tránh i18n phức tạp |
 | Dark theme | Hợp game feel, ít công |
 | Mobile-first | 80% traffic viral là mobile |
+| Rank 6 tier (không 5) | Spread đẹp hơn, mức D cho user trung bình kém |
+| Game number lưu localStorage | Không cần backend, gimmick "lần thứ N chơi" |
 
 ## Roadmap còn lại
 
-- **Session 4:** Final screen — total score (trung bình %), rank tier (Pantone Soul / Eagle Eye / Sharp Memory / Average Joe / Color Fog), comment Việt hoá, list 10 round
-- **Session 5:** Share grid emoji + Share card PNG (Canvas API)
-- **Session 6:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày
-- **Phase Figma:** Apply UI final từ Figma user cung cấp
+- **Session 5:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày, share grid riêng "Daily #N"
+- **Phase Figma:** Apply UI final từ Figma user cung cấp (đang chờ)
 - **Phase content:** Bạn gom brand Việt theo batch, mình verify
-- **Phase polish:** Domain, OG meta tags, SEO, analytics
+- **Phase polish:** Domain, OG meta tags, favicon, SEO, analytics (Plausible / Umami)
+- **Phase optional:** Sound effects, haptic feedback mobile, dark/light toggle
 
 ## Lưu ý khi thiết kế Figma (cho phase tiếp theo)
 
-1. **Screens cần thiết kế:** Home, Round state-1 (chọn màu), Round state-2 (reveal), Final, Error/Empty
-2. **Mobile-first portrait 375×812.** Desktop chỉ center trong max-width 560px
-3. **Đừng thiết kế lại color picker** — iro.js render canvas runtime, chỉ tuỳ chỉnh size + handle được
-4. **Logo container:** dùng placeholder 240×80 trong Figma, không vẽ logo cụ thể (game random)
-5. **Animation đã có:** score count-up 700ms, bar fill cùng 700ms, feedback fade-in stagger 150ms, logo mono→color transition 400ms
-6. **Design tokens cần có:** colors, spacing scale (4/8/12/16/20/24/32/48), radius (8/12/14/999), type scale (11/13/14/16/18/20/28/32/72)
-7. **Font:** tránh Adobe Fonts (license). Inter / Manrope / Plus Jakarta Sans là OK qua Google Fonts
-8. **Share card 1200×630** (OG ratio) cho Final screen — render PNG bằng Canvas
-9. **Recommend chỉ dark mode** ở phase này
-10. **Share Figma chế độ view** là đủ — Claude sẽ inspect lấy values + download SVG/PNG
+### Screens cần thiết kế
+1. **Home** — title + 2 nút Classic / Daily
+2. **Round state-1 (chọn màu)** — progress, logo mono, brand name, picker, swatch preview, Submit
+3. **Round state-2 (reveal)** — logo color, score%, progress bar, reaction, 2 swatch, feedback list, Next
+4. **Final** — score giant, rank pill, comment, recap 10 row, share grid, share buttons, Play again
+5. **Error/Empty state** — khi chưa có brand
+6. **Share card 1200×630** (asset PNG riêng) — cho social preview
+
+### Constraints kỹ thuật
+- **Mobile-first portrait 375×812.** Desktop chỉ center trong max-width 560px
+- **Đừng thiết kế lại color picker** — iro.js render canvas runtime, chỉ tuỳ chỉnh size + handle được
+- **Logo container** dùng placeholder 240×80 trong Figma (game random brand)
+- **Share card PNG** render bằng Canvas — không hỗ trợ filter/effect phức tạp như Figma (gradient/shadow/image OK; masking/blend mode/custom font cần work-around)
+
+### Animation đã có
+- Score reveal count-up 700ms (ease-out cubic)
+- Score bar fill cùng 700ms
+- Feedback list fade-in stagger 150ms từ 300ms
+- Logo mono→color transition 400ms
+- Final score count-up 900ms
+
+### Design tokens cần có trong Figma
+- **Colors:** background (#0f0f12), surface (#18181b), text-primary (#f5f5f7), text-muted (#a1a1aa), text-dim (#71717a)
+- **Spacing scale:** 4, 8, 12, 16, 20, 24, 28, 32, 48
+- **Border radius:** 8 (swatch), 10 (recap row), 12 (card), 14 (button), 999 (pill/bar)
+- **Type scale:** 11/13/14/15/16/18/20/22/28/32/72/96 (size), 400/500/600/700/800/900 (weight)
+- **Font:** system font hiện tại — nếu đổi nên dùng Google Fonts (Inter / Manrope / Plus Jakarta Sans). Tránh Adobe Fonts.
+
+### Recommend
+- Chỉ dark mode ở phase này
+- Share Figma chế độ view là đủ — Claude inspect lấy values + download SVG/PNG tự
 
 ## Reference nhanh
 
@@ -166,3 +222,5 @@ mindcolor/
 - **Simple Icons:** https://simpleicons.org/
 - **CIEDE2000 reference:** http://www2.ece.rochester.edu/~gsharma/ciede2000/
 - **GitHub Pages docs:** https://docs.github.com/en/pages
+- **Canvas API:** https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+- **OG image specs:** 1200×630, ratio 1.91:1

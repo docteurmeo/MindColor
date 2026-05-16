@@ -90,17 +90,52 @@
       </div>
     </section>
 
-    <!-- Final Screen (placeholder) -->
+    <!-- Final Screen -->
     <section id="screen-final" class="screen">
-      <h2 class="final-title">Hoàn thành!</h2>
-      <p class="final-sub">Bạn đã chơi xong 10 brand. Final screen sẽ build ở Session 4.</p>
-      <button class="btn btn-secondary" data-action="back-home">← Về Home</button>
+      <header class="final-header">
+        <p class="final-eyebrow">Kết quả</p>
+        <div class="final-score" id="final-score">0<span class="final-score-pct">%</span></div>
+        <div class="final-rank">
+          <span class="final-rank-emoji" id="final-rank-emoji">🎨</span>
+          <span class="final-rank-label" id="final-rank-label">—</span>
+        </div>
+        <p class="final-comment" id="final-comment">—</p>
+      </header>
+
+      <section class="final-section">
+        <h3 class="final-section-title">10 lượt vừa rồi</h3>
+        <ul class="recap" id="recap"></ul>
+      </section>
+
+      <section class="final-section">
+        <h3 class="final-section-title">Khoe thành tích</h3>
+        <pre class="share-grid" id="share-grid">—</pre>
+        <div class="share-actions">
+          <button class="btn btn-secondary" data-action="copy-grid" id="copy-grid-btn">
+            <span class="btn-title">📋 Copy text</span>
+          </button>
+          <button class="btn btn-secondary" data-action="download-card">
+            <span class="btn-title">🖼️ Tải ảnh</span>
+          </button>
+        </div>
+      </section>
+
+      <div class="final-cta">
+        <button class="btn btn-primary" data-action="play-again">
+          <span class="btn-title">Chơi lại</span>
+          <span class="btn-sub">10 brand mới ngẫu nhiên</span>
+        </button>
+        <button class="btn btn-secondary" data-action="back-home">
+          <span class="btn-title">Về Home</span>
+        </button>
+      </div>
     </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
   <script src="js/logo.js"></script>
   <script src="js/scoring.js"></script>
+  <script src="js/share.js"></script>
   <script src="js/game.js"></script>
   <script src="js/ui.js"></script>
 </body>

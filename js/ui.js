@@ -132,10 +132,77 @@
   function handleNext() {
     const nextBrand = Game.next();
     if (!nextBrand) {
+      renderFinal();
       showScreen("screen-final");
       return;
     }
     renderRound(nextBrand);
+  }
+
+  function renderFinal() {
+    const summary = Game.getFinalSummary();
+    if (!summary) return;
+
+    // Score animate
+    const scoreEl = document.getElementById("final-score");
+    scoreEl.firstChild.nodeValue = "0";
+    animateFinalScore(summary.totalScore, 900);
+
+    // Rank
+    document.getElementById("final-rank-emoji").textContent = summary.rank.emoji;
+    document.getElementById("final-rank-label").textContent = summary.rank.label;
+    document.getElementById("final-comment").textContent = summary.rank.comment;
+
+    // Recap list
+    const recap = document.getElementById("recap");
+    recap.innerHTML = "";
+    summary.results.forEach((r) => {
+      const li = document.createElement("li");
+      li.className = "recap-row";
+      li.innerHTML = `
+        <span class="recap-emoji">${Share.scoreToEmoji(r.score)}</span>
+        <span class="recap-name">${r.brandName}</span>
+        <span class="recap-swatches">
+          <span class="recap-sw" style="background:${r.userColor}" title="Bạn"></span>
+          <span class="recap-sw" style="background:${r.brandColor}" title="Đúng"></span>
+        </span>
+        <span class="recap-score">${r.score}%</span>
+      `;
+      recap.appendChild(li);
+    });
+
+    // Share grid
+    document.getElementById("share-grid").textContent = Share.buildShareGrid(summary);
+    document.getElementById("copy-grid-btn").querySelector(".btn-title").textContent = "📋 Copy text";
+  }
+
+  function animateFinalScore(target, durationMs) {
+    const el = document.getElementById("final-score");
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min(1, (now - start) / durationMs);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.firstChild.nodeValue = Math.round(eased * target);
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  async function handleCopyGrid() {
+    const summary = Game.getFinalSummary();
+    if (!summary) return;
+    await Share.copyShareGrid(summary);
+    const btn = document.getElementById("copy-grid-btn");
+    btn.querySelector(".btn-title").textContent = "✓ Đã copy!";
+    setTimeout(() => {
+      btn.querySelector(".btn-title").textContent = "📋 Copy text";
+    }, 1800);
+  }
+
+  function handleDownloadCard() {
+    const summary = Game.getFinalSummary();
+    if (!summary) return;
+    Share.downloadShareCard(summary);
   }
 
   document.addEventListener("click", (e) => {
@@ -157,6 +224,15 @@
         break;
       case "back-home":
         showScreen("screen-home");
+        break;
+      case "play-again":
+        handlePlayClassic();
+        break;
+      case "copy-grid":
+        handleCopyGrid();
+        break;
+      case "download-card":
+        handleDownloadCard();
         break;
     }
   });
