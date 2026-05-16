@@ -108,6 +108,12 @@
     "difficulty": 2
   },
   {
+    "id": "grab",
+    "name": "Grab",
+    "color": "#00B14F",
+    "difficulty": 2
+  },
+  {
     "id": "honda",
     "name": "Honda",
     "color": "#E40521",
@@ -225,6 +231,12 @@
     "id": "sega",
     "name": "Sega",
     "color": "#0089CF",
+    "difficulty": 2
+  },
+  {
+    "id": "shopee",
+    "name": "Shopee",
+    "color": "#EE4D2D",
     "difficulty": 2
   },
   {
@@ -369,6 +381,12 @@
     "id": "youtube",
     "name": "YouTube",
     "color": "#FF0000",
+    "difficulty": 2
+  },
+  {
+    "id": "zalo",
+    "name": "Zalo",
+    "color": "#0068FF",
     "difficulty": 2
   },
   {
