@@ -556,3 +556,42 @@ body.on-game #screen-home { display: none !important; }
 
 /* iro.js dot styling — keep visible on light bg */
 .IroHandle circle { stroke: #fff; stroke-width: 2; }
+
+/* ============================================================
+   Logo variants — mobile (2-line) vs desktop (1-line horizontal)
+   ============================================================ */
+.home-logo-desktop { display: none; }
+
+/* Desktop / landscape: use horizontal 1-line logo + wider layout
+   Trigger: landscape orientation OR wide viewport */
+@media (orientation: landscape) and (min-width: 700px), (min-width: 768px) {
+  .home-logo-mobile  { display: none; }
+  .home-logo-desktop { display: block; }
+
+  #screen-home {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .home-logo-svg {
+    width: 100vw;
+    max-width: 1440px;
+    margin-top: 0;
+  }
+
+  .home-tagline {
+    font-size: clamp(20px, 3.2vw, 45px);
+    line-height: 1.2;
+    padding: 0 32px;
+  }
+  /* Tagline 1 line on wide screens — drop the <br> wrap */
+  .home-tagline br { display: none; }
+
+  .home-actions {
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 390px;
+    padding: 0 10px 40px;
+  }
+}
