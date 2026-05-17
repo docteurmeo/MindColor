@@ -24,6 +24,12 @@
     "difficulty": 2
   },
   {
+    "id": "audi",
+    "name": "Audi",
+    "color": "#BB0A30",
+    "difficulty": 2
+  },
+  {
     "id": "behance",
     "name": "Behance",
     "color": "#1769FF",
@@ -39,6 +45,18 @@
     "id": "bitcoin",
     "name": "Bitcoin",
     "color": "#F7931A",
+    "difficulty": 2
+  },
+  {
+    "id": "bmw",
+    "name": "BMW",
+    "color": "#0066B1",
+    "difficulty": 2
+  },
+  {
+    "id": "burger-king",
+    "name": "Burger King",
+    "color": "#D62300",
     "difficulty": 2
   },
   {
@@ -108,9 +126,27 @@
     "difficulty": 2
   },
   {
+    "id": "google",
+    "name": "Google",
+    "color": "#4285F4",
+    "difficulty": 2
+  },
+  {
     "id": "grab",
     "name": "Grab",
     "color": "#00B14F",
+    "difficulty": 2
+  },
+  {
+    "id": "hermes",
+    "name": "Hermès",
+    "color": "#0091CD",
+    "difficulty": 2
+  },
+  {
+    "id": "hm",
+    "name": "H&M",
+    "color": "#E50010",
     "difficulty": 2
   },
   {
@@ -132,6 +168,12 @@
     "difficulty": 2
   },
   {
+    "id": "hyundai",
+    "name": "Hyundai",
+    "color": "#002C5E",
+    "difficulty": 2
+  },
+  {
     "id": "intel",
     "name": "Intel",
     "color": "#0071C5",
@@ -141,6 +183,12 @@
     "id": "jira",
     "name": "Jira",
     "color": "#0052CC",
+    "difficulty": 2
+  },
+  {
+    "id": "kfc",
+    "name": "KFC",
+    "color": "#F40027",
     "difficulty": 2
   },
   {
@@ -156,6 +204,12 @@
     "difficulty": 2
   },
   {
+    "id": "lg",
+    "name": "LG",
+    "color": "#A50034",
+    "difficulty": 2
+  },
+  {
     "id": "mailchimp",
     "name": "Mailchimp",
     "color": "#FFE01B",
@@ -165,6 +219,12 @@
     "id": "mcdonalds",
     "name": "McDonald's",
     "color": "#FBC817",
+    "difficulty": 2
+  },
+  {
+    "id": "meta",
+    "name": "Meta",
+    "color": "#0467DF",
     "difficulty": 2
   },
   {
@@ -186,9 +246,27 @@
     "difficulty": 2
   },
   {
+    "id": "new-balance",
+    "name": "New Balance",
+    "color": "#CF0A2C",
+    "difficulty": 2
+  },
+  {
     "id": "nvidia",
     "name": "NVIDIA",
     "color": "#76B900",
+    "difficulty": 2
+  },
+  {
+    "id": "oppo",
+    "name": "OPPO",
+    "color": "#2D683D",
+    "difficulty": 2
+  },
+  {
+    "id": "paramount",
+    "name": "Paramount",
+    "color": "#0064FF",
     "difficulty": 2
   },
   {
@@ -204,9 +282,27 @@
     "difficulty": 2
   },
   {
+    "id": "playstation",
+    "name": "PlayStation",
+    "color": "#0070D1",
+    "difficulty": 2
+  },
+  {
+    "id": "puma",
+    "name": "Puma",
+    "color": "#242B2F",
+    "difficulty": 2
+  },
+  {
     "id": "razer",
     "name": "Razer",
     "color": "#00FF00",
+    "difficulty": 2
+  },
+  {
+    "id": "red-bull",
+    "name": "Red Bull",
+    "color": "#DB0A40",
     "difficulty": 2
   },
   {
@@ -324,6 +420,18 @@
     "difficulty": 2
   },
   {
+    "id": "unilever",
+    "name": "Unilever",
+    "color": "#1F36C7",
+    "difficulty": 2
+  },
+  {
+    "id": "uniqlo",
+    "name": "Uniqlo",
+    "color": "#FF0000",
+    "difficulty": 2
+  },
+  {
     "id": "verizon",
     "name": "Verizon",
     "color": "#CD040B",
@@ -339,6 +447,12 @@
     "id": "visa",
     "name": "Visa",
     "color": "#1A1F71",
+    "difficulty": 2
+  },
+  {
+    "id": "vivo",
+    "name": "Vivo",
+    "color": "#415FFF",
     "difficulty": 2
   },
   {
@@ -369,6 +483,12 @@
     "id": "xiaomi",
     "name": "Xiaomi",
     "color": "#FF6900",
+    "difficulty": 2
+  },
+  {
+    "id": "yamaha",
+    "name": "Yamaha",
+    "color": "#E60012",
     "difficulty": 2
   },
   {

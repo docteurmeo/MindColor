@@ -9,10 +9,21 @@
   let suppressColorChange = false;
 
   function showScreen(id) {
-    document.querySelectorAll(".screen, #screen-home").forEach((s) => {
-      s.classList.toggle("active", s.id === id);
-    });
-    window.scrollTo(0, 0);
+    const swap = () => {
+      document.querySelectorAll(".screen, #screen-home").forEach((s) => {
+        // remove active first so re-entering same screen replays animation
+        s.classList.remove("active");
+        // force reflow on the target so animations restart
+        if (s.id === id) void s.offsetWidth;
+      });
+      document.querySelectorAll(".screen, #screen-home").forEach((s) => {
+        s.classList.toggle("active", s.id === id);
+      });
+      window.scrollTo(0, 0);
+    };
+    if (window.FX) return FX.transitionTo(swap);
+    swap();
+    return Promise.resolve();
   }
 
   // ----- Picker sizing: square = wrap's actual content width.
@@ -141,7 +152,13 @@
     });
 
     document.getElementById("picker-stage").hidden = true;
-    document.getElementById("result-stage").hidden = false;
+    const stage = document.getElementById("result-stage");
+    stage.hidden = false;
+    // Restart entry animations on subsequent rounds
+    stage.style.animation = "none";
+    void stage.offsetWidth;
+    stage.style.animation = "";
+    if (window.FX) FX.applyResultBand(stage, result.score);
   }
 
   function animateScore(target, durationMs) {
@@ -174,6 +191,9 @@
 
     document.getElementById("final-score").textContent = "0%";
     animateFinalScore(summary.totalScore, 900);
+
+    const finalScreen = document.getElementById("screen-final");
+    if (window.FX) FX.applyFinalBand(finalScreen, summary.totalScore);
 
     document.getElementById("final-rank-emoji").textContent = summary.rank.emoji;
     document.getElementById("final-rank-label").textContent = summary.rank.label;
@@ -212,9 +232,8 @@
   async function handlePlayClassic() {
     try {
       const brand = await Game.startClassic();
-      showScreen("screen-round");
+      await showScreen("screen-round");
       // Double rAF: ensure layout has been computed after display:flex applied.
-      // Lan 1: cho CSS apply. Lan 2: layout settled, clientWidth accurate.
       requestAnimationFrame(() => requestAnimationFrame(() => {
         // Force layout flush in case rAF runs before layout
         const wrap = document.getElementById("color-picker");

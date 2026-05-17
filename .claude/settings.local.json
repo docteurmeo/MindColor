@@ -6,7 +6,17 @@
       "mcp__d9597a98-026a-414a-977c-16d2bba46285__get_metadata",
       "mcp__d9597a98-026a-414a-977c-16d2bba46285__get_design_context",
       "Bash(curl -s -o \"D:/WORK/AI Projects/Dinh Stuff/MindColor/assets/mindcolor-logo.svg\" \"https://www.figma.com/api/mcp/asset/dff5b330-1b9e-4e34-b823-77c56fdc0f7f\")",
-      "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/c435f5b3-bc26-4554-b6c6-877634904619\" -o \"D:/WORK/AI Projects/Dinh Stuff/MindColor/assets/mindcolor-logo-desktop.svg\")"
+      "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/c435f5b3-bc26-4554-b6c6-877634904619\" -o \"D:/WORK/AI Projects/Dinh Stuff/MindColor/assets/mindcolor-logo-desktop.svg\")",
+      "mcp__d9597a98-026a-414a-977c-16d2bba46285__get_screenshot",
+      "Bash(curl -s \"https://raw.githubusercontent.com/simple-icons/simple-icons/master/_data/simple-icons.json\" -o /tmp/si.json)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://cdn.jsdelivr.net/npm/simple-icons@latest/data/simple-icons.json\" -o /tmp/si.json)",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(curl -sL \"https://cdn.jsdelivr.net/npm/simple-icons@latest/data/simple-icons.json\" -o \"D:/WORK/AI Projects/Dinh Stuff/MindColor/.tmp/si.json\")",
+      "Bash(node .tmp/expand.js)",
+      "Bash(node .tmp/download.js)",
+      "Bash(node .tmp/merge.js)"
     ]
   }
 }

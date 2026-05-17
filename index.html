@@ -1,17 +1,59 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#ffffff" id="meta-theme-color" />
   <title>MindColor — Bạn nhớ màu sắc của các brand giỏi tới đâu?</title>
   <meta name="description" content="Game đoán màu logo thương hiệu. Test xem mắt bạn có phải designer thực thụ không." />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    // Theme bootstrap — apply before paint to prevent FOUC
+    (function(){
+      try {
+        var saved = localStorage.getItem("mc-theme");
+        var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        var theme = saved || prefers;
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch(e){}
+    })();
+  </script>
 </head>
 <body>
   <div id="safe-probe"></div>
 
-  <!-- ============== HOME (viewport-native, ngoài frame scale) ============== -->
+  <!-- SVG mask dùng chung cho mọi knob: cutter circle (BLACK trong mask = hide)
+       slide vào knob → khoét dần dần thành crescent. Animation áp vào class .mc-knob-cutter. -->
+  <svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
+    <defs>
+      <mask id="mc-knob-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="27" height="27">
+        <rect width="27" height="27" fill="white"/>
+        <circle class="mc-knob-cutter" cx="13.5" cy="13.5" r="13.5" fill="black"/>
+      </mask>
+    </defs>
+  </svg>
+
+  <!-- Theme toggle — Figma "Toggle Dark-Light mode" 60x31 -->
+  <template id="tpl-theme-toggle">
+    <button class="theme-toggle" data-action="toggle-theme" aria-label="Toggle dark mode" type="button">
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-knob">
+          <svg viewBox="0 0 27 27" width="27" height="27">
+            <circle cx="13.5" cy="13.5" r="13.5" fill="#ffffff" mask="url(#mc-knob-mask)"/>
+          </svg>
+        </span>
+        <span class="theme-toggle-label label-light" aria-hidden="true">Light</span>
+        <span class="theme-toggle-label label-dark"  aria-hidden="true">Dark</span>
+      </span>
+    </button>
+  </template>
+
+  <!-- ============== HOME ============== -->
   <section id="screen-home" class="active">
+    <header class="page-header home-header">
+      <span class="page-header-spacer"></span>
+      <span class="page-header-toggle" data-toggle-slot></span>
+    </header>
     <img class="home-logo-svg home-logo-mobile" src="assets/mindcolor-logo.svg" alt="MindColor" />
     <img class="home-logo-svg home-logo-desktop" src="assets/mindcolor-logo-desktop.svg" alt="MindColor" />
     <p class="home-tagline">Bạn nhớ màu sắc của các brand<br/>giỏi tới đâu?</p>
@@ -29,25 +71,22 @@
 
   <main id="app">
 
-    <!-- ============== ROUND (Step 1 + Step 2 Result) ============== -->
+    <!-- ============== ROUND ============== -->
     <section id="screen-round" class="screen">
-      <!-- Header -->
       <div class="app-header">
         <span class="progress" id="round-progress">1/10</span>
         <span class="title" id="brand-name">—</span>
+        <span class="page-header-toggle" data-toggle-slot></span>
       </div>
 
-      <!-- Brand logo (idle gray → user-color preview → reveal answer) -->
       <div class="brand-logo-large" id="brand-logo"></div>
 
-      <!-- ===== Step 1: Picker (hidden on reveal) ===== -->
       <div id="picker-stage">
         <div class="color-picker-wrap" id="color-picker"></div>
         <div class="hue-slider-wrap" id="hue-slider"></div>
         <button class="btn-cta" data-action="submit-color" id="submit-btn">Submit</button>
       </div>
 
-      <!-- ===== Step 2: Result (hidden until submit) ===== -->
       <div id="result-stage" hidden>
         <div class="result-score" id="score-big">0%</div>
         <div class="result-ruler"><div class="result-ruler-fill" id="score-bar-fill"></div></div>
@@ -79,7 +118,9 @@
     <!-- ============== FINAL ============== -->
     <section id="screen-final" class="screen">
       <div class="app-header center-only">
+        <span class="page-header-spacer"></span>
         <span class="title">MindColor</span>
+        <span class="page-header-toggle" data-toggle-slot></span>
       </div>
 
       <div class="final-score" id="final-score">0%</div>
@@ -100,11 +141,17 @@
     </section>
   </main>
 
+  <!-- FX overlay (confetti, page-blur transitions) -->
+  <div id="fx-confetti" aria-hidden="true"></div>
+  <div id="fx-transition" aria-hidden="true"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
   <script src="js/logo.js"></script>
   <script src="js/scoring.js"></script>
   <script src="js/share.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/fx.js"></script>
   <script src="js/ui.js"></script>
 </body>
 </html>
