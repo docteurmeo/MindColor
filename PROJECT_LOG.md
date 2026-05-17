@@ -106,51 +106,134 @@ Mình rework:
   - 2 CTA stack: Chơi lại / Về Home
 - Button "Copy text" feedback: đổi label "✓ Đã copy!" 1.8s rồi reset
 
+### Session 5 — Figma redesign + responsive layout overhaul
+
+User cung cấp Figma (https://www.figma.com/design/x1GZ94iyJBhKqKtNcJkzaR/MindColor) — phải re-implement pixel-perfect và đảm bảo fluid trên mọi thiết bị.
+
+**5.1 — Figma extract + brand collection**
+- Tổng hợp **113 brand tracking** (63 foreign + 50 VN) trong `BRANDS_TRACKING.csv` với status Done/Missing + nguồn manual
+- Đối với brand VN: Simple Icons CDN chỉ có 3 (shopee, grab, zalo) → còn 47 brand cần download manual
+- **`assets/logos/_overrides.json`**: bổ sung shopee, grab, zalo
+
+**5.2 — Vector logo "MindColor" thay font Clash Display**
+- Download 2 variants từ Figma:
+  - `assets/mindcolor-logo.svg` — 2 dòng (frame 9:743, viewBox 421×214)
+  - `assets/mindcolor-logo-desktop.svg` — 1 dòng (frame 12:749, viewBox 1440×178)
+- Fix `preserveAspectRatio="none"` (Figma default) → `xMidYMid meet`
+
+**5.3 — Light theme + typography swap**
+- Đổi từ dark theme cũ sang **light theme** (theo Figma)
+- Font: **Clash Display** (700) cho display + **Plus Jakarta Sans** (400/700) cho body — import qua Fontshare + Google Fonts CDN
+- Design tokens mới: #e9e4e1, #f3efed, #ccc2bd, #bdb4ae, #a29a95, #77706b, #44dea8 (score green)
+
+**5.4 — Layout rewrite: viewport-native fluid (không scale frame)**
+
+Đã thử nghiệm và loại bỏ phương án "scale 390×844 Figma frame" vì sinh whitespace. Cuối cùng dùng **viewport-native flex** cho tất cả screen.
+
+**Nguyên tắc layout:**
+- Mọi screen `position: fixed; height: 100dvh` (fallback 100vh) → no scroll, không lệ thuộc URL bar iOS động
+- Padding screen: top = `env(safe-area-inset-top)`, bottom = `safe-area-inset-bottom + 50px`, sides = 0
+- Container con padding `0 10px` (header, picker-stage, result-stage, final-comment, recap, final-actions)
+- Buttons pinned đáy bằng `justify-content: flex-end` (picker-stage) hoặc `margin-top: auto` (result/final)
+- **Mobile**: tất cả container full-width đến padding 10px
+- **Desktop/landscape** (`@media (min-aspect-ratio: 1/1)`): cap container max-width 500px, centered
+- **Logo MindColor**: luôn `width: 100vw` trên MỌI viewport (không cap pixel), swap variant theo aspect-ratio (vuông trở lên = horizontal logo)
+
+**5.5 — Color picker responsive (khó nhất)**
+
+Bug history:
+1. Init iro với `width=stage.clientWidth` (gồm padding 10px) > wrap thật (sau trừ padding) → picker render rộng hơn wrap → bị overflow:hidden clip 10px mỗi bên → visual rectangle thay vì square
+2. `colorPicker.resize(width)` của iro v5 chỉ update width, KHÔNG update `boxHeight` → sau resize viewport, picker thành rectangle
+3. Khi viewport thấp, picker `aspect-ratio: 1; width: 100%` cao = stage width = 580 → vượt quá space của picker-stage → tràn lên đè brand-logo
+
+**Final solution:**
+- **Brand logo fixed 150×150** (không responsive, để công thức tính picker chính xác)
+- **CSS var `--picker-w`** trên `#picker-stage`:
+  ```css
+  --picker-w: min(100%, calc(100dvh - 372px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+  ```
+  Trong đó 372 = header(40) + logo-block(170) + hue(24) + submit(68) + 2 gaps(20) + bottom-pad(50)
+- **picker-wrap, hue-wrap, submit btn** đều dùng `width: var(--picker-w)` → đồng bộ width tuyệt đối
+- **`.color-picker-wrap { aspect-ratio: 1 }`** khoá vuông
+- **JS `computePickerSize()`** đọc `#color-picker.clientWidth` (wrap thật, không phải stage) → đúng size để pass vào iro
+- **Rebuild picker on resize** (thay vì iro.resize) — preserve color state, suppress callback để tránh false-positive `userHasPicked`
+
+**5.6 — Result/Final layout fluid**
+
+- **Compare card** `aspect-ratio: 2/3` (height ≤ 1.5× width strict) — không giãn vô tội vạ
+- **Logo trong card**: padding 10px nội bộ, logo `width: 100%; aspect-ratio: 1` (vuông full inner width)
+- **Score %** dùng `flex: 1 1 0` + `font-size: clamp(64px, 22vh, 220px)` → hút space còn lại, fluid theo viewport
+- **Feedback box** cap `max-height: 123px` (không giãn vô lý)
+- **Recap rows** `flex: 1 1 0; min-height: 0` + font-size `clamp(10px, 1.7vh, 16px)` → 10 rows tự co theo viewport, không scroll
+- **Hide brand-logo ở step 2 reveal** (`brand-logo.hidden = true`) — đã có pairing 2 card bên dưới
+
+**5.7 — Dev server local**
+- `server.js` + `serve.bat` — Node thuần (không cần dependency)
+- Auto-open browser, hot port fallback
+
+### Files thay đổi/thêm trong Session 5
+- `index.html` — rewrite 3 screens, thêm 2 `<img>` logo variants
+- `css/style.css` — rewrite hoàn toàn (light theme, viewport-native, responsive)
+- `js/ui.js` — bỏ scale logic, thêm picker resize handler + state preservation
+- `js/logo.js` — CSS mask-based tinting cho arbitrary colors
+- `assets/mindcolor-logo.svg` + `mindcolor-logo-desktop.svg` — new
+- `BRANDS_TRACKING.csv` — new
+- `server.js` + `serve.bat` — new
+
 ## Trạng thái hiện tại
 
 **Đã có:**
-- ✅ Home screen
+- ✅ Home screen (mobile + desktop logo variants)
 - ✅ Classic mode 10 round
-- ✅ 63 brand single-color (mostly global)
-- ✅ Color picker Box + Hue
-- ✅ Logo mono → color reveal
+- ✅ 66 brand single-color (63 foreign + shopee/grab/zalo)
+- ✅ Color picker Box + Hue (responsive, square trên mọi viewport)
+- ✅ Logo CSS-mask tinting (arbitrary colors)
 - ✅ Delta-E CIEDE2000 scoring + feedback Việt suồng sã
 - ✅ Final screen với rank + comment dân dã
 - ✅ Share grid text (Wordle-style)
 - ✅ Share card PNG (1200×630 OG image)
 - ✅ Play again / Back home
 - ✅ SVG-driven brand system + auto-build CI
+- ✅ Figma pixel-perfect light theme
+- ✅ Viewport-native responsive (mobile 320 → desktop 4K)
+- ✅ Local dev server (Node)
 
 **Chưa có:**
 - ❌ Daily Challenge (5 brand cố định/ngày + lịch 365 ngày)
-- ❌ Brand Việt (kế hoạch sau khi UI ổn)
+- ❌ 47 brand VN còn lại (đã có tracking CSV với source URL)
 - ❌ Domain riêng
-- ❌ Figma final UI (đang chờ user design)
 - ❌ OG meta tags + favicon
 - ❌ Analytics
+- ❌ Share button trên Final (đang disabled, build sau)
 
 ## Cấu trúc dự án hiện tại
 
 ```
 mindcolor/
 ├── index.html                       # Entry — Home + Round + Final
-├── css/style.css                    # Demo styling (sẽ thay bằng Figma)
+├── css/style.css                    # Light theme, viewport-native fluid
 ├── js/
-│   ├── ui.js                        # UI controller, swap được khi đổi design
+│   ├── ui.js                        # UI controller + picker resize handler
 │   ├── game.js                      # Game state + rank system + final summary
-│   ├── logo.js                      # Logo render (mono/color)
+│   ├── logo.js                      # CSS-mask logo tinting (arbitrary colors)
 │   ├── scoring.js                   # CIEDE2000 + feedback engine
 │   └── share.js                     # Share grid + Share card PNG
 ├── data/
 │   └── brands.json                  # Auto-generated, KHÔNG sửa tay
-├── assets/logos/                    # Drop SVG vào đây
-│   ├── *.svg                        # 63 brand
-│   ├── _overrides.json              # Override display name
-│   └── README.md
+├── assets/
+│   ├── mindcolor-logo.svg           # Logo 2-line (mobile/portrait)
+│   ├── mindcolor-logo-desktop.svg   # Logo 1-line (desktop/landscape)
+│   └── logos/                       # Drop SVG vào đây
+│       ├── *.svg                    # 66 brand
+│       ├── _overrides.json          # Override display name
+│       └── README.md
 ├── scripts/
 │   └── build-brands.mjs             # Node script chạy bởi Action
 ├── .github/workflows/
 │   └── build-brands.yml             # Auto-build on push to assets/logos/
+├── server.js                        # Local dev server (Node thuần)
+├── serve.bat                        # Windows launcher
+├── BRANDS_TRACKING.csv              # Tracking 113 brand (63 foreign + 50 VN)
 ├── PROJECT_LOG.md                   # File này
 └── README.md
 ```

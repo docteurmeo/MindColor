@@ -6,6 +6,7 @@
   let currentUserHex = "#ffffff";
   let currentBrand = null;
   let userHasPicked = false;
+  let suppressColorChange = false;
 
   function showScreen(id) {
     document.querySelectorAll(".screen, #screen-home").forEach((s) => {
@@ -18,37 +19,33 @@
     }
   }
 
-  // ----- Picker sizing: square = min(available width, available height in #picker-stage) -----
+  // ----- Picker sizing: square = wrap's actual content width.
+  //       Doc tu chinh wrap (#color-picker), khong phai stage,
+  //       vi stage co padding 10px khien clientWidth lon hon thuc te.
   function computePickerSize() {
-    const stage = document.getElementById("picker-stage");
-    if (!stage) return 320;
-    // stage already has padding 0 10px applied by CSS via parent — read clientWidth
-    const w = stage.clientWidth;
-    const h = stage.clientHeight;
-    const hueH = 24;
-    const submitH = 68;
-    const gaps = 10 * 2; // gap between picker→hue and hue→submit (margin-top:auto eats one)
-    const availH = h - hueH - submitH - gaps;
-    const size = Math.max(180, Math.min(w, availH, 600));
-    return Math.floor(size);
+    const wrap = document.getElementById("color-picker");
+    if (!wrap) return 320;
+    return Math.max(180, Math.floor(wrap.clientWidth));
   }
 
-  function initPickers() {
+  function initPickers(initialColor) {
     if (pickerBox && pickerHue) return;
     const size = computePickerSize();
+    const hueW = document.getElementById("hue-slider").clientWidth || size;
+    const startColor = initialColor || "#ff6c02";
 
     pickerBox = new iro.ColorPicker("#color-picker", {
       width: size,
-      boxHeight: size,
-      color: "#ff6c02",
+      boxHeight: size,            // explicit square
+      color: startColor,
       borderWidth: 0,
       handleRadius: 11,
       layout: [{ component: iro.ui.Box }],
     });
 
     pickerHue = new iro.ColorPicker("#hue-slider", {
-      width: document.getElementById("hue-slider").clientWidth || size,
-      color: pickerBox.color.hexString,
+      width: hueW,
+      color: startColor,
       borderWidth: 0,
       handleRadius: 11,
       sliderSize: 24,
@@ -56,33 +53,35 @@
     });
 
     pickerHue.on("color:change", (color) => {
+      if (suppressColorChange) return;
       pickerBox.color.hue = color.hue;
     });
     pickerBox.on("color:change", (color) => {
+      if (suppressColorChange) return;
       currentUserHex = color.hexString;
       userHasPicked = true;
-      if (currentBrand) {
+      if (currentBrand && !document.getElementById("brand-logo").hidden) {
         Logo.tint(document.getElementById("brand-logo"), currentUserHex);
       }
     });
   }
 
+  // Rebuild picker on resize — iro.resize() doesn't update boxHeight,
+  // causing the box to become rectangular when viewport changes.
   function resizePickers() {
     if (!pickerBox || !pickerHue) return;
-    const size = computePickerSize();
-    const hueW = document.getElementById("hue-slider").clientWidth || size;
-    try {
-      // iro v5 supports resize(width)
-      pickerBox.resize(size);
-      pickerHue.resize(hueW);
-    } catch (e) {
-      // Fallback: rebuild
-      document.getElementById("color-picker").innerHTML = "";
-      document.getElementById("hue-slider").innerHTML = "";
-      pickerBox = null;
-      pickerHue = null;
-      initPickers();
-    }
+    const savedColor = pickerBox.color.hexString;
+    const savedPicked = userHasPicked;
+    suppressColorChange = true;
+    document.getElementById("color-picker").innerHTML = "";
+    document.getElementById("hue-slider").innerHTML = "";
+    pickerBox = null;
+    pickerHue = null;
+    initPickers(savedColor);
+    userHasPicked = savedPicked;
+    currentUserHex = savedColor;
+    // Release suppression after the init's initial color:change events fire
+    requestAnimationFrame(() => { suppressColorChange = false; });
   }
 
   window.addEventListener("resize", resizePickers);
@@ -100,14 +99,17 @@
     const p = Game.progress();
     document.getElementById("round-progress").textContent = `${p.current}/${p.total}`;
 
-    Logo.render(document.getElementById("brand-logo"), brand, "idle");
+    const brandLogo = document.getElementById("brand-logo");
+    brandLogo.hidden = false;                            // hiện lại preview ô lớn
+    Logo.render(brandLogo, brand, "idle");
 
     document.getElementById("picker-stage").hidden = false;
     document.getElementById("result-stage").hidden = true;
   }
 
   function renderReveal(result) {
-    Logo.tint(document.getElementById("brand-logo"), result.userColor);
+    // Step 2: ẩn ô preview lớn — đã có pairing 2 card bên dưới
+    document.getElementById("brand-logo").hidden = true;
 
     const scoreEl = document.getElementById("score-big");
     const bar = document.getElementById("score-bar-fill");

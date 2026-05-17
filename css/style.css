@@ -15,10 +15,12 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 html, body {
-  height: 100%;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;        /* fallback */
+  height: 100dvh;       /* dynamic viewport — fit chính xác với URL bar iOS */
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   overflow: hidden;
   overscroll-behavior: none;
   background: #fff;
@@ -41,9 +43,13 @@ img    { display: block; }
 #screen-home, .screen {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;        /* fallback */
+  height: 100dvh;       /* dynamic viewport */
   flex-direction: column;
-  padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
+  padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 50px);
   background: #fff;
 }
@@ -116,18 +122,18 @@ img    { display: block; }
 
   /* Home */
   .home-tagline br   { display: none; }
-  .home-tagline      { font-size: clamp(20px, 3.2vw, 45px); }
+  .home-tagline      { font-size: clamp(20px, 3.2vw, 36px); }
   .home-actions      { align-items: center; width: 100%; }
   .home-actions .btn-card { width: 100%; max-width: 600px; }
 
-  /* Game screens — center column, cap 600px */
+  /* Game screens — center column, cap 500px cho breathing space */
   .screen { align-items: center; }
   .app-header,
   #picker-stage,
   #result-stage,
   .final-comment,
   .recap,
-  .final-actions { width: 100%; max-width: 600px; }
+  .final-actions { width: 100%; max-width: 500px; }
 }
 
 /* ============================================================
@@ -155,8 +161,8 @@ img    { display: block; }
    ============================================================ */
 .brand-logo-large {
   flex-shrink: 0;
-  width: clamp(120px, 28vh, 200px);
-  aspect-ratio: 1;
+  width: 150px;
+  height: 150px;
   margin: 10px auto;
 }
 
@@ -183,37 +189,40 @@ img    { display: block; }
    ROUND — Picker stage
    ============================================================ */
 #picker-stage {
+  /* Reserved fixed = header(40) + brand-logo-block(170) + hue(24) + submit(68)
+                    + gaps(20) + screen padding-bottom(50) + safe-areas
+                    = 372px + safe-areas */
+  --picker-w: min(100%, calc(100dvh - 372px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
   flex: 1 1 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;          /* center children theo truc ngang */
+  justify-content: flex-end;    /* pack sat day */
   padding: 0 10px;
   gap: 10px;
 }
 
 .color-picker-wrap {
-  /* JS resizes iro picker; this wrapper just centers it */
-  width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: var(--picker-w);
+  aspect-ratio: 1;              /* khoa vuong tuyet doi */
+  flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
   background: transparent;
 }
-.color-picker-wrap > div { margin: 0 auto; }
 
 .hue-slider-wrap {
   flex-shrink: 0;
-  width: 100%;
+  width: var(--picker-w);
   height: 24px;
   border-radius: 12px;
   overflow: hidden;
   background: #d9d9d9;
 }
 .hue-slider-wrap > div { width: 100% !important; }
+
+#picker-stage > .btn-cta { width: var(--picker-w); }
 
 /* CTA button — pinned at bottom of flex column */
 .btn-cta {
@@ -245,15 +254,18 @@ img    { display: block; }
 }
 
 .result-score {
-  flex-shrink: 0;
+  flex: 1 1 0;             /* hut het space con lai → so % fluid lon */
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: clamp(64px, 18vw, 95px);
-  line-height: 1.05;
+  font-size: clamp(64px, 22vh, 220px);
+  line-height: 1;
   color: #000;
   font-variant-numeric: tabular-nums;
-  margin-top: 10px;
 }
 
 .result-ruler {
@@ -282,8 +294,7 @@ img    { display: block; }
 }
 
 .compare {
-  flex: 0 1 auto;
-  min-height: 0;
+  flex: 0 0 auto;               /* khong grow — natural height tu card aspect-ratio */
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -292,20 +303,20 @@ img    { display: block; }
 
 .compare-card {
   position: relative;
+  aspect-ratio: 2 / 3;          /* H = 1.5 x W (max strict per design) */
   border: 1px solid #e9e4e1;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 8px;
-  gap: 8px;
+  padding: 10px;
+  gap: 10px;
 }
 
 .compare-card .logo-wrap {
   width: 100%;
-  aspect-ratio: 1;
-  max-height: 160px;
-  margin: 0 auto;
+  aspect-ratio: 1;              /* logo vuong full inner width */
+  flex-shrink: 0;
 }
 
 .compare-card .swatch-bar {
@@ -332,8 +343,8 @@ img    { display: block; }
 }
 
 .result-feedback {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 0 1 auto;
+  max-height: 123px;
   width: 100%;
   padding: 16px;
   background: #f3efed;
@@ -349,15 +360,15 @@ img    { display: block; }
 /* ============================================================
    FINAL
    ============================================================ */
-#screen-final { padding: calc(env(safe-area-inset-top, 0px) + 20px) 10px calc(env(safe-area-inset-bottom, 0px) + 50px); gap: 10px; }
+#screen-final { padding: env(safe-area-inset-top, 0px) 10px calc(env(safe-area-inset-bottom, 0px) + 50px); gap: 10px; }
 
 .final-score {
   flex-shrink: 0;
   text-align: center;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: clamp(64px, 18vw, 95px);
-  line-height: 1.05;
+  font-size: clamp(64px, 18vh, 220px);
+  line-height: 1;
   color: #000;
   font-variant-numeric: tabular-nums;
   margin-top: 30px;
