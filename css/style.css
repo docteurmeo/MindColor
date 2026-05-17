@@ -262,8 +262,94 @@ html[data-theme="dark"]  .theme-toggle-label.label-light { opacity: 0; }
   to   { opacity: 1; transform: translateY(0)    scale(1);   }
 }
 
-/* Dark mode: invert MindColor logo (which is black on white) */
-html[data-theme="dark"] .home-logo-svg { filter: invert(1) hue-rotate(180deg); }
+/* =============================================================
+   HOLOGRAM — CD/oil-on-water iridescent fill + subtle water ripple.
+   Used on: home MindColor logo, final score % at result screen.
+   ============================================================= */
+
+/* Shared rainbow palette + scrolling animation.
+   Palette: oil-on-water full spectrum, loop-closed (ends == starts → seam-less). */
+.holo-text,
+.holo-logo {
+  background-image: linear-gradient(
+    110deg,
+    #ff5ec4 0%,
+    #ffce4a 18%,
+    #5eff9d 36%,
+    #4ad9ff 54%,
+    #b06bff 72%,
+    #ff8aa1 86%,
+    #ff5ec4 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  animation: holo-shift 7s linear infinite;
+  /* GPU promote to avoid jank from animating background-position. */
+  will-change: background-position, filter;
+}
+@keyframes holo-shift {
+  to { background-position: 300% 50%; }
+}
+
+/* TEXT variant: clip the rainbow to glyph shapes. */
+.holo-text {
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  /* Sóng nước tinh tế: turbulence displacement, biên độ thấp, 10s/chu kỳ. */
+  filter: url(#mc-water);
+}
+
+/* LOGO variant: SVG as CSS mask, gradient is the visible fill. */
+.holo-logo {
+  /* width:100vw đã có từ .home-logo-svg, height:auto sẽ không hoạt động với <div> →
+     dùng aspect-ratio theo đúng viewBox SVG để khớp pixel với img cũ. */
+  height: auto;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  filter: url(#mc-water);
+  /* preserve original entry animation */
+  animation: holo-shift 7s linear infinite, home-logo-in 800ms var(--ease-out-expo) 80ms both;
+}
+.holo-logo--mobile {
+  -webkit-mask-image: url("../assets/mindcolor-logo.svg");
+          mask-image: url("../assets/mindcolor-logo.svg");
+  aspect-ratio: 421.178 / 214;
+}
+.holo-logo--desktop {
+  -webkit-mask-image: url("../assets/mindcolor-logo-desktop.svg");
+          mask-image: url("../assets/mindcolor-logo-desktop.svg");
+  aspect-ratio: 1440 / 178;
+}
+
+/* Dark mode: tăng nhẹ saturation + lightness gradient cho rực hơn trên nền tối. */
+html[data-theme="dark"] .holo-text,
+html[data-theme="dark"] .holo-logo {
+  background-image: linear-gradient(
+    110deg,
+    #ff7ad3 0%,
+    #ffd966 18%,
+    #7affb0 36%,
+    #6be3ff 54%,
+    #c485ff 72%,
+    #ff9eb3 86%,
+    #ff7ad3 100%
+  );
+  filter: url(#mc-water) brightness(1.05) saturate(1.1);
+}
+
+/* Reduced motion: tắt rainbow shift + water ripple, để gradient tĩnh. */
+@media (prefers-reduced-motion: reduce) {
+  .holo-text, .holo-logo { animation: none; filter: none; }
+  .holo-logo { animation: home-logo-in 800ms var(--ease-out-expo) 80ms both; }
+  #mc-water feTurbulence animate,
+  #mc-water feTurbulence > animate { /* no-op selector — SMIL không dừng được qua CSS, nhưng filter:none ở trên đã ngắt */ }
+}
 
 .home-tagline {
   flex: 1 1 0;
@@ -585,8 +671,9 @@ html[data-theme="dark"] .home-logo-svg { filter: invert(1) hue-rotate(180deg); }
 .result-stage-low::after          { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 12px; animation: red-flash 700ms var(--ease-smooth) 700ms 1 both; }
 
 @keyframes glow-pulse {
-  0%,100% { text-shadow: 0 0 18px rgba(68,222,168,.35); }
-  50%     { text-shadow: 0 0 36px rgba(68,222,168,.85); }
+  /* Neutral white glow để không đè màu rainbow holo. */
+  0%,100% { text-shadow: 0 0 18px rgba(255,255,255,.35); }
+  50%     { text-shadow: 0 0 38px rgba(255,255,255,.75); }
 }
 @keyframes shake {
   0%,100% { transform: translateX(0); }
@@ -712,11 +799,12 @@ html[data-theme="dark"] .home-logo-svg { filter: invert(1) hue-rotate(180deg); }
   text-align: right;
 }
 
-/* Final FX */
-.final-rank-low .final-score { color: #ef4444; animation: pop-in 700ms var(--ease-spring) 120ms both, shake 700ms var(--ease-quick) 1000ms 2; }
+/* Final FX — rank-low/high giữ shake/glow nhưng KHÔNG set color (để holo-text rainbow nắm quyền).
+   Animation cộng dồn: pop-in (entry) + shake/glow-pulse + holo-shift (từ .holo-text). */
+.final-rank-low .final-score  { animation: pop-in 700ms var(--ease-spring) 120ms both, shake 700ms var(--ease-quick) 1000ms 2, holo-shift 7s linear infinite; }
 .final-rank-low { position: relative; }
 .final-rank-low::after { content: ""; position: absolute; inset: 0; pointer-events: none; animation: red-flash 800ms var(--ease-smooth) 900ms 1 both; }
-.final-rank-high .final-score { color: #1ec48a; text-shadow: 0 0 28px rgba(68,222,168,.6); animation: pop-in 700ms var(--ease-spring) 120ms both, glow-pulse 1800ms var(--ease-smooth) 1000ms 2; }
+.final-rank-high .final-score { text-shadow: 0 0 28px rgba(255,255,255,.45); animation: pop-in 700ms var(--ease-spring) 120ms both, glow-pulse 1800ms var(--ease-smooth) 1000ms 2, holo-shift 7s linear infinite; }
 
 .final-actions {
   flex-shrink: 0;
