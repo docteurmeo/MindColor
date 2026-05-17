@@ -13,10 +13,6 @@
       s.classList.toggle("active", s.id === id);
     });
     window.scrollTo(0, 0);
-    // Defer picker resize until after layout settles
-    if (id === "screen-round") {
-      requestAnimationFrame(resizePickers);
-    }
   }
 
   // ----- Picker sizing: square = wrap's actual content width.
@@ -70,11 +66,20 @@
   // causing the box to become rectangular when viewport changes.
   function resizePickers() {
     if (!pickerBox || !pickerHue) return;
+    const wrapBox = document.getElementById("color-picker");
+    const wrapHue = document.getElementById("hue-slider");
+    // Bail neu screen-round dang an (display:none → clientWidth=0)
+    // De khong rebuild voi size 0/180 (min) gay layout vo gia tri.
+    if (!wrapBox || wrapBox.clientWidth < 100) return;
+
     const savedColor = pickerBox.color.hexString;
     const savedPicked = userHasPicked;
     suppressColorChange = true;
-    document.getElementById("color-picker").innerHTML = "";
-    document.getElementById("hue-slider").innerHTML = "";
+    wrapBox.innerHTML = "";
+    wrapHue.innerHTML = "";
+    // Iro co the set inline style tren wrap → clear de CSS gianh lai control
+    wrapBox.removeAttribute("style");
+    wrapHue.removeAttribute("style");
     pickerBox = null;
     pickerHue = null;
     initPickers(savedColor);
@@ -208,11 +213,22 @@
     try {
       const brand = await Game.startClassic();
       showScreen("screen-round");
-      // Initial picker init after screen becomes visible so clientWidth/Height are correct
-      requestAnimationFrame(() => {
-        initPickers();
+      // Double rAF: ensure layout has been computed after display:flex applied.
+      // Lan 1: cho CSS apply. Lan 2: layout settled, clientWidth accurate.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        // Force layout flush in case rAF runs before layout
+        const wrap = document.getElementById("color-picker");
+        if (wrap) void wrap.offsetWidth;
+
+        if (!pickerBox || !pickerHue) {
+          initPickers();
+        } else {
+          // Lan choi thu 2 tro di — rebuild voi size cua viewport hien tai
+          // (de fix bug picker stale tu lan resize khi screen-round an)
+          resizePickers();
+        }
         renderRound(brand);
-      });
+      }));
     } catch (e) {
       alert(
         "Chưa có brand nào để chơi!\n\n" +
