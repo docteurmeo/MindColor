@@ -1,27 +1,28 @@
-/* MindColor — pixel-perfect theo Figma (frame 390 mobile-first) */
+/* MindColor — viewport-native fluid layout
+   Rules:
+   - All screens fixed to viewport, no scroll
+   - Horizontal padding sides = 10px (containers full-width to that padding)
+   - Button cluster pinned at bottom with padding-bottom = 50px (+ safe-area)
+   - Top padding = 20px + safe-area-inset-top
+   - Logo: always 100vw, variant swaps by viewport aspect-ratio
+*/
 
 /* ---------- Fonts ---------- */
 @import url("https://api.fontshare.com/v2/css?f[]=clash-display@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
 
 /* ---------- Reset ---------- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 html, body {
-  margin: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
   position: fixed;
   inset: 0;
+  overflow: hidden;
   overscroll-behavior: none;
-  background: #ffffff;
-  color: #000000;
+  background: #fff;
+  color: #000;
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,96 +30,56 @@ html, body {
   user-select: none;
 }
 
-button {
-  font-family: inherit;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
+button { font-family: inherit; border: none; background: none; cursor: pointer; }
+img    { display: block; }
+[hidden]{ display: none !important; }
 
-img { display: block; }
+/* App wrapper acts as pass-through (no scaling) */
+#app { display: contents; }
 
-/* Hidden probe để đọc safe-area-inset values trong JS */
-#safe-probe {
-  position: absolute;
-  top: 0; left: 0;
-  width: 0; height: 0;
-  visibility: hidden;
-  pointer-events: none;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-/* ---------- App frame: 390x844 Figma, scale-to-fit viewport ---------- */
-#app {
-  position: absolute;
-  top: env(safe-area-inset-top, 0px);
-  left: 50%;
-  width: 390px;
-  height: 844px;
-  transform-origin: top center;
-  transform: translateX(-50%) scale(var(--app-scale, 1));
-  overflow: hidden;
-  background: #fff;
-  display: none; /* show only when a scaled screen is active */
-}
-body.on-game #app { display: block; }
-body.on-game #screen-home { display: none !important; }
-
-.screen {
-  display: none;
-  position: absolute;
-  inset: 0;
-  width: 390px;
-  height: 844px;
-}
-.screen.active { display: block; }
-
-/* Typography helpers */
-.font-display { font-family: "Clash Display", "Plus Jakarta Sans", sans-serif; font-weight: 700; }
-.font-body    { font-family: "Plus Jakarta Sans", sans-serif; }
-
-/* ============================================================
-   HOME (viewport-native, không scale)
-   ============================================================ */
-#screen-home {
+/* ---------- Screen base ---------- */
+#screen-home, .screen {
   display: none;
   position: fixed;
   inset: 0;
-  background: #fff;
   flex-direction: column;
-  align-items: stretch;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 50px);
+  background: #fff;
 }
-#screen-home.active { display: flex; }
+#screen-home.active, .screen.active { display: flex; }
+
+/* ============================================================
+   HOME
+   ============================================================ */
+#screen-home { padding-top: env(safe-area-inset-top, 0px); }
 
 .home-logo-svg {
   display: block;
-  width: 100vw;          /* tràn viền chính xác mọi viewport */
+  width: 100vw;
   height: auto;
-  margin-top: 30px;
   flex-shrink: 0;
   pointer-events: none;
+  margin-top: 30px;
 }
+.home-logo-desktop { display: none; }
 
 .home-tagline {
-  flex: 1 0 auto;
+  flex: 1 1 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: clamp(16px, 4.2vw, 28px);
   line-height: 1.25;
-  color: #000;
   padding: 0 24px;
 }
 
 .home-actions {
   flex-shrink: 0;
-  padding: 0 10px 24px;
+  padding: 0 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -132,48 +93,33 @@ body.on-game #screen-home { display: none !important; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
-  transition: transform 0.1s, opacity 0.2s;
+  transition: transform .1s, opacity .2s;
 }
-.btn-card:active:not(:disabled) { transform: scale(0.98); }
+.btn-card:active:not(:disabled) { transform: scale(.98); }
 .btn-card:disabled { cursor: not-allowed; }
-
-.btn-card .title {
-  font-family: "Clash Display", sans-serif;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 1;
-  width: 100%;
-}
-.btn-card .sub {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  color: #bdb4ae;
-  margin-top: 8px;
-  width: 100%;
-}
-
-.btn-classic {
-  background: #fff;
-  border: 2px solid #e9e4e1;
-}
+.btn-card .title { font-family: "Clash Display", sans-serif; font-weight: 700; font-size: clamp(28px, 8vw, 36px); line-height: 1; width: 100%; }
+.btn-card .sub   { font-weight: 400; font-size: 12px; color: #bdb4ae; margin-top: 8px; width: 100%; }
+.btn-classic { background: #fff; border: 2px solid #e9e4e1; }
 .btn-classic .title { color: #000; }
-
-.btn-daily {
-  background: #e9e4e1;
-  border: none;
-}
+.btn-daily   { background: #e9e4e1; border: none; }
 .btn-daily .title { color: #ccc2bd; }
 .btn-daily .sub   { color: #bdb4ae; }
 
+/* Logo swap by viewport shape (not by pixel width) */
+@media (min-aspect-ratio: 1/1) {
+  .home-logo-mobile  { display: none; }
+  .home-logo-desktop { display: block; }
+  .home-tagline br   { display: none; }
+  .home-tagline      { font-size: clamp(20px, 3.2vw, 45px); }
+  .home-actions      { align-items: center; }
+  .home-actions .btn-card { max-width: min(60vw, 600px); }
+}
+
 /* ============================================================
-   HEADER (Round, Result)
+   HEADER (Round / Result / Final)
    ============================================================ */
 .app-header {
-  position: absolute;
-  top: 60px;
-  left: 0;
+  flex-shrink: 0;
   width: 100%;
   height: 40px;
   display: flex;
@@ -182,94 +128,83 @@ body.on-game #screen-home { display: none !important; }
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
   font-size: 20px;
-  letter-spacing: 0.04em;
+  letter-spacing: .04em;
   line-height: 1;
 }
-.app-header .progress {
-  color: #ccc2bd;
-  width: 60px;
-  text-align: left;
-}
-.app-header .title {
-  flex: 1;
-  text-align: center;
-  color: #000;
-  /* offset right by progress width so visually centered */
-  margin-right: 60px;
-}
+.app-header .progress { color: #ccc2bd; width: 60px; text-align: left; }
+.app-header .title    { flex: 1; text-align: center; color: #000; margin-right: 60px; }
 .app-header.center-only .title { margin-right: 0; }
 
 /* ============================================================
-   ROUND SCREEN
+   ROUND — brand logo
    ============================================================ */
 .brand-logo-large {
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 150px;
+  flex-shrink: 0;
+  width: clamp(120px, 28vh, 200px);
+  aspect-ratio: 1;
+  margin: 10px auto;
 }
 
-/* Tinted logo via CSS mask — supports single-color SVG */
+/* CSS-mask tinted logo */
 .logo-mask {
-  width: 100%;
-  height: 100%;
-  background-color: #ccc2bd; /* idle gray */
-  -webkit-mask-position: center;
-          mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-          mask-size: contain;
+  width: 100%; height: 100%;
+  background-color: #ccc2bd;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: contain;    mask-size: contain;
 }
-
-/* Fallback letter (when SVG fails) */
 .logo-fallback {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   border-radius: 24px;
   background: #ccc2bd;
   color: #fff;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
   font-size: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   ROUND — Picker stage
+   ============================================================ */
+#picker-stage {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  gap: 10px;
+}
+
+.color-picker-wrap {
+  /* JS resizes iro picker; this wrapper just centers it */
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* iro.js picker container */
-.color-picker-wrap {
-  position: absolute;
-  top: 250px;
-  left: 10px;
-  width: 370px;
-  height: 370px;
   border-radius: 12px;
   overflow: hidden;
-  background: #d9d9d9;
+  background: transparent;
 }
-.color-picker-wrap > div { width: 100% !important; height: 100% !important; }
+.color-picker-wrap > div { margin: 0 auto; }
 
 .hue-slider-wrap {
-  position: absolute;
-  top: 630px;
-  left: 10px;
-  width: 370px;
+  flex-shrink: 0;
+  width: 100%;
   height: 24px;
   border-radius: 12px;
   overflow: hidden;
   background: #d9d9d9;
 }
-.hue-slider-wrap > div { width: 100% !important; height: 100% !important; }
+.hue-slider-wrap > div { width: 100% !important; }
 
-/* Submit / Next big button */
+/* CTA button — pinned at bottom of flex column */
 .btn-cta {
-  position: absolute;
-  top: 726px;
-  left: 10px;
-  width: 370px;
+  flex-shrink: 0;
+  margin-top: auto;
+  width: 100%;
   height: 68px;
   background: #000;
   color: #fff;
@@ -277,35 +212,38 @@ body.on-game #screen-home { display: none !important; }
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
   font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.1s, opacity 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .1s, opacity .2s;
 }
-.btn-cta:active { transform: scale(0.98); }
+.btn-cta:active { transform: scale(.98); }
 
 /* ============================================================
-   RESULT SCREEN (overlay within round)
+   ROUND — Result stage
    ============================================================ */
+#result-stage {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  gap: 10px;
+}
+
 .result-score {
-  position: absolute;
-  top: 143px;
-  left: 0;
-  width: 100%;
+  flex-shrink: 0;
   text-align: center;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: 95px;
-  line-height: 1.1;
+  font-size: clamp(64px, 18vw, 95px);
+  line-height: 1.05;
   color: #000;
   font-variant-numeric: tabular-nums;
+  margin-top: 10px;
 }
 
 .result-ruler {
-  position: absolute;
-  top: 260px;
-  left: 10px;
-  width: 370px;
+  flex-shrink: 0;
+  width: 100%;
   height: 10px;
   background: #e9e4e1;
   border-radius: 5px;
@@ -316,16 +254,12 @@ body.on-game #screen-home { display: none !important; }
   width: 0%;
   background: #44dea8;
   border-radius: 5px;
-  transition: width 0.7s cubic-bezier(.2,.7,.2,1);
+  transition: width .7s cubic-bezier(.2,.7,.2,1);
 }
 
 .result-reaction {
-  position: absolute;
-  top: 290px;
-  left: 0;
-  width: 100%;
+  flex-shrink: 0;
   text-align: center;
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 1.25;
@@ -333,109 +267,93 @@ body.on-game #screen-home { display: none !important; }
 }
 
 .compare {
-  position: absolute;
-  top: 330px;
-  left: 10px;
-  width: 370px;
-  height: 255px;
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
   display: grid;
-  grid-template-columns: 180px 180px;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
 .compare-card {
   position: relative;
-  width: 180px;
-  height: 255px;
   border: 1px solid #e9e4e1;
   border-radius: 12px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 8px;
 }
 
 .compare-card .logo-wrap {
-  position: absolute;
-  top: 9px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  height: 160px;
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 160px;
+  margin: 0 auto;
 }
 
 .compare-card .swatch-bar {
-  position: absolute;
-  top: 169px;
-  left: 10px;
-  width: 160px;
+  width: 100%;
   height: 50px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 .compare-card .swatch-hex {
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
   font-size: 12px;
   color: #fff;
-  text-align: center;
 }
 
 .compare-card .label {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  width: 100%;
   text-align: center;
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
   font-size: 12px;
   color: #a29a95;
+  margin-top: auto;
 }
 
 .result-feedback {
-  position: absolute;
-  top: 593px;
-  left: 10px;
-  width: 370px;
-  height: 123px;
-  padding: 24px;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  padding: 16px;
   background: #f3efed;
   border-radius: 12px;
   color: #77706b;
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 1.25;
+  font-size: clamp(13px, 1.6vh, 16px);
+  line-height: 1.3;
   overflow: hidden;
 }
-.result-feedback p + p { margin-top: 2px; }
+.result-feedback p + p { margin-top: 4px; }
 
 /* ============================================================
-   FINAL SCREEN
+   FINAL
    ============================================================ */
+#screen-final { padding: calc(env(safe-area-inset-top, 0px) + 20px) 10px calc(env(safe-area-inset-bottom, 0px) + 50px); gap: 10px; }
+
 .final-score {
-  position: absolute;
-  top: 143px;
-  left: 0;
-  width: 100%;
+  flex-shrink: 0;
   text-align: center;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: 95px;
-  line-height: 1.1;
+  font-size: clamp(64px, 18vw, 95px);
+  line-height: 1.05;
   color: #000;
   font-variant-numeric: tabular-nums;
+  margin-top: 30px;
 }
 
 .final-rank-pill {
-  position: absolute;
-  top: 260px;
-  left: 50%;
-  transform: translateX(-50%);
+  flex-shrink: 0;
+  align-self: center;
   background: #f3efed;
   border-radius: 22px;
-  padding: 12px;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 10px 16px;
   font-weight: 700;
   font-size: 16px;
   color: #000;
@@ -446,88 +364,86 @@ body.on-game #screen-home { display: none !important; }
 }
 
 .final-comment {
-  position: absolute;
-  top: 314px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 350px;
+  flex-shrink: 0;
+  width: 100%;
   text-align: center;
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.3;
   color: #77706b;
+  padding: 0 10px;
 }
 
+/* Recap list: flex-grow, rows auto-shrink so all 10 always fit, no internal scroll */
 .recap {
-  position: absolute;
-  top: 352px;
-  left: 10px;
-  width: 370px;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: clamp(2px, .4vh, 5px);
   list-style: none;
+  overflow: hidden;
 }
 
 .recap-row {
+  flex: 1 1 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 1px solid #f6f5f4;
   border-radius: 4px;
-  padding: 5px 6px;
+  padding: 0 6px;
+  font-size: clamp(10px, 1.7vh, 16px);
 }
-.recap-left, .recap-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+.recap-left, .recap-right { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .recap-color-block {
-  width: 20px;
-  height: 20px;
+  height: 70%;
+  aspect-ratio: 1;
+  max-height: 20px;
   border-radius: 2px;
   flex-shrink: 0;
 }
 .recap-brand-name {
-  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
-  font-size: 16px;
   color: #000;
-  line-height: 1.25;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.recap-swatch-pair {
-  display: inline-flex;
-  gap: 2px;
-}
+.recap-swatch-pair { display: inline-flex; gap: 2px; }
 .recap-swatch-pair .sw {
-  width: 20px;
-  height: 20px;
+  height: 70%;
+  aspect-ratio: 1;
+  max-height: 20px;
+  width: auto;
   border-radius: 2px;
 }
+.recap-row .recap-right .sw { height: clamp(12px, 1.7vh, 20px); }
+.recap-row .recap-color-block { height: clamp(12px, 1.7vh, 20px); }
 .recap-score {
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: 16px;
   color: #000;
-  line-height: 1.25;
+  line-height: 1.2;
   min-width: 38px;
   text-align: right;
 }
 
-/* Final bottom buttons */
+/* Final buttons — pinned bottom, full width 2-col */
 .final-actions {
-  position: absolute;
-  top: 726px;
-  left: 10px;
-  width: 370px;
+  flex-shrink: 0;
+  margin-top: auto;
+  width: 100%;
   height: 68px;
   display: grid;
-  grid-template-columns: 180px 180px;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 .final-actions .btn-cta-half {
-  width: 180px;
+  width: 100%;
   height: 68px;
   border-radius: 12px;
   font-family: "Clash Display", sans-serif;
@@ -536,62 +452,13 @@ body.on-game #screen-home { display: none !important; }
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  top: auto;
-  left: auto;
-  bottom: auto;
 }
-.btn-share {
-  background: #e9e4e1;
-  color: #ccc2bd;
-}
-.btn-again {
-  background: #000;
-  color: #fff;
-}
-.btn-again:active { transform: scale(0.98); }
+.btn-share { background: #e9e4e1; color: #ccc2bd; }
+.btn-again { background: #000; color: #fff; }
+.btn-again:active { transform: scale(.98); }
 
-/* Hidden helper */
-[hidden] { display: none !important; }
+/* Hidden probe (legacy — kept harmless) */
+#safe-probe { position: absolute; width: 0; height: 0; visibility: hidden; pointer-events: none; }
 
-/* iro.js dot styling — keep visible on light bg */
+/* iro.js dot styling */
 .IroHandle circle { stroke: #fff; stroke-width: 2; }
-
-/* ============================================================
-   Logo variants — mobile (2-line) vs desktop (1-line horizontal)
-   ============================================================ */
-.home-logo-desktop { display: none; }
-
-/* Desktop / landscape: use horizontal 1-line logo + wider layout
-   Trigger: landscape orientation OR wide viewport */
-@media (orientation: landscape) and (min-width: 700px), (min-width: 768px) {
-  .home-logo-mobile  { display: none; }
-  .home-logo-desktop { display: block; }
-
-  #screen-home {
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .home-logo-svg {
-    width: 100vw;
-    max-width: 1440px;
-    margin-top: 0;
-  }
-
-  .home-tagline {
-    font-size: clamp(20px, 3.2vw, 45px);
-    line-height: 1.2;
-    padding: 0 32px;
-  }
-  /* Tagline 1 line on wide screens — drop the <br> wrap */
-  .home-tagline br { display: none; }
-
-  .home-actions {
-    flex-direction: column;
-    gap: 14px;
-    width: 100%;
-    max-width: 390px;
-    padding: 0 10px 40px;
-  }
-}

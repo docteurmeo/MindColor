@@ -1,24 +1,6 @@
-// MindColor — UI controller (Figma redesign)
+// MindColor — UI controller (viewport-native fluid layout)
 
 (function () {
-  // ---------- Scale-to-fit the 390x844 Figma frame on any viewport ----------
-  function fitApp() {
-    const probe = document.getElementById("safe-probe");
-    const cs = probe ? getComputedStyle(probe) : null;
-    const safeTop = cs ? parseFloat(cs.paddingTop) || 0 : 0;
-    const safeBot = cs ? parseFloat(cs.paddingBottom) || 0 : 0;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight - safeTop - safeBot;
-    const scale = Math.min(vw / 390, vh / 844);
-    document.documentElement.style.setProperty("--app-scale", scale);
-  }
-  fitApp();
-  window.addEventListener("resize", fitApp);
-  window.addEventListener("orientationchange", fitApp);
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", fitApp);
-  }
-
   let pickerBox = null;
   let pickerHue = null;
   let currentUserHex = "#ffffff";
@@ -26,35 +8,46 @@
   let userHasPicked = false;
 
   function showScreen(id) {
-    // Toggle game-mode class on body to switch between Home (viewport-native) and #app (scaled frame)
-    if (id === "screen-home") {
-      document.body.classList.remove("on-game");
-    } else {
-      document.body.classList.add("on-game");
-    }
     document.querySelectorAll(".screen, #screen-home").forEach((s) => {
       s.classList.toggle("active", s.id === id);
     });
     window.scrollTo(0, 0);
-    if (typeof fitApp === "function") fitApp();
+    // Defer picker resize until after layout settles
+    if (id === "screen-round") {
+      requestAnimationFrame(resizePickers);
+    }
+  }
+
+  // ----- Picker sizing: square = min(available width, available height in #picker-stage) -----
+  function computePickerSize() {
+    const stage = document.getElementById("picker-stage");
+    if (!stage) return 320;
+    // stage already has padding 0 10px applied by CSS via parent — read clientWidth
+    const w = stage.clientWidth;
+    const h = stage.clientHeight;
+    const hueH = 24;
+    const submitH = 68;
+    const gaps = 10 * 2; // gap between picker→hue and hue→submit (margin-top:auto eats one)
+    const availH = h - hueH - submitH - gaps;
+    const size = Math.max(180, Math.min(w, availH, 600));
+    return Math.floor(size);
   }
 
   function initPickers() {
     if (pickerBox && pickerHue) return;
+    const size = computePickerSize();
 
-    // Box picker (saturation/value) — fills 370x370 container
     pickerBox = new iro.ColorPicker("#color-picker", {
-      width: 370,
-      boxHeight: 370,
+      width: size,
+      boxHeight: size,
       color: "#ff6c02",
       borderWidth: 0,
       handleRadius: 11,
       layout: [{ component: iro.ui.Box }],
     });
 
-    // Hue slider — fills 370x24 container
     pickerHue = new iro.ColorPicker("#hue-slider", {
-      width: 370,
+      width: document.getElementById("hue-slider").clientWidth || size,
       color: pickerBox.color.hexString,
       borderWidth: 0,
       handleRadius: 11,
@@ -62,11 +55,9 @@
       layout: [{ component: iro.ui.Slider, options: { sliderType: "hue" } }],
     });
 
-    // Sync hue → box
     pickerHue.on("color:change", (color) => {
       pickerBox.color.hue = color.hue;
     });
-    // Any change → update preview
     pickerBox.on("color:change", (color) => {
       currentUserHex = color.hexString;
       userHasPicked = true;
@@ -74,6 +65,30 @@
         Logo.tint(document.getElementById("brand-logo"), currentUserHex);
       }
     });
+  }
+
+  function resizePickers() {
+    if (!pickerBox || !pickerHue) return;
+    const size = computePickerSize();
+    const hueW = document.getElementById("hue-slider").clientWidth || size;
+    try {
+      // iro v5 supports resize(width)
+      pickerBox.resize(size);
+      pickerHue.resize(hueW);
+    } catch (e) {
+      // Fallback: rebuild
+      document.getElementById("color-picker").innerHTML = "";
+      document.getElementById("hue-slider").innerHTML = "";
+      pickerBox = null;
+      pickerHue = null;
+      initPickers();
+    }
+  }
+
+  window.addEventListener("resize", resizePickers);
+  window.addEventListener("orientationchange", () => requestAnimationFrame(resizePickers));
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", resizePickers);
   }
 
   function renderRound(brand) {
@@ -85,19 +100,15 @@
     const p = Game.progress();
     document.getElementById("round-progress").textContent = `${p.current}/${p.total}`;
 
-    // Idle: logo ghi
     Logo.render(document.getElementById("brand-logo"), brand, "idle");
 
-    // Hiện picker, ẩn result
     document.getElementById("picker-stage").hidden = false;
     document.getElementById("result-stage").hidden = true;
   }
 
   function renderReveal(result) {
-    // Logo lớn (header area) — tint theo user color để "trêu" trước khi xem đáp án
     Logo.tint(document.getElementById("brand-logo"), result.userColor);
 
-    // Score
     const scoreEl = document.getElementById("score-big");
     const bar = document.getElementById("score-bar-fill");
     bar.style.width = "0%";
@@ -105,18 +116,15 @@
     animateScore(result.score, 700);
     bar.style.width = `${result.score}%`;
 
-    // Reaction (1 dòng)
     document.getElementById("reaction").textContent = result.reaction;
 
-    // 2 cards
     Logo.render(document.getElementById("reveal-user-logo"),  currentBrand, "user",  result.userColor);
     Logo.render(document.getElementById("reveal-brand-logo"), currentBrand, "color");
-    document.getElementById("reveal-user-bar").style.background = result.userColor;
+    document.getElementById("reveal-user-bar").style.background  = result.userColor;
     document.getElementById("reveal-brand-bar").style.background = result.brandColor;
     document.getElementById("reveal-user-hex").textContent  = result.userColor.toUpperCase();
     document.getElementById("reveal-brand-hex").textContent = result.brandColor.toUpperCase();
 
-    // Feedback (2 dòng max — lấy 2 dòng đầu từ detailLines)
     const fb = document.getElementById("feedback");
     fb.innerHTML = "";
     (result.detailLines || []).slice(0, 2).forEach((line) => {
@@ -125,7 +133,6 @@
       fb.appendChild(p);
     });
 
-    // Hide picker, show result
     document.getElementById("picker-stage").hidden = true;
     document.getElementById("result-stage").hidden = false;
   }
@@ -163,7 +170,7 @@
 
     document.getElementById("final-rank-emoji").textContent = summary.rank.emoji;
     document.getElementById("final-rank-label").textContent = summary.rank.label;
-    document.getElementById("final-comment").textContent = summary.rank.comment;
+    document.getElementById("final-comment").textContent    = summary.rank.comment;
 
     const recap = document.getElementById("recap");
     recap.innerHTML = "";
@@ -199,8 +206,11 @@
     try {
       const brand = await Game.startClassic();
       showScreen("screen-round");
-      initPickers();
-      renderRound(brand);
+      // Initial picker init after screen becomes visible so clientWidth/Height are correct
+      requestAnimationFrame(() => {
+        initPickers();
+        renderRound(brand);
+      });
     } catch (e) {
       alert(
         "Chưa có brand nào để chơi!\n\n" +
@@ -211,7 +221,6 @@
   }
 
   function handleSubmit() {
-    // Nếu user chưa pick gì, vẫn cho submit với màu mặc định
     const result = Game.submit(currentUserHex);
     renderReveal(result);
   }
