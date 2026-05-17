@@ -105,14 +105,29 @@ img    { display: block; }
 .btn-daily .title { color: #ccc2bd; }
 .btn-daily .sub   { color: #bdb4ae; }
 
-/* Logo swap by viewport shape (not by pixel width) */
+/* ============================================================
+   Desktop / landscape — content column capped at picker max (600px)
+   Logo MindColor luôn full-width; mọi thứ khác center & cap 600px.
+   ============================================================ */
 @media (min-aspect-ratio: 1/1) {
+  /* Logo swap */
   .home-logo-mobile  { display: none; }
   .home-logo-desktop { display: block; }
+
+  /* Home */
   .home-tagline br   { display: none; }
   .home-tagline      { font-size: clamp(20px, 3.2vw, 45px); }
-  .home-actions      { align-items: center; }
-  .home-actions .btn-card { max-width: min(60vw, 600px); }
+  .home-actions      { align-items: center; width: 100%; }
+  .home-actions .btn-card { width: 100%; max-width: 600px; }
+
+  /* Game screens — center column, cap 600px */
+  .screen { align-items: center; }
+  .app-header,
+  #picker-stage,
+  #result-stage,
+  .final-comment,
+  .recap,
+  .final-actions { width: 100%; max-width: 600px; }
 }
 
 /* ============================================================
