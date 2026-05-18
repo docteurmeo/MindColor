@@ -176,10 +176,17 @@
   function animateFinalScore(target, durationMs) {
     const el = document.getElementById("final-score");
     const start = performance.now();
+    let lastValue = -1;
     function tick(now) {
       const t = Math.min(1, (now - start) / durationMs);
       const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = `${Math.round(eased * target)}%`;
+      const v = Math.round(eased * target);
+      if (v !== lastValue) {
+        const txt = `${v}%`;
+        el.textContent = txt;
+        if (window.MCWebGL && MCWebGL.updateScoreMask) MCWebGL.updateScoreMask(txt);
+        lastValue = v;
+      }
       if (t < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
@@ -190,6 +197,7 @@
     if (!summary) return;
 
     document.getElementById("final-score").textContent = "0%";
+    if (window.MCWebGL && MCWebGL.updateScoreMask) MCWebGL.updateScoreMask("0%");
     animateFinalScore(summary.totalScore, 900);
 
     const finalScreen = document.getElementById("screen-final");

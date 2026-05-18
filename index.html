@@ -65,8 +65,12 @@
       <span class="page-header-spacer"></span>
       <span class="page-header-toggle" data-toggle-slot></span>
     </header>
-    <div class="home-logo-svg home-logo-mobile  holo-logo holo-logo--mobile"  role="img" aria-label="MindColor"></div>
-    <div class="home-logo-svg home-logo-desktop holo-logo holo-logo--desktop" role="img" aria-label="MindColor"></div>
+    <div class="home-logo-svg home-logo-mobile  webgl-logo webgl-logo--mobile"  role="img" aria-label="MindColor">
+      <canvas data-webgl-color></canvas>
+    </div>
+    <div class="home-logo-svg home-logo-desktop webgl-logo webgl-logo--desktop" role="img" aria-label="MindColor">
+      <canvas data-webgl-color></canvas>
+    </div>
     <p class="home-tagline">Bạn nhớ màu sắc của các brand<br/>giỏi tới đâu?</p>
     <div class="home-actions">
       <button class="btn-card btn-classic" data-action="play-classic">
@@ -134,7 +138,11 @@
         <span class="page-header-toggle" data-toggle-slot></span>
       </div>
 
-      <div class="final-score holo-text" id="final-score">0%</div>
+      <div class="final-score webgl-score">
+        <canvas data-webgl-color></canvas>
+        <div class="webgl-score-overlay" id="final-score-overlay" aria-hidden="true"></div>
+        <span class="webgl-score-srlabel" id="final-score">0%</span>
+      </div>
 
       <div class="final-rank-pill">
         <span id="final-rank-emoji">🎨</span>
@@ -157,12 +165,14 @@
   <div id="fx-transition" aria-hidden="true"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/regl@2.1.0/dist/regl.min.js"></script>
   <script src="js/logo.js"></script>
   <script src="js/scoring.js"></script>
   <script src="js/share.js"></script>
   <script src="js/game.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/fx.js"></script>
+  <script src="js/webgl-color.js"></script>
   <script src="js/ui.js"></script>
 </body>
 </html>

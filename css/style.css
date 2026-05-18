@@ -263,137 +263,88 @@ html[data-theme="dark"]  .theme-toggle-label.label-light { opacity: 0; }
 }
 
 /* =============================================================
-   HOLOGRAM — Conic-gradient swirl + position drift + iridescent sheen.
-   Replaces left→right linear flow with organic radial swirling motion.
+   WEBGL COLOR — Full-spectrum animated color field via regl.js + GLSL.
+   Shader adapted from https://codepen.io/MillerTime/pen/NWPPyrX
    Used on: home MindColor logo, final score % at result screen.
+
+   Architecture:
+   - LOGO: <canvas> inside wrapper, CSS mask-image clips canvas to logo shape.
+   - SCORE: <canvas> + <svg> overlay with text-shaped cutout mask. SVG text
+     renders inside the DOM, so it uses the page's loaded Clash Display font.
    ============================================================= */
 
-/* @property cho phép animate góc conic mượt mà.
-   Browser cũ không hỗ trợ sẽ fallback sang gradient tĩnh — vẫn đẹp. */
-@property --holo-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
+/* LOGO — wrapper sized by host class (mobile/desktop). Canvas fills wrapper
+   and is clipped via mask-image to the logo silhouette.
+   Don't set `display` here — `.home-logo-mobile/-desktop` rules control visibility
+   per viewport. Overriding here re-shows the hidden variant. */
+.webgl-logo {
+  position: relative;
+  pointer-events: none;
+}
+/* Canvas absolute → doesn't contribute its 300x150 intrinsic size to parent
+   layout. Wrapper size is determined solely by width: 100vw + aspect-ratio. */
+.webgl-logo canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.webgl-logo--mobile  {
+  aspect-ratio: 421.178 / 214;
+  height: calc(100vw * 214 / 421.178);
+}
+.webgl-logo--desktop {
+  aspect-ratio: 1440 / 178;
+  height: calc(100vw * 178 / 1440);
 }
 
-/* Shared rainbow palette dùng cho cả logo + text.
-   2 lớp background:
-     1. Conic rainbow quay quanh tâm (swirl chính)
-     2. Linear sheen pha 135° lệch tốc độ → ánh xà cừ trượt qua, blend overlay  */
-.holo-text,
-.holo-logo {
-  background-image:
-    linear-gradient(135deg,
-      rgba(255,255,255,.35) 0%,
-      rgba(255,255,255,0)   25%,
-      rgba(255,255,255,0)   55%,
-      rgba(255,255,255,.45) 75%,
-      rgba(255,255,255,0)   100%),
-    conic-gradient(from var(--holo-angle) at 50% 50%,
-      #ff5ec4   0%,
-      #ffce4a  16%,
-      #5eff9d  32%,
-      #4ad9ff  50%,
-      #b06bff  66%,
-      #ff8aa1  84%,
-      #ff5ec4 100%);
-  background-size: 240% 240%, 200% 200%;
-  background-position: 30% 40%, 50% 50%;
-  background-blend-mode: overlay;
-  animation:
-    holo-swirl 11s linear infinite,
-    holo-drift  9s ease-in-out infinite;
-  will-change: background-position, --holo-angle;
+.webgl-logo--mobile canvas {
+  -webkit-mask: url("../assets/mindcolor-logo.svg") center / contain no-repeat;
+          mask: url("../assets/mindcolor-logo.svg") center / contain no-repeat;
+}
+.webgl-logo--desktop canvas {
+  -webkit-mask: url("../assets/mindcolor-logo-desktop.svg") center / contain no-repeat;
+          mask: url("../assets/mindcolor-logo-desktop.svg") center / contain no-repeat;
 }
 
-/* Swirl: quay conic angle 360° mỗi 11s → rainbow xoay quanh tâm logo/số. */
-@keyframes holo-swirl {
-  to { --holo-angle: 360deg; }
+/* SCORE — wrapper has explicit height (no longer text-sized). Canvas fills
+   wrapper; overlay div (var(--bg)) sits on top with mask-image punched into
+   text shape. Mask is rendered to off-screen canvas in JS using the page's
+   loaded Clash Display font (avoids SVG font-loading caveat). */
+.webgl-score {
+  position: relative;
+  width: 100%;
+  height: clamp(72px, 20dvh, 200px);
+  overflow: hidden;
 }
-/* Drift: tâm sheen trượt theo path khép kín (figure-8 nén lại) → cảm giác
-   mặt nước sóng sánh. Layer 2 (conic) giữ nguyên 50% 50%. */
-@keyframes holo-drift {
-  0%   { background-position: 30% 35%, 50% 50%; }
-  25%  { background-position: 75% 25%, 50% 50%; }
-  50%  { background-position: 70% 78%, 50% 50%; }
-  75%  { background-position: 22% 70%, 50% 50%; }
-  100% { background-position: 30% 35%, 50% 50%; }
+.webgl-score canvas[data-webgl-color],
+.webgl-score-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
-
-/* TEXT variant: clip rainbow vào glyph.
-   KHÔNG dùng SVG displacement filter ở đây — gây aliasing & jitter cho text.
-   Bù lại bằng font-smoothing để biên chữ sắc nét trong khi gradient vẫn flow. */
-.holo-text {
-  -webkit-background-clip: text;
-          background-clip: text;
-  -webkit-text-fill-color: transparent;
-          color: transparent;
-  /* Font rendering tweaks để chống răng cưa khi gradient di chuyển. */
-  -webkit-font-smoothing: antialiased;
-     -moz-osx-font-smoothing: grayscale;
-  text-rendering: geometricPrecision;
-  /* Force own compositor layer → background-position animate trên GPU,
-     pixel grid ổn định, không bị subpixel jitter. */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* LOGO variant: SVG là mask, gradient là fill. Water filter giữ ở đây vì
-   logo path không có vấn đề aliasing như text glyph. */
-.holo-logo {
-  height: auto;
+.webgl-score-overlay {
+  background: var(--bg);
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-          mask-position: center;
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  filter: url(#mc-water);
-  /* Cộng entry animation; swirl + drift đã có từ rule chung. */
-  animation:
-    holo-swirl 11s linear infinite,
-    holo-drift  9s ease-in-out infinite,
-    home-logo-in 800ms var(--ease-out-expo) 80ms both;
+  transition: background-color var(--theme-fade) var(--ease-smooth);
 }
-.holo-logo--mobile {
-  -webkit-mask-image: url("../assets/mindcolor-logo.svg");
-          mask-image: url("../assets/mindcolor-logo.svg");
-  aspect-ratio: 421.178 / 214;
-}
-.holo-logo--desktop {
-  -webkit-mask-image: url("../assets/mindcolor-logo-desktop.svg");
-          mask-image: url("../assets/mindcolor-logo-desktop.svg");
-  aspect-ratio: 1440 / 178;
+/* Screen-reader-only label — keeps "82%" accessible without rendering text. */
+.webgl-score-srlabel {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* Dark mode: bump saturation/lightness cho rực hơn trên nền tối. */
-html[data-theme="dark"] .holo-text,
-html[data-theme="dark"] .holo-logo {
-  background-image:
-    linear-gradient(135deg,
-      rgba(255,255,255,.5) 0%,
-      rgba(255,255,255,0)   25%,
-      rgba(255,255,255,0)   55%,
-      rgba(255,255,255,.55) 75%,
-      rgba(255,255,255,0)   100%),
-    conic-gradient(from var(--holo-angle) at 50% 50%,
-      #ff7ad3   0%,
-      #ffd966  16%,
-      #7affb0  32%,
-      #6be3ff  50%,
-      #c485ff  66%,
-      #ff9eb3  84%,
-      #ff7ad3 100%);
-}
-html[data-theme="dark"] .holo-logo {
-  filter: url(#mc-water) brightness(1.05) saturate(1.1);
-}
-
-/* Reduced motion: dừng animation, giữ gradient tĩnh. */
-@media (prefers-reduced-motion: reduce) {
-  .holo-text, .holo-logo { animation: none; }
-  .holo-logo { animation: home-logo-in 800ms var(--ease-out-expo) 80ms both; filter: none; }
-}
+/* Reduced motion: webgl-color.js renders one static frame and stops the loop. */
 
 .home-tagline {
   flex: 1 1 0;
@@ -583,7 +534,7 @@ html[data-theme="dark"] .holo-logo {
   display: flex;
   flex-direction: column;
   padding: 0 10px;
-  gap: 10px;
+  gap: clamp(4px, 1dvh, 10px);
   animation: fade-up 450ms var(--ease-out-expo) both;
 }
 
@@ -608,17 +559,14 @@ html[data-theme="dark"] .holo-logo {
 }
 
 .result-score {
-  flex: 1 1 0;
-  min-height: 0;
-  container-type: size;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: clamp(56px, 22vh, 220px);
-  font-size: clamp(56px, 70cqh, 200px);
+  font-size: clamp(48px, 17dvh, 180px);
   line-height: 1;
   color: var(--text);
   font-variant-numeric: tabular-nums;
@@ -659,20 +607,20 @@ html[data-theme="dark"] .holo-logo {
 
 .compare-card {
   position: relative;
-  aspect-ratio: 2 / 3;
+  height: clamp(160px, 38dvh, 260px);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  gap: 10px;
+  gap: 8px;
   background: var(--bg-elev);
   transition: transform 220ms var(--ease-spring), border-color var(--theme-fade) var(--ease-smooth), box-shadow 220ms var(--ease-smooth);
 }
 .compare-card:hover { transform: translateY(-2px) scale(1.012); box-shadow: var(--shadow-card); }
 
-.compare-card .logo-wrap { width: 100%; aspect-ratio: 1; flex-shrink: 0; }
+.compare-card .logo-wrap { width: 100%; flex: 1 1 0; min-height: 0; }
 
 .compare-card .swatch-bar {
   width: 100%;
@@ -696,9 +644,9 @@ html[data-theme="dark"] .holo-logo {
 
 .result-feedback {
   flex: 0 1 auto;
-  max-height: 200px;
+  max-height: clamp(60px, 13dvh, 130px);
   width: 100%;
-  padding: 14px 16px;
+  padding: 10px 14px;
   background: var(--feedback-bg);
   border-radius: 12px;
   color: var(--feedback-fg);
@@ -738,7 +686,7 @@ html[data-theme="dark"] .holo-logo {
 /* =============================================================
    FINAL
    ============================================================= */
-#screen-final { padding: env(safe-area-inset-top, 0px) 10px calc(env(safe-area-inset-bottom, 0px) + 50px); gap: 10px; }
+#screen-final { padding: env(safe-area-inset-top, 0px) 10px calc(env(safe-area-inset-bottom, 0px) + 20px); gap: 10px; }
 
 .final-score {
   flex-shrink: 0;
@@ -845,12 +793,12 @@ html[data-theme="dark"] .holo-logo {
   text-align: right;
 }
 
-/* Final FX — rank-low/high giữ shake/glow nhưng KHÔNG set color (để holo-text rainbow nắm quyền).
-   Animation cộng dồn: pop-in (entry) + shake/glow-pulse + holo swirl/drift (từ .holo-text). */
-.final-rank-low .final-score  { animation: pop-in 700ms var(--ease-spring) 120ms both, shake 700ms var(--ease-quick) 1000ms 2, holo-swirl 11s linear infinite, holo-drift 9s ease-in-out infinite; }
+/* Final FX — WebGL canvas tự lo phần màu sắc. Rank-low chỉ cộng shake +
+   red-flash. Rank-high không cần thêm hiệu ứng (WebGL đã đủ "wow"). */
+.final-rank-low .final-score { animation: pop-in 700ms var(--ease-spring) 120ms both, shake 700ms var(--ease-quick) 1000ms 2; }
 .final-rank-low { position: relative; }
 .final-rank-low::after { content: ""; position: absolute; inset: 0; pointer-events: none; animation: red-flash 800ms var(--ease-smooth) 900ms 1 both; }
-.final-rank-high .final-score { text-shadow: 0 0 28px rgba(255,255,255,.45); animation: pop-in 700ms var(--ease-spring) 120ms both, glow-pulse 1800ms var(--ease-smooth) 1000ms 2, holo-swirl 11s linear infinite, holo-drift 9s ease-in-out infinite; }
+.final-rank-high .final-score { animation: pop-in 700ms var(--ease-spring) 120ms both; }
 
 .final-actions {
   flex-shrink: 0;
