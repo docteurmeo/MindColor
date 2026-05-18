@@ -236,13 +236,77 @@ Yêu cầu: 100% code, không asset, lightweight.
 - `index.html` — thêm `<defs>` filter `#mc-water`, đổi logo home sang `<div class="holo-logo">`, gắn `holo-text` cho `#final-score`
 - `css/style.css` — block HOLOGRAM mới (conic + drift + sheen + @property --holo-angle), update `.final-rank-low/high .final-score` dùng `holo-swirl + holo-drift`
 
+### Session 7 — Mobile layout polish + WebGL color field
+
+**7.1 — Result screen (step 2 reveal) bị chật trên mobile + browser height co lại**
+
+User report: số % bị overflow đè vào header, các card so sánh đẩy mọi thứ tràn xuống dưới. Root cause: `.compare-card { aspect-ratio: 2/3 }` ép card cao bằng 1.5× width — trên viewport thấp card chiếm ~350px, đẩy `.result-score` về 0px, font `22vh` của score tràn ra ngoài. Container query `cqh` thử nghiệm trước đó không cứu được vì container height = 0.
+
+Hướng fix đúng: **không để bất cứ element nào "ăn theo" remaining space** trên màn hình này. Mọi thứ size cố định theo `dvh`:
+
+| Element | Trước | Sau |
+|---|---|---|
+| `.result-score` | `flex: 1 1 0` + `clamp(64px, 22vh, 220px)` | `flex: 0 0 auto` + `clamp(48px, 17dvh, 180px)` |
+| `.compare-card` | `aspect-ratio: 2/3` | `height: clamp(160px, 38dvh, 260px)` |
+| `.compare-card .logo-wrap` | `aspect-ratio: 1` | `flex: 1 1 0; min-height: 0` |
+| `.result-feedback` max-height | `200px` | `clamp(60px, 13dvh, 130px)` |
+| `#result-stage` gap | `10px` cứng | `clamp(4px, 1dvh, 10px)` |
+| `.screen` padding-bottom | `+50px` | `+20px` |
+| `#screen-final` padding-bottom | `+50px` | `+20px` |
+
+`dvh` (dynamic viewport height) tốt hơn `vh` trên mobile — trừ browser chrome (thanh address động).
+
+**7.2 — Thay CSS hologram bằng WebGL color field**
+
+User muốn hiệu ứng màu giống <https://codepen.io/MillerTime/pen/NWPPyrX> — full-spectrum animated color field smooth, không loop ngắn, không thấy stripe của conic gradient.
+
+Source pen dùng **regl.js** (~25KB minified) + fragment shader GLSL ~30 dòng. Shader: 3 phương trình `sin/cos` trên position + time với rotation offsets quay 360° / 2min → R/G/B mỗi pixel tính độc lập, blend organic.
+
+**Kiến trúc tích hợp:**
+- **Logo Home**: `<canvas data-webgl-color>` trong wrapper, CSS `mask-image: url(logo.svg) center/contain` clip canvas thành silhouette logo. Canvas `position: absolute; inset: 0` để **không đóng góp** intrinsic 300×150 vào layout parent.
+- **Final Score**: layer 3:
+  1. `<canvas data-webgl-color>` (WebGL color field full-bleed)
+  2. `<div class="webgl-score-overlay">` (var(--bg) đè lên, mask-image punch text-shape hole)
+  3. `<span class="webgl-score-srlabel" id="final-score">82%</span>` (SR-only, JS update text)
+- **Mask render**: SVG-as-mask không load được font Clash Display → dùng off-screen 2D canvas, vẽ text với `ctx.font = "700 Npx Clash Display"` (font đã load), composite `destination-out` để khoét text-shape hole, `toDataURL` set thành `mask-image`. Đợi `document.fonts.load("700 320px Clash Display")` resolve trước khi render lần đầu.
+- **Performance**: DPR cap ở 2, mask chỉ rerender khi integer score đổi (~30 lần trong 900ms count-up, không phải 60). Resize debounce qua rAF.
+
+**`js/webgl-color.js`** — module độc lập:
+- Auto-attach mọi `canvas[data-webgl-color]` lúc `DOMContentLoaded`
+- Share 1 rAF loop cho tất cả instances
+- `prefers-reduced-motion`: render 1 frame static, không loop
+- API: `MCWebGL.attach(canvas)`, `MCWebGL.detach(canvas)`, `MCWebGL.updateScoreMask(text)`
+
+**Files đụng vào:**
+- `js/webgl-color.js` — NEW
+- `index.html` — thêm CDN `regl@2.1.0` qua jsdelivr, đổi `<div class="holo-logo">` → wrapper chứa `<canvas data-webgl-color>`, đổi `<div class="final-score holo-text">` → wrapper + canvas + overlay + sr-span
+- `css/style.css` — XÓA toàn bộ block HOLOGRAM (conic, holo-swirl, holo-drift, `@property --holo-angle`, water filter rules). Thêm block WEBGL COLOR (`.webgl-logo`, `.webgl-logo--mobile/--desktop`, `.webgl-score`, `.webgl-score-overlay`, `.webgl-score-srlabel`). Update `.final-rank-low/high` bỏ holo-swirl/drift references.
+- `js/ui.js` — `animateFinalScore` chỉ update text khi `Math.round(eased*target)` đổi (thay vì mỗi frame), gọi `MCWebGL.updateScoreMask` cùng lúc. `renderFinal` reset mask "0%" cùng textContent.
+
+**7.3 — Bugs phát sinh & fix**
+
+1. **Cả 2 logo (mobile + desktop) cùng hiện trên mọi viewport** — `.webgl-logo { display: block }` định nghĩa SAU `.home-logo-desktop { display: none }` → đè vì cùng specificity. Fix: bỏ `display: block` khỏi `.webgl-logo`.
+2. **Logo desktop bị tụt giữa trang, đẩy buttons ra khỏi viewport** — canvas mặc định có intrinsic size 300×150, khi child `width: 100%; height: 100%` trên parent có `aspect-ratio` + `height: auto`, browser dùng canvas intrinsic để xác định parent height thay vì aspect-ratio. Fix:
+   - Canvas `position: absolute; inset: 0` → không contribute layout
+   - Thêm explicit `height: calc(100vw * ratio_h / ratio_w)` cho `.webgl-logo--mobile/--desktop` để chốt kích thước, không lệ thuộc aspect-ratio resolution
+
+**7.4 — Project housekeeping**
+- Tạo `.gitignore`: `.claude/worktrees/` (Claude Code worktree folder), `node_modules/`. Trước đó GitHub Desktop báo dirty vì folder worktree không track.
+
+### Files thay đổi/thêm trong Session 7
+- `js/webgl-color.js` — NEW (~150 dòng)
+- `index.html` — regl CDN, restructure logo + final-score HTML, thêm script tag
+- `css/style.css` — replace HOLOGRAM block (conic gradient/filter/keyframes) bằng WEBGL COLOR block; layout polish cho `#result-stage`, `.result-score`, `.compare-card`, `.compare-card .logo-wrap`, `.result-feedback`, `.screen`/`#screen-final` padding
+- `js/ui.js` — `animateFinalScore` + `renderFinal` gọi `MCWebGL.updateScoreMask`
+- `.gitignore` — NEW
+
 ## Trạng thái hiện tại
 
 **Đã có:**
-- ✅ Home screen (mobile + desktop logo variants) — logo hologram động
+- ✅ Home screen (mobile + desktop logo variants) — logo WebGL color field
 - ✅ Classic mode 10 round
 - ✅ 86 brand single-color (66 cũ + 20 mở rộng global/VN)
-- ✅ Hologram FX (CD/oil-on-water swirl + drift + water ripple cho logo)
+- ✅ WebGL color field FX (regl.js + GLSL fragment shader) — logo Home + số % Final
 - ✅ ~112 quip industry-specific đa dạng, không lặp pattern
 - ✅ Color picker Box + Hue (responsive, square trên mọi viewport)
 - ✅ Logo CSS-mask tinting (arbitrary colors)
@@ -253,7 +317,7 @@ Yêu cầu: 100% code, không asset, lightweight.
 - ✅ Play again / Back home
 - ✅ SVG-driven brand system + auto-build CI
 - ✅ Figma pixel-perfect light theme
-- ✅ Viewport-native responsive (mobile 320 → desktop 4K)
+- ✅ Viewport-native responsive (mobile 320 → desktop 4K) — result screen dùng `dvh` cho fluid sizing
 - ✅ Local dev server (Node)
 
 **Chưa có:**
@@ -275,7 +339,10 @@ mindcolor/
 │   ├── game.js                      # Game state + rank system + final summary
 │   ├── logo.js                      # CSS-mask logo tinting (arbitrary colors)
 │   ├── scoring.js                   # CIEDE2000 + feedback engine
-│   └── share.js                     # Share grid + Share card PNG
+│   ├── share.js                     # Share grid + Share card PNG
+│   ├── theme.js                     # Light/Dark toggle bootstrap
+│   ├── fx.js                        # Confetti + transition overlay
+│   └── webgl-color.js               # regl.js color field + score text mask
 ├── data/
 │   └── brands.json                  # Auto-generated, KHÔNG sửa tay
 ├── assets/
@@ -317,11 +384,11 @@ mindcolor/
 
 ## Roadmap còn lại
 
-- **Session 5:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày, share grid riêng "Daily #N"
-- **Phase Figma:** Apply UI final từ Figma user cung cấp (đang chờ)
-- **Phase content:** Bạn gom brand Việt theo batch, mình verify
+- **Session 8:** Share grid + Share card PNG — enable button trên Final, wire `share.js` lên UI
+- **Session 9:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày, share grid riêng "Daily #N"
+- **Phase content:** 47 brand VN còn lại (có tracking trong `BRANDS_TRACKING.csv`)
 - **Phase polish:** Domain, OG meta tags, favicon, SEO, analytics (Plausible / Umami)
-- **Phase optional:** Sound effects, haptic feedback mobile, dark/light toggle
+- **Phase optional:** Sound effects, haptic feedback mobile
 
 ## Lưu ý khi thiết kế Figma (cho phase tiếp theo)
 
@@ -360,6 +427,8 @@ mindcolor/
 ## Reference nhanh
 
 - **iro.js docs:** https://iro.js.org/
+- **regl.js docs:** https://regl-project.github.io/regl/
+- **WebGL color shader source:** https://codepen.io/MillerTime/pen/NWPPyrX
 - **Simple Icons:** https://simpleicons.org/
 - **CIEDE2000 reference:** http://www2.ece.rochester.edu/~gsharma/ciede2000/
 - **GitHub Pages docs:** https://docs.github.com/en/pages

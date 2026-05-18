@@ -39,8 +39,9 @@ mindcolor/
 - [x] Session 4 — Classic 10 rounds + Final screen
 - [x] Session 5 — Figma redesign + viewport-native responsive
 - [x] Session 6 — Brand expansion (86) + quip rewrite + Hologram FX
-- [ ] Session 7 — Share grid + Share card PNG (button đang disabled)
-- [ ] Session 8 — Daily Challenge
+- [x] Session 7 — Mobile layout polish + WebGL color field (thay CSS hologram)
+- [ ] Session 8 — Share grid + Share card PNG (button đang disabled)
+- [ ] Session 9 — Daily Challenge
 
 ## Deploy
 
