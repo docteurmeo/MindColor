@@ -1,0 +1,12 @@
+[
+  { "id": "marvel",         "name": "Marvel",          "search": "Marvel Logo 2012",         "color": "#ED1D24" },
+  { "id": "pizza-hut",      "name": "Pizza Hut",       "search": "Pizza Hut 2025",           "color": "#EE3424" },
+  { "id": "dominos",        "name": "Domino's Pizza",  "search": "Dominos Pizza 2012 logo",  "color": "#E31837" },
+  { "id": "subway",         "name": "Subway",          "search": "Subway 2016 logo",         "color": "#008C15" },
+  { "id": "heineken",       "name": "Heineken",        "search": "Heineken International logo", "color": "#006A36" },
+  { "id": "carlsberg",      "name": "Carlsberg",       "search": "Carlsberg logo wordmark",  "color": "#145FA8" },
+  { "id": "monster-energy", "name": "Monster Energy",  "search": "Monster Energy logo",      "color": "#84CC16" },
+  { "id": "xbox",           "name": "Xbox",            "search": "Xbox logo 2019",           "color": "#107C10" },
+  { "id": "dc",             "name": "DC Comics",       "search": "DC Comics logo 2016",      "color": "#0067B1" },
+  { "id": "pixar",          "name": "Pixar",           "search": "Pixar wordmark",           "color": "#0090D5" }
+]

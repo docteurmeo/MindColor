@@ -1,5 +1,11 @@
 [
   {
+    "id": "acb",
+    "name": "Acb",
+    "color": "#001689",
+    "difficulty": 2
+  },
+  {
     "id": "acer",
     "name": "Acer",
     "color": "#83B81A",
@@ -42,6 +48,12 @@
     "difficulty": 2
   },
   {
+    "id": "bidv",
+    "name": "Bidv",
+    "color": "#008C44",
+    "difficulty": 2
+  },
+  {
     "id": "binance",
     "name": "Binance",
     "color": "#F0B90B",
@@ -66,6 +78,12 @@
     "difficulty": 2
   },
   {
+    "id": "clinique",
+    "name": "Clinique",
+    "color": "#01A6D1",
+    "difficulty": 2
+  },
+  {
     "id": "cloudflare",
     "name": "Cloudflare",
     "color": "#F38020",
@@ -81,6 +99,12 @@
     "id": "coinbase",
     "name": "Coinbase",
     "color": "#0052FF",
+    "difficulty": 2
+  },
+  {
+    "id": "dc",
+    "name": "Dc",
+    "color": "#0067B1",
     "difficulty": 2
   },
   {
@@ -105,6 +129,18 @@
     "id": "disney",
     "name": "Disney",
     "color": "#1A1F71",
+    "difficulty": 2
+  },
+  {
+    "id": "dominos",
+    "name": "Dominos",
+    "color": "#E31837",
+    "difficulty": 2
+  },
+  {
+    "id": "dove",
+    "name": "Dove",
+    "color": "#0073C6",
     "difficulty": 2
   },
   {
@@ -138,6 +174,12 @@
     "difficulty": 2
   },
   {
+    "id": "fpt",
+    "name": "Fpt",
+    "color": "#EE7423",
+    "difficulty": 2
+  },
+  {
     "id": "google",
     "name": "Google",
     "color": "#4285F4",
@@ -147,6 +189,18 @@
     "id": "grab",
     "name": "Grab",
     "color": "#00B14F",
+    "difficulty": 2
+  },
+  {
+    "id": "heineken",
+    "name": "Heineken",
+    "color": "#006A36",
+    "difficulty": 2
+  },
+  {
+    "id": "highlands-coffee",
+    "name": "Highlands Coffee",
+    "color": "#A11F1F",
     "difficulty": 2
   },
   {
@@ -192,6 +246,12 @@
     "difficulty": 2
   },
   {
+    "id": "jollibee",
+    "name": "Jollibee",
+    "color": "#E11932",
+    "difficulty": 2
+  },
+  {
     "id": "kfc",
     "name": "KFC",
     "color": "#F40027",
@@ -201,6 +261,18 @@
     "id": "kickstarter",
     "name": "Kickstarter",
     "color": "#05CE78",
+    "difficulty": 2
+  },
+  {
+    "id": "lacoste",
+    "name": "Lacoste",
+    "color": "#1C8740",
+    "difficulty": 2
+  },
+  {
+    "id": "lazada",
+    "name": "Lazada",
+    "color": "#FF9200",
     "difficulty": 2
   },
   {
@@ -216,9 +288,21 @@
     "difficulty": 2
   },
   {
+    "id": "lotteria",
+    "name": "Lotteria",
+    "color": "#EC1C24",
+    "difficulty": 2
+  },
+  {
     "id": "mailchimp",
     "name": "Mailchimp",
     "color": "#FFE01B",
+    "difficulty": 2
+  },
+  {
+    "id": "marvel",
+    "name": "Marvel",
+    "color": "#ED1D24",
     "difficulty": 2
   },
   {
@@ -231,6 +315,12 @@
     "id": "meta",
     "name": "Meta",
     "color": "#0467DF",
+    "difficulty": 2
+  },
+  {
+    "id": "mobifone",
+    "name": "Mobifone",
+    "color": "#E2231A",
     "difficulty": 2
   },
   {
@@ -261,6 +351,12 @@
     "id": "nintendo",
     "name": "Nintendo",
     "color": "#E60012",
+    "difficulty": 2
+  },
+  {
+    "id": "nivea",
+    "name": "Nivea",
+    "color": "#003E7E",
     "difficulty": 2
   },
   {
@@ -300,6 +396,18 @@
     "difficulty": 2
   },
   {
+    "id": "pixar",
+    "name": "Pixar",
+    "color": "#0090D5",
+    "difficulty": 2
+  },
+  {
+    "id": "pizza-hut",
+    "name": "Pizza Hut",
+    "color": "#EE3424",
+    "difficulty": 2
+  },
+  {
     "id": "playstation",
     "name": "PlayStation",
     "color": "#0070D1",
@@ -315,6 +423,12 @@
     "id": "razer",
     "name": "Razer",
     "color": "#00FF00",
+    "difficulty": 2
+  },
+  {
+    "id": "realme",
+    "name": "Realme",
+    "color": "#FFC900",
     "difficulty": 2
   },
   {
@@ -345,6 +459,12 @@
     "id": "sega",
     "name": "Sega",
     "color": "#0089CF",
+    "difficulty": 2
+  },
+  {
+    "id": "shiseido",
+    "name": "Shiseido",
+    "color": "#E60012",
     "difficulty": 2
   },
   {
@@ -396,6 +516,12 @@
     "difficulty": 2
   },
   {
+    "id": "subway",
+    "name": "Subway",
+    "color": "#008C15",
+    "difficulty": 2
+  },
+  {
     "id": "target",
     "name": "Target",
     "color": "#CC0000",
@@ -417,6 +543,12 @@
     "id": "toyota",
     "name": "Toyota",
     "color": "#EB0A1E",
+    "difficulty": 2
+  },
+  {
+    "id": "tpbank",
+    "name": "Tpbank",
+    "color": "#FBB413",
     "difficulty": 2
   },
   {
@@ -462,6 +594,12 @@
     "difficulty": 2
   },
   {
+    "id": "vietjet",
+    "name": "Vietjet",
+    "color": "#EE2A36",
+    "difficulty": 2
+  },
+  {
     "id": "vietnam-airlines",
     "name": "Vietnam Airlines",
     "color": "#234E72",
@@ -486,9 +624,21 @@
     "difficulty": 2
   },
   {
+    "id": "vinaphone",
+    "name": "Vinaphone",
+    "color": "#005EA6",
+    "difficulty": 2
+  },
+  {
     "id": "vinfast",
     "name": "VinFast",
     "color": "#003478",
+    "difficulty": 2
+  },
+  {
+    "id": "vingroup",
+    "name": "Vingroup",
+    "color": "#E50019",
     "difficulty": 2
   },
   {
@@ -504,6 +654,12 @@
     "difficulty": 2
   },
   {
+    "id": "vng",
+    "name": "Vng",
+    "color": "#005CAA",
+    "difficulty": 2
+  },
+  {
     "id": "vodafone",
     "name": "Vodafone",
     "color": "#E60000",
@@ -516,6 +672,12 @@
     "difficulty": 2
   },
   {
+    "id": "vpbank",
+    "name": "Vpbank",
+    "color": "#009A4E",
+    "difficulty": 2
+  },
+  {
     "id": "whatsapp",
     "name": "WhatsApp",
     "color": "#25D366",
@@ -525,6 +687,12 @@
     "id": "wordpress",
     "name": "WordPress",
     "color": "#21759B",
+    "difficulty": 2
+  },
+  {
+    "id": "xbox",
+    "name": "Xbox",
+    "color": "#107C10",
     "difficulty": 2
   },
   {

@@ -1,0 +1,12 @@
+[
+  { "id": "lotteria",       "name": "Lotteria",        "search": "Lotteria logo",            "color": "#EC1C24" },
+  { "id": "laneige",        "name": "Laneige",         "search": "Laneige logo",             "color": "#0078CC" },
+  { "id": "clinique",       "name": "Clinique",        "search": "Clinique logo",            "color": "#01A6D1" },
+  { "id": "nivea",          "name": "Nivea",           "search": "Nivea logo",               "color": "#003E7E" },
+  { "id": "dove",           "name": "Dove",            "search": "Dove brand logo",          "color": "#0073C6" },
+  { "id": "shiseido",       "name": "Shiseido",        "search": "Shiseido logo",            "color": "#E60012" },
+  { "id": "lacoste",        "name": "Lacoste",         "search": "Lacoste logo",             "color": "#1C8740" },
+  { "id": "jollibee",       "name": "Jollibee",        "search": "Jollibee logo",            "color": "#E11932" },
+  { "id": "lazada",         "name": "Lazada",          "search": "Lazada logo",              "color": "#0E1A8B" },
+  { "id": "realme",         "name": "realme",          "search": "Realme logo",              "color": "#FFC900" }
+]

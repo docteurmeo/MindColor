@@ -1,0 +1,10 @@
+[
+  { "id": "vingroup",        "name": "Vingroup",         "search": "Vingroup logo",         "color": "#E50019" },
+  { "id": "vincom",          "name": "Vincom",           "search": "Vincom logo",           "color": "#E50019" },
+  { "id": "vinhomes",        "name": "Vinhomes",         "search": "Vinhomes logo",         "color": "#9F1B32" },
+  { "id": "vinpearl",        "name": "Vinpearl",         "search": "Vinpearl logo",         "color": "#9F1B32" },
+  { "id": "highlands-coffee","name": "Highlands Coffee", "search": "Highlands Coffee logo", "color": "#A11F1F" },
+  { "id": "phuc-long",       "name": "Phuc Long",        "search": "Phuc Long Coffee logo", "color": "#0D5B33" },
+  { "id": "masan",           "name": "Masan Group",      "search": "Masan Group logo",      "color": "#C00000" },
+  { "id": "vietjet",         "name": "VietJet Air",      "search": "VietJet Air logo",      "color": "#EE2A36", "force": false }
+]

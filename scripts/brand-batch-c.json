@@ -1,0 +1,12 @@
+[
+  { "id": "bidv",         "name": "BIDV",         "search": "BIDV logo",         "color": "#008C44" },
+  { "id": "techcombank",  "name": "Techcombank",  "search": "Techcombank logo",  "color": "#ED1C24" },
+  { "id": "vpbank",       "name": "VPBank",       "search": "VPBank logo",       "color": "#009A4E" },
+  { "id": "mbbank",       "name": "MB Bank",      "search": "MB Bank Vietnam logo", "color": "#003C72" },
+  { "id": "acb",          "name": "ACB",          "search": "Asia Commercial Bank logo", "color": "#001689" },
+  { "id": "sacombank",    "name": "Sacombank",    "search": "Sacombank logo",    "color": "#056FB7" },
+  { "id": "tpbank",       "name": "TPBank",       "search": "TPBank logo",       "color": "#5E308E" },
+  { "id": "vib",          "name": "VIB",          "search": "Vietnam International Bank logo", "color": "#1764B5" },
+  { "id": "agribank",     "name": "Agribank",     "search": "Agribank logo",     "color": "#B8252A" },
+  { "id": "vietjet",      "name": "VietJet Air",  "search": "VietJet Air logo",  "color": "#EE2A36" }
+]

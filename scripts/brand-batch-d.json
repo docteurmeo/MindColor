@@ -1,0 +1,8 @@
+[
+  { "id": "vinaphone",      "name": "VinaPhone",       "search": "VinaPhone logo",        "color": "#005EA6" },
+  { "id": "mobifone",       "name": "MobiFone",        "search": "MobiFone logo",         "color": "#E2231A" },
+  { "id": "vnpt",           "name": "VNPT",            "search": "VNPT logo",             "color": "#005BAA" },
+  { "id": "vng",            "name": "VNG",             "search": "VNG Corporation logo",  "color": "#005CAA" },
+  { "id": "tiki",           "name": "Tiki",            "search": "Tiki Vietnam logo",     "color": "#1A94FF" },
+  { "id": "fpt",            "name": "FPT",             "search": "FPT Corporation logo",  "color": "#EE7423" }
+]

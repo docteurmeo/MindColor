@@ -61,6 +61,25 @@ function normalize(raw, brandColor, brandName) {
   svgOpen = svgOpen.replace(/\sfill="[^"]*"/gi, "");
   s = s.replace(/<svg\b[^>]*>/, svgOpen);
 
+  // Strip full-viewBox <rect> elements (Nintendo bug: background rect makes mask
+  // render as solid rectangle). Detect rects whose width×height equals viewBox area.
+  const vbMatch = s.match(/viewBox="([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)"/);
+  if (vbMatch) {
+    const vbW = parseFloat(vbMatch[3]);
+    const vbH = parseFloat(vbMatch[4]);
+    s = s.replace(/<rect\b[^>]*?\/>/gi, (m) => {
+      const w = m.match(/\bwidth="([\d.]+)"/);
+      const h = m.match(/\bheight="([\d.]+)"/);
+      if (w && h) {
+        const rw = parseFloat(w[1]);
+        const rh = parseFloat(h[1]);
+        // If rect covers ≥95% of viewBox area, it's a background — strip it.
+        if (rw >= vbW * 0.95 && rh >= vbH * 0.95) return "";
+      }
+      return m;
+    });
+  }
+
   // Strip per-element fill attributes so root fill cascades.
   // Keep "none" fills (those mark cut-outs / non-filled regions).
   s = s.replace(/\sfill="(?!none)[^"]*"/gi, "");
