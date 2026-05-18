@@ -65,5 +65,13 @@
   "heroku":         { "name": "Heroku" },
   "shopee":         { "name": "Shopee" },
   "grab":           { "name": "Grab" },
-  "zalo":           { "name": "Zalo" }
+  "zalo":           { "name": "Zalo" },
+  "vinfast":        { "name": "VinFast" },
+  "vietnam-airlines": { "name": "Vietnam Airlines" },
+  "bmw":            { "name": "BMW" },
+  "hm":             { "name": "H&M" },
+  "kfc":            { "name": "KFC" },
+  "lg":             { "name": "LG" },
+  "oppo":           { "name": "OPPO" },
+  "playstation":    { "name": "PlayStation" }
 }

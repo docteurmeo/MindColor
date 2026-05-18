@@ -12,6 +12,12 @@
     "difficulty": 2
   },
   {
+    "id": "amazon",
+    "name": "Amazon",
+    "color": "#FF9900",
+    "difficulty": 2
+  },
+  {
     "id": "android",
     "name": "Android",
     "color": "#3DDC84",
@@ -49,7 +55,7 @@
   },
   {
     "id": "bmw",
-    "name": "Bmw",
+    "name": "BMW",
     "color": "#0066B1",
     "difficulty": 2
   },
@@ -96,6 +102,12 @@
     "difficulty": 2
   },
   {
+    "id": "disney",
+    "name": "Disney",
+    "color": "#1A1F71",
+    "difficulty": 2
+  },
+  {
     "id": "dribbble",
     "name": "Dribbble",
     "color": "#EA4C89",
@@ -138,14 +150,8 @@
     "difficulty": 2
   },
   {
-    "id": "hermes",
-    "name": "Hermes",
-    "color": "#0091CD",
-    "difficulty": 2
-  },
-  {
     "id": "hm",
-    "name": "Hm",
+    "name": "H&M",
     "color": "#E50010",
     "difficulty": 2
   },
@@ -187,7 +193,7 @@
   },
   {
     "id": "kfc",
-    "name": "Kfc",
+    "name": "KFC",
     "color": "#F40027",
     "difficulty": 2
   },
@@ -205,7 +211,7 @@
   },
   {
     "id": "lg",
-    "name": "Lg",
+    "name": "LG",
     "color": "#A50034",
     "difficulty": 2
   },
@@ -252,6 +258,12 @@
     "difficulty": 2
   },
   {
+    "id": "nintendo",
+    "name": "Nintendo",
+    "color": "#E60012",
+    "difficulty": 2
+  },
+  {
     "id": "nvidia",
     "name": "NVIDIA",
     "color": "#76B900",
@@ -259,7 +271,7 @@
   },
   {
     "id": "oppo",
-    "name": "Oppo",
+    "name": "OPPO",
     "color": "#2D683D",
     "difficulty": 2
   },
@@ -276,6 +288,12 @@
     "difficulty": 2
   },
   {
+    "id": "pepsi",
+    "name": "Pepsi",
+    "color": "#004B93",
+    "difficulty": 2
+  },
+  {
     "id": "pinterest",
     "name": "Pinterest",
     "color": "#BD081C",
@@ -283,14 +301,14 @@
   },
   {
     "id": "playstation",
-    "name": "Playstation",
+    "name": "PlayStation",
     "color": "#0070D1",
     "difficulty": 2
   },
   {
     "id": "puma",
     "name": "Puma",
-    "color": "#242B2F",
+    "color": "#DC0817",
     "difficulty": 2
   },
   {
@@ -438,9 +456,39 @@
     "difficulty": 2
   },
   {
+    "id": "vietcombank",
+    "name": "Vietcombank",
+    "color": "#007749",
+    "difficulty": 2
+  },
+  {
+    "id": "vietnam-airlines",
+    "name": "Vietnam Airlines",
+    "color": "#234E72",
+    "difficulty": 2
+  },
+  {
+    "id": "viettel",
+    "name": "Viettel",
+    "color": "#EE0033",
+    "difficulty": 2
+  },
+  {
     "id": "vimeo",
     "name": "Vimeo",
     "color": "#1AB7EA",
+    "difficulty": 2
+  },
+  {
+    "id": "vinamilk",
+    "name": "Vinamilk",
+    "color": "#0213B0",
+    "difficulty": 2
+  },
+  {
+    "id": "vinfast",
+    "name": "VinFast",
+    "color": "#003478",
     "difficulty": 2
   },
   {
@@ -488,7 +536,7 @@
   {
     "id": "yamaha",
     "name": "Yamaha",
-    "color": "#E60012",
+    "color": "#4B1E78",
     "difficulty": 2
   },
   {
