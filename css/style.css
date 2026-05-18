@@ -117,7 +117,7 @@ img    { display: block; }
   height: 100dvh;
   flex-direction: column;
   padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 50px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
   background: var(--bg);
 }
 #screen-home.active, .screen.active { display: flex; }
@@ -610,13 +610,15 @@ html[data-theme="dark"] .holo-logo {
 .result-score {
   flex: 1 1 0;
   min-height: 0;
+  container-type: size;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: "Clash Display", sans-serif;
   font-weight: 700;
-  font-size: clamp(64px, 22vh, 220px);
+  font-size: clamp(56px, 22vh, 220px);
+  font-size: clamp(56px, 70cqh, 200px);
   line-height: 1;
   color: var(--text);
   font-variant-numeric: tabular-nums;
