@@ -180,12 +180,70 @@ Bug history:
 - `BRANDS_TRACKING.csv` — new
 - `server.js` + `serve.bat` — new
 
+### Session 6 — Brand expansion + Quip rewrite + Hologram FX
+
+**6.1 — Brand pool mở rộng (66 → 86)**
+
+User yêu cầu: ẩn brand chưa có logo, bổ sung 100 brand global/VN trải đều fashion / FMCG / entertainment / cosmetics. Loại logo đen-trắng-only.
+
+- Tạo wishlist 100 brand, đối chiếu Simple Icons CDN
+- **20 brand resolve được + có màu**: puma, new-balance, uniqlo, hm, hermes, unilever, red-bull, kfc, burger-king, paramount, playstation, google, meta, lg, oppo, vivo, bmw, audi, hyundai, yamaha
+- **11 brand skip vì monochrome** (logic: HSL saturation < 10 + lightness < 8 hoặc > 95)
+- **69 brand Pending** vì Simple Icons gỡ do IP (Nike, Adidas, Pepsi, Disney, Microsoft, Amazon, LinkedIn, …) → track trong `BRANDS_TRACKING.csv` với status Done/Skipped/Pending
+- Filter UI: brand không có logo file → bỏ qua khỏi pool round random (logo.js fallback rỗng)
+
+Bug đã fix: sau merge, 20 entry mới đều có `color: #888888` xám. Cause chưa xác định (có thể script merge ghi đè). Fix: chạy lại node fetch Simple Icons JSON, patch hex thật vào từng entry.
+
+**6.2 — Quip rewrite (~112 câu)**
+
+User feedback: comment chi tiết line-2 lặp pattern "nhớ" / "kiểu nhớ" quá nhiều, nhàm.
+
+- Mở rộng `BRAND_CATEGORY` map thêm 20 brand mới → đúng industry
+- Thêm 7 category vào `INDUSTRY_QUIPS`: fashion, cosmetics, fmcg, beverage, fastfood, entertainment, retail
+- **Rewrite hết ~112 quip** xoá pattern "nhớ" lặp. Style mới đa dạng:
+  - Quan sát trực diện ("Sắc này designer brand team cãi nhau cả tuần mới chốt")
+  - Phản ứng giả định brand team / agency
+  - Locale reference VN (vỉa hè quận 4, Bùi Viện, Nguyễn Huệ)
+  - Hypothetical & technical metaphor có vibe (VS Code Dracula theme, Lightroom Pink Glow preset, baseband 480p, TN panel)
+- Rewrite cả `GENERIC_QUIPS` để match tone
+- `glow-pulse` keyframe đổi shadow sang trắng trung tính (không còn vàng) — phù hợp khi rank-high có holo rainbow
+
+**6.3 — Hologram FX cho logo Home + Final score %**
+
+User muốn thể hiện đúng tinh thần "color" của game: logo MindColor + số % final không còn đen, mà là **hologram CD/váng dầu** liên tục đổi sắc, lượn sóng nước.
+
+Yêu cầu: 100% code, không asset, lightweight.
+
+**Kỹ thuật chốt:**
+- **`<defs>` SVG global trong `index.html`**: filter `#mc-water` = `feTurbulence` (fractalNoise) + `feDisplacementMap` scale=4. `<animate>` chạy `baseFrequency` và `seed` theo loop 10s → noise drift sống động.
+- **Logo Home**: đổi từ `<img>` sang `<div class="holo-logo holo-logo--mobile/desktop">`. Dùng `mask-image: url("../assets/mindcolor-logo.svg")` + `aspect-ratio` từng variant → giữ silhouette logo, body là background hologram.
+- **Final score `<div class="holo-text">`**: `background-clip: text` + `-webkit-text-fill-color: transparent` → text trở thành "window" cho gradient.
+- **Palette**: 7-stop conic full-spectrum (pink → ngả vàng → ngả xanh lá → cyan → tím → hồng nhạt → pink) — vibe CD/oil-on-water.
+- **Motion 2 lớp** (chốt sau khi user feedback "linear chạy phải→trái buồn"):
+  - `@property --holo-angle` syntax `<angle>` → animatable. `holo-swirl` quay 360° / 11s.
+  - `holo-drift` lay `background-position` qua 4 điểm path không đều / 9s ease-in-out → bề mặt trôi không tuyến tính.
+  - Lớp sheen `linear-gradient` highlight trắng + `background-blend-mode: overlay` → ánh kim chạy ngang.
+- **`filter: url(#mc-water)`** chỉ áp lên `.holo-logo` (silhouette hình mượt, không lo aliasing). KHÔNG dùng cho `.holo-text` vì SVG filter + `background-clip:text` gây resample edge mỗi frame → text răng cưa/rung. Thay vào đó: `transform: translateZ(0)` + `backface-visibility: hidden` + `text-rendering: geometricPrecision` + font-smoothing → GPU compositor layer, render ổn định.
+- **Dark mode**: palette riêng (sáng hơn) + filter `brightness(1.1) saturate(1.15)` để giữ tươi trên nền tối.
+- **Accessibility**: `@media (prefers-reduced-motion: reduce)` ngắt animation, giữ gradient tĩnh.
+- **Rank-low/high final**: vẫn cộng dồn animation `shake` / `glow-pulse` với `holo-swirl + holo-drift` (rename từ `holo-shift` cũ).
+
+### Files thay đổi/thêm trong Session 6
+- `data/brands.json` — thêm 20 entry brand mới (66 → 86), color đúng theo Simple Icons
+- `assets/logos/*.svg` — 20 SVG mới download từ Simple Icons CDN
+- `BRANDS_TRACKING.csv` — update full status Done / Skipped / Pending
+- `js/scoring.js` — rewrite toàn bộ `INDUSTRY_QUIPS` + `GENERIC_QUIPS` + mở rộng `BRAND_CATEGORY`; chỉnh `glow-pulse` shadow
+- `index.html` — thêm `<defs>` filter `#mc-water`, đổi logo home sang `<div class="holo-logo">`, gắn `holo-text` cho `#final-score`
+- `css/style.css` — block HOLOGRAM mới (conic + drift + sheen + @property --holo-angle), update `.final-rank-low/high .final-score` dùng `holo-swirl + holo-drift`
+
 ## Trạng thái hiện tại
 
 **Đã có:**
-- ✅ Home screen (mobile + desktop logo variants)
+- ✅ Home screen (mobile + desktop logo variants) — logo hologram động
 - ✅ Classic mode 10 round
-- ✅ 66 brand single-color (63 foreign + shopee/grab/zalo)
+- ✅ 86 brand single-color (66 cũ + 20 mở rộng global/VN)
+- ✅ Hologram FX (CD/oil-on-water swirl + drift + water ripple cho logo)
+- ✅ ~112 quip industry-specific đa dạng, không lặp pattern
 - ✅ Color picker Box + Hue (responsive, square trên mọi viewport)
 - ✅ Logo CSS-mask tinting (arbitrary colors)
 - ✅ Delta-E CIEDE2000 scoring + feedback Việt suồng sã

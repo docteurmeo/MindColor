@@ -263,48 +263,84 @@ html[data-theme="dark"]  .theme-toggle-label.label-light { opacity: 0; }
 }
 
 /* =============================================================
-   HOLOGRAM — CD/oil-on-water iridescent fill + subtle water ripple.
+   HOLOGRAM — Conic-gradient swirl + position drift + iridescent sheen.
+   Replaces left→right linear flow with organic radial swirling motion.
    Used on: home MindColor logo, final score % at result screen.
    ============================================================= */
 
-/* Shared rainbow palette + scrolling animation.
-   Palette: oil-on-water full spectrum, loop-closed (ends == starts → seam-less). */
-.holo-text,
-.holo-logo {
-  background-image: linear-gradient(
-    110deg,
-    #ff5ec4 0%,
-    #ffce4a 18%,
-    #5eff9d 36%,
-    #4ad9ff 54%,
-    #b06bff 72%,
-    #ff8aa1 86%,
-    #ff5ec4 100%
-  );
-  background-size: 300% 100%;
-  background-position: 0% 50%;
-  animation: holo-shift 7s linear infinite;
-  /* GPU promote to avoid jank from animating background-position. */
-  will-change: background-position, filter;
-}
-@keyframes holo-shift {
-  to { background-position: 300% 50%; }
+/* @property cho phép animate góc conic mượt mà.
+   Browser cũ không hỗ trợ sẽ fallback sang gradient tĩnh — vẫn đẹp. */
+@property --holo-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
-/* TEXT variant: clip the rainbow to glyph shapes. */
+/* Shared rainbow palette dùng cho cả logo + text.
+   2 lớp background:
+     1. Conic rainbow quay quanh tâm (swirl chính)
+     2. Linear sheen pha 135° lệch tốc độ → ánh xà cừ trượt qua, blend overlay  */
+.holo-text,
+.holo-logo {
+  background-image:
+    linear-gradient(135deg,
+      rgba(255,255,255,.35) 0%,
+      rgba(255,255,255,0)   25%,
+      rgba(255,255,255,0)   55%,
+      rgba(255,255,255,.45) 75%,
+      rgba(255,255,255,0)   100%),
+    conic-gradient(from var(--holo-angle) at 50% 50%,
+      #ff5ec4   0%,
+      #ffce4a  16%,
+      #5eff9d  32%,
+      #4ad9ff  50%,
+      #b06bff  66%,
+      #ff8aa1  84%,
+      #ff5ec4 100%);
+  background-size: 240% 240%, 200% 200%;
+  background-position: 30% 40%, 50% 50%;
+  background-blend-mode: overlay;
+  animation:
+    holo-swirl 11s linear infinite,
+    holo-drift  9s ease-in-out infinite;
+  will-change: background-position, --holo-angle;
+}
+
+/* Swirl: quay conic angle 360° mỗi 11s → rainbow xoay quanh tâm logo/số. */
+@keyframes holo-swirl {
+  to { --holo-angle: 360deg; }
+}
+/* Drift: tâm sheen trượt theo path khép kín (figure-8 nén lại) → cảm giác
+   mặt nước sóng sánh. Layer 2 (conic) giữ nguyên 50% 50%. */
+@keyframes holo-drift {
+  0%   { background-position: 30% 35%, 50% 50%; }
+  25%  { background-position: 75% 25%, 50% 50%; }
+  50%  { background-position: 70% 78%, 50% 50%; }
+  75%  { background-position: 22% 70%, 50% 50%; }
+  100% { background-position: 30% 35%, 50% 50%; }
+}
+
+/* TEXT variant: clip rainbow vào glyph.
+   KHÔNG dùng SVG displacement filter ở đây — gây aliasing & jitter cho text.
+   Bù lại bằng font-smoothing để biên chữ sắc nét trong khi gradient vẫn flow. */
 .holo-text {
   -webkit-background-clip: text;
           background-clip: text;
   -webkit-text-fill-color: transparent;
           color: transparent;
-  /* Sóng nước tinh tế: turbulence displacement, biên độ thấp, 10s/chu kỳ. */
-  filter: url(#mc-water);
+  /* Font rendering tweaks để chống răng cưa khi gradient di chuyển. */
+  -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  /* Force own compositor layer → background-position animate trên GPU,
+     pixel grid ổn định, không bị subpixel jitter. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-/* LOGO variant: SVG as CSS mask, gradient is the visible fill. */
+/* LOGO variant: SVG là mask, gradient là fill. Water filter giữ ở đây vì
+   logo path không có vấn đề aliasing như text glyph. */
 .holo-logo {
-  /* width:100vw đã có từ .home-logo-svg, height:auto sẽ không hoạt động với <div> →
-     dùng aspect-ratio theo đúng viewBox SVG để khớp pixel với img cũ. */
   height: auto;
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
@@ -313,8 +349,11 @@ html[data-theme="dark"]  .theme-toggle-label.label-light { opacity: 0; }
   -webkit-mask-size: contain;
           mask-size: contain;
   filter: url(#mc-water);
-  /* preserve original entry animation */
-  animation: holo-shift 7s linear infinite, home-logo-in 800ms var(--ease-out-expo) 80ms both;
+  /* Cộng entry animation; swirl + drift đã có từ rule chung. */
+  animation:
+    holo-swirl 11s linear infinite,
+    holo-drift  9s ease-in-out infinite,
+    home-logo-in 800ms var(--ease-out-expo) 80ms both;
 }
 .holo-logo--mobile {
   -webkit-mask-image: url("../assets/mindcolor-logo.svg");
@@ -327,28 +366,33 @@ html[data-theme="dark"]  .theme-toggle-label.label-light { opacity: 0; }
   aspect-ratio: 1440 / 178;
 }
 
-/* Dark mode: tăng nhẹ saturation + lightness gradient cho rực hơn trên nền tối. */
+/* Dark mode: bump saturation/lightness cho rực hơn trên nền tối. */
 html[data-theme="dark"] .holo-text,
 html[data-theme="dark"] .holo-logo {
-  background-image: linear-gradient(
-    110deg,
-    #ff7ad3 0%,
-    #ffd966 18%,
-    #7affb0 36%,
-    #6be3ff 54%,
-    #c485ff 72%,
-    #ff9eb3 86%,
-    #ff7ad3 100%
-  );
+  background-image:
+    linear-gradient(135deg,
+      rgba(255,255,255,.5) 0%,
+      rgba(255,255,255,0)   25%,
+      rgba(255,255,255,0)   55%,
+      rgba(255,255,255,.55) 75%,
+      rgba(255,255,255,0)   100%),
+    conic-gradient(from var(--holo-angle) at 50% 50%,
+      #ff7ad3   0%,
+      #ffd966  16%,
+      #7affb0  32%,
+      #6be3ff  50%,
+      #c485ff  66%,
+      #ff9eb3  84%,
+      #ff7ad3 100%);
+}
+html[data-theme="dark"] .holo-logo {
   filter: url(#mc-water) brightness(1.05) saturate(1.1);
 }
 
-/* Reduced motion: tắt rainbow shift + water ripple, để gradient tĩnh. */
+/* Reduced motion: dừng animation, giữ gradient tĩnh. */
 @media (prefers-reduced-motion: reduce) {
-  .holo-text, .holo-logo { animation: none; filter: none; }
-  .holo-logo { animation: home-logo-in 800ms var(--ease-out-expo) 80ms both; }
-  #mc-water feTurbulence animate,
-  #mc-water feTurbulence > animate { /* no-op selector — SMIL không dừng được qua CSS, nhưng filter:none ở trên đã ngắt */ }
+  .holo-text, .holo-logo { animation: none; }
+  .holo-logo { animation: home-logo-in 800ms var(--ease-out-expo) 80ms both; filter: none; }
 }
 
 .home-tagline {
@@ -800,11 +844,11 @@ html[data-theme="dark"] .holo-logo {
 }
 
 /* Final FX — rank-low/high giữ shake/glow nhưng KHÔNG set color (để holo-text rainbow nắm quyền).
-   Animation cộng dồn: pop-in (entry) + shake/glow-pulse + holo-shift (từ .holo-text). */
-.final-rank-low .final-score  { animation: pop-in 700ms var(--ease-spring) 120ms both, shake 700ms var(--ease-quick) 1000ms 2, holo-shift 7s linear infinite; }
+   Animation cộng dồn: pop-in (entry) + shake/glow-pulse + holo swirl/drift (từ .holo-text). */
+.final-rank-low .final-score  { animation: pop-in 700ms var(--ease-spring) 120ms both, shake 700ms var(--ease-quick) 1000ms 2, holo-swirl 11s linear infinite, holo-drift 9s ease-in-out infinite; }
 .final-rank-low { position: relative; }
 .final-rank-low::after { content: ""; position: absolute; inset: 0; pointer-events: none; animation: red-flash 800ms var(--ease-smooth) 900ms 1 both; }
-.final-rank-high .final-score { text-shadow: 0 0 28px rgba(255,255,255,.45); animation: pop-in 700ms var(--ease-spring) 120ms both, glow-pulse 1800ms var(--ease-smooth) 1000ms 2, holo-shift 7s linear infinite; }
+.final-rank-high .final-score { text-shadow: 0 0 28px rgba(255,255,255,.45); animation: pop-in 700ms var(--ease-spring) 120ms both, glow-pulse 1800ms var(--ease-smooth) 1000ms 2, holo-swirl 11s linear infinite, holo-drift 9s ease-in-out infinite; }
 
 .final-actions {
   flex-shrink: 0;

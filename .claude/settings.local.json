@@ -16,7 +16,10 @@
       "Bash(curl -sL \"https://cdn.jsdelivr.net/npm/simple-icons@latest/data/simple-icons.json\" -o \"D:/WORK/AI Projects/Dinh Stuff/MindColor/.tmp/si.json\")",
       "Bash(node .tmp/expand.js)",
       "Bash(node .tmp/download.js)",
-      "Bash(node .tmp/merge.js)"
+      "Bash(node .tmp/merge.js)",
+      "Bash(mkdir -p .tmp)",
+      "Bash(curl -sL \"https://cdn.jsdelivr.net/npm/simple-icons@latest/data/simple-icons.json\" -o .tmp/si.json)",
+      "Bash(rm -rf .tmp)"
     ]
   }
 }

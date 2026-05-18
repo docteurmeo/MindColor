@@ -35,10 +35,12 @@ mindcolor/
 - [x] Session 1 — Scaffold + Home screen
 - [x] Session 2 — Color picker + 1 round
 - [x] Session 2.5 — SVG-driven brand system + auto-build
-- [ ] Session 3 — Delta-E scoring + HSL feedback
-- [ ] Session 4 — Classic 10 rounds + Final screen
-- [ ] Session 5 — Share grid + Share card PNG
-- [ ] Session 6 — Daily Challenge
+- [x] Session 3 — Delta-E scoring + HSL feedback
+- [x] Session 4 — Classic 10 rounds + Final screen
+- [x] Session 5 — Figma redesign + viewport-native responsive
+- [x] Session 6 — Brand expansion (86) + quip rewrite + Hologram FX
+- [ ] Session 7 — Share grid + Share card PNG (button đang disabled)
+- [ ] Session 8 — Daily Challenge
 
 ## Deploy
 

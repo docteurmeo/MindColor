@@ -26,7 +26,7 @@
   {
     "id": "audi",
     "name": "Audi",
-    "color": "#888888",
+    "color": "#BB0A30",
     "difficulty": 2
   },
   {
@@ -50,13 +50,13 @@
   {
     "id": "bmw",
     "name": "Bmw",
-    "color": "#888888",
+    "color": "#0066B1",
     "difficulty": 2
   },
   {
     "id": "burger-king",
     "name": "Burger King",
-    "color": "#888888",
+    "color": "#D62300",
     "difficulty": 2
   },
   {
@@ -128,7 +128,7 @@
   {
     "id": "google",
     "name": "Google",
-    "color": "#888888",
+    "color": "#4285F4",
     "difficulty": 2
   },
   {
@@ -140,13 +140,13 @@
   {
     "id": "hermes",
     "name": "Hermes",
-    "color": "#888888",
+    "color": "#0091CD",
     "difficulty": 2
   },
   {
     "id": "hm",
     "name": "Hm",
-    "color": "#888888",
+    "color": "#E50010",
     "difficulty": 2
   },
   {
@@ -170,7 +170,7 @@
   {
     "id": "hyundai",
     "name": "Hyundai",
-    "color": "#888888",
+    "color": "#002C5E",
     "difficulty": 2
   },
   {
@@ -188,7 +188,7 @@
   {
     "id": "kfc",
     "name": "Kfc",
-    "color": "#888888",
+    "color": "#F40027",
     "difficulty": 2
   },
   {
@@ -206,7 +206,7 @@
   {
     "id": "lg",
     "name": "Lg",
-    "color": "#888888",
+    "color": "#A50034",
     "difficulty": 2
   },
   {
@@ -224,7 +224,7 @@
   {
     "id": "meta",
     "name": "Meta",
-    "color": "#888888",
+    "color": "#0467DF",
     "difficulty": 2
   },
   {
@@ -248,7 +248,7 @@
   {
     "id": "new-balance",
     "name": "New Balance",
-    "color": "#888888",
+    "color": "#CF0A2C",
     "difficulty": 2
   },
   {
@@ -260,13 +260,13 @@
   {
     "id": "oppo",
     "name": "Oppo",
-    "color": "#888888",
+    "color": "#2D683D",
     "difficulty": 2
   },
   {
     "id": "paramount",
     "name": "Paramount",
-    "color": "#888888",
+    "color": "#0064FF",
     "difficulty": 2
   },
   {
@@ -284,13 +284,13 @@
   {
     "id": "playstation",
     "name": "Playstation",
-    "color": "#888888",
+    "color": "#0070D1",
     "difficulty": 2
   },
   {
     "id": "puma",
     "name": "Puma",
-    "color": "#888888",
+    "color": "#242B2F",
     "difficulty": 2
   },
   {
@@ -302,7 +302,7 @@
   {
     "id": "red-bull",
     "name": "Red Bull",
-    "color": "#888888",
+    "color": "#DB0A40",
     "difficulty": 2
   },
   {
@@ -422,13 +422,13 @@
   {
     "id": "unilever",
     "name": "Unilever",
-    "color": "#888888",
+    "color": "#1F36C7",
     "difficulty": 2
   },
   {
     "id": "uniqlo",
     "name": "Uniqlo",
-    "color": "#888888",
+    "color": "#FF0000",
     "difficulty": 2
   },
   {
@@ -452,7 +452,7 @@
   {
     "id": "vivo",
     "name": "Vivo",
-    "color": "#888888",
+    "color": "#415FFF",
     "difficulty": 2
   },
   {
@@ -488,7 +488,7 @@
   {
     "id": "yamaha",
     "name": "Yamaha",
-    "color": "#888888",
+    "color": "#E60012",
     "difficulty": 2
   },
   {
