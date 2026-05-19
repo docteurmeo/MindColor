@@ -69,7 +69,7 @@ vng,VNG,Vietnam,Tech,Done,Wikimedia Commons (VNG Corp logo #005CAA)
 tiki,Tiki,Vietnam,E-commerce,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
 lazada-vn,Lazada,Vietnam,E-commerce,Missing,Manual download from press.lazada.com
 sendo,Sendo,Vietnam,E-commerce,Missing,Manual download from sendo.vn (red logo)
-fpt,FPT,Vietnam,Tech,Done,Wikimedia Commons (FPT logo 2010 #EE7423)
+fpt,FPT,Vietnam,Tech,Skipped,Multi-color brand identity (official FPT guideline requires 3-color logo) - removed from single-color pool
 fpt-shop,FPT Shop,Vietnam,Retail,Missing,Manual download from fptshop.com.vn
 the-gioi-di-dong,The Gioi Di Dong,Vietnam,Retail,Missing,Manual download from thegioididong.com (yellow logo)
 dien-may-xanh,Dien May Xanh,Vietnam,Retail,Missing,Manual download from dienmayxanh.com (green logo)
@@ -92,14 +92,14 @@ trung-nguyen,Trung Nguyen Legend,Vietnam,F&B,Missing,Manual download from trungn
 the-coffee-house,The Coffee House,Vietnam,F&B,Missing,Manual download from thecoffeehouse.com (brown/orange logo)
 cong-caphe,Cong Ca Phe,Vietnam,F&B,Missing,Manual download from congcaphe.com
 katinat,Katinat,Vietnam,F&B,Missing,Manual download from katinat.vn
-vietcombank,Vietcombank,Vietnam,Banking,Done,Wikimedia Commons (Vietcombank logo fixed #007749)
+vietcombank,Vietcombank,Vietnam,Banking,Pending,Removed from pool: current SVG contained embedded raster image and full lockup; needs clean vector symbol-only/logo asset
 bidv,BIDV,Vietnam,Banking,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 techcombank,Techcombank,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
-vpbank,VPBank,Vietnam,Banking,Done,Wikimedia Commons (VPBank logo #009A4E)
+vpbank,VPBank,Vietnam,Banking,Pending,Removed from pool: current asset was full lockup; needs clean symbol-only SVG and color confirmation
 mbbank,MB Bank,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
 acb,ACB,Vietnam,Banking,Done,Wikimedia Commons (Asia Commercial Bank #001689)
 sacombank,Sacombank,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
-tpbank,TPBank,Vietnam,Banking,Done,Wikimedia Commons (Logo TPBank #5E308E)
+tpbank,TPBank,Vietnam,Banking,Skipped,Multi-color brand identity (purple/orange/yellow) - removed from single-color pool
 vib,VIB,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
 agribank,Agribank,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
 momo,MoMo,Vietnam,Fintech,Missing,Manual download from momo.vn (pink/red logo)
@@ -109,7 +109,7 @@ viettel,Viettel,Vietnam,Telecom,Done,Wikimedia Commons (Viettel logo 2021 #EE003
 vinaphone,Vinaphone,Vietnam,Telecom,Done,Wikimedia Commons (Logo Vinaphone before 2015 #005EA6)
 mobifone,Mobifone,Vietnam,Telecom,Done,Wikimedia Commons (MobiFone logo #E2231A)
 vnpt,VNPT,Vietnam,Telecom,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
-vietnam-airlines,Vietnam Airlines,Vietnam,Aviation,Done,Wikimedia Commons (2015 wordmark #234E72)
+vietnam-airlines,Vietnam Airlines,Vietnam,Aviation,Pending,Removed from pool: current asset was wordmark-only; needs clean lotus symbol SVG
 vietjet,VietJet Air,Vietnam,Aviation,Done,Wikimedia Commons (VietJet Air Cargo logo #EE2A36)
 bamboo-airways,Bamboo Airways,Vietnam,Aviation,Missing,Manual download from bambooairways.com
 be,Be,Vietnam,Ride-hailing,Missing,Manual download from be.com.vn (yellow logo)
@@ -121,7 +121,7 @@ uniqlo,Uniqlo,Foreign,Fashion,Done,Simple Icons
 hm,H&M,Foreign,Fashion,Done,Simple Icons
 hermes,Hermes,Foreign,Fashion,Pending,Simple Icons slug points to wrong brand (logistics, not fashion); Wikimedia rate-limited — retry later
 unilever,Unilever,Foreign,FMCG,Done,Simple Icons
-red-bull,Red Bull,Foreign,Beverage,Done,Simple Icons
+red-bull,Red Bull,Foreign,Beverage,Skipped,Multi-color brand identity (red/yellow bull mark) - removed from single-color pool
 kfc,KFC,Foreign,F&B,Done,Simple Icons
 burger-king,Burger King,Foreign,F&B,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 paramount,Paramount,Foreign,Entertainment,Done,Simple Icons
@@ -153,7 +153,7 @@ louis-vuitton,Louis Vuitton,Foreign,Fashion,Pending,Not on Simple Icons — find
 chanel,Chanel,Foreign,Fashion,Pending,Not on Simple Icons — find SVG elsewhere
 prada,Prada,Foreign,Fashion,Pending,Not on Simple Icons — find SVG elsewhere
 burberry,Burberry,Foreign,Fashion,Pending,Not on Simple Icons — find SVG elsewhere
-lacoste,Lacoste,Foreign,Fashion,Done,Wikimedia Commons (Lacoste wordmark 2011 #1C8740)
+lacoste,Lacoste,Foreign,Fashion,Pending,Removed from pool: current asset was wordmark-only; needs clean crocodile symbol SVG
 tommy-hilfiger,Tommy Hilfiger,Foreign,Fashion,Pending,Not on Simple Icons — find SVG elsewhere
 calvin-klein,Calvin Klein,Foreign,Fashion,Pending,Not on Simple Icons — find SVG elsewhere
 loreal,L'Oreal,Foreign,Cosmetics,Pending,Not on Simple Icons — find SVG elsewhere
@@ -166,12 +166,12 @@ shiseido,Shiseido,Foreign,Cosmetics,Done,Wikimedia Commons (Shiseido logo #E6001
 estee-lauder,Estee Lauder,Foreign,Cosmetics,Pending,Not on Simple Icons — find SVG elsewhere
 clinique,Clinique,Foreign,Cosmetics,Done,Wikimedia Commons (Clinique logo #01A6D1)
 nivea,Nivea,Foreign,Cosmetics,Done,Wikimedia Commons (NIVEA logo 2021 #003E7E)
-dove,Dove,Foreign,Cosmetics,Done,Wikimedia Commons (Dove dove #0073C6)
+dove,Dove,Foreign,Cosmetics,Done,Wikimedia Commons symbol-only dove; recolored to Dove gold #D5B470
 olay,Olay,Foreign,Cosmetics,Pending,Not on Simple Icons — find SVG elsewhere
-pepsi,Pepsi,Foreign,Beverage,Done,VectorLogoZone (single-color blue variant #004B93)
+pepsi,Pepsi,Foreign,Beverage,Skipped,Multi-color brand identity (current Pepsi globe uses multiple colors) - removed from single-color pool
 nestle,Nestle,Foreign,FMCG,Pending,Not on Simple Icons — find SVG elsewhere
 pg,P&G,Foreign,FMCG,Pending,Not on Simple Icons — find SVG elsewhere
-heineken,Heineken,Foreign,Beverage,Done,Wikimedia Commons (Heineken Logo #006A36)
+heineken,Heineken,Foreign,Beverage,Done,Symbol-only red star extracted from Heineken logo; wordmark removed
 tiger-beer,Tiger Beer,Foreign,Beverage,Pending,Not on Simple Icons — find SVG elsewhere
 saigon-beer,Saigon Beer,Vietnam,Beverage,Pending,Not on Simple Icons — find SVG elsewhere
 hanoi-beer,Hanoi Beer,Vietnam,Beverage,Pending,Not on Simple Icons — find SVG elsewhere

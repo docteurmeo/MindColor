@@ -1,7 +1,7 @@
 [
   {
     "id": "acb",
-    "name": "Acb",
+    "name": "ACB",
     "color": "#001689",
     "difficulty": 2
   },
@@ -79,7 +79,7 @@
   },
   {
     "id": "dc",
-    "name": "Dc",
+    "name": "DC Comics",
     "color": "#0067B1",
     "difficulty": 2
   },
@@ -110,7 +110,7 @@
   {
     "id": "dove",
     "name": "Dove",
-    "color": "#0073C6",
+    "color": "#D5B470",
     "difficulty": 2
   },
   {
@@ -144,12 +144,6 @@
     "difficulty": 2
   },
   {
-    "id": "fpt",
-    "name": "Fpt",
-    "color": "#EE7423",
-    "difficulty": 2
-  },
-  {
     "id": "grab",
     "name": "Grab",
     "color": "#00B14F",
@@ -158,7 +152,7 @@
   {
     "id": "heineken",
     "name": "Heineken",
-    "color": "#006A36",
+    "color": "#E30613",
     "difficulty": 2
   },
   {
@@ -222,12 +216,6 @@
     "difficulty": 2
   },
   {
-    "id": "lacoste",
-    "name": "Lacoste",
-    "color": "#1C8740",
-    "difficulty": 2
-  },
-  {
     "id": "lenovo",
     "name": "Lenovo",
     "color": "#E2231A",
@@ -271,7 +259,7 @@
   },
   {
     "id": "mobifone",
-    "name": "Mobifone",
+    "name": "MobiFone",
     "color": "#E2231A",
     "difficulty": 2
   },
@@ -307,7 +295,7 @@
   },
   {
     "id": "nivea",
-    "name": "Nivea",
+    "name": "NIVEA",
     "color": "#003E7E",
     "difficulty": 2
   },
@@ -327,12 +315,6 @@
     "id": "paramount",
     "name": "Paramount",
     "color": "#0064FF",
-    "difficulty": 2
-  },
-  {
-    "id": "pepsi",
-    "name": "Pepsi",
-    "color": "#004B93",
     "difficulty": 2
   },
   {
@@ -367,14 +349,8 @@
   },
   {
     "id": "realme",
-    "name": "Realme",
+    "name": "realme",
     "color": "#FFC900",
-    "difficulty": 2
-  },
-  {
-    "id": "red-bull",
-    "name": "Red Bull",
-    "color": "#DB0A40",
     "difficulty": 2
   },
   {
@@ -480,12 +456,6 @@
     "difficulty": 2
   },
   {
-    "id": "tpbank",
-    "name": "Tpbank",
-    "color": "#FBB413",
-    "difficulty": 2
-  },
-  {
     "id": "trello",
     "name": "Trello",
     "color": "#0052CC",
@@ -511,7 +481,7 @@
   },
   {
     "id": "uniqlo",
-    "name": "Uniqlo",
+    "name": "UNIQLO",
     "color": "#FF0000",
     "difficulty": 2
   },
@@ -522,21 +492,9 @@
     "difficulty": 2
   },
   {
-    "id": "vietcombank",
-    "name": "Vietcombank",
-    "color": "#007749",
-    "difficulty": 2
-  },
-  {
     "id": "vietjet",
-    "name": "Vietjet",
+    "name": "VietJet",
     "color": "#EE2A36",
-    "difficulty": 2
-  },
-  {
-    "id": "vietnam-airlines",
-    "name": "Vietnam Airlines",
-    "color": "#234E72",
     "difficulty": 2
   },
   {
@@ -559,7 +517,7 @@
   },
   {
     "id": "vinaphone",
-    "name": "Vinaphone",
+    "name": "VinaPhone",
     "color": "#005EA6",
     "difficulty": 2
   },
@@ -583,13 +541,13 @@
   },
   {
     "id": "vivo",
-    "name": "Vivo",
+    "name": "vivo",
     "color": "#415FFF",
     "difficulty": 2
   },
   {
     "id": "vng",
-    "name": "Vng",
+    "name": "VNG",
     "color": "#005CAA",
     "difficulty": 2
   },
@@ -603,12 +561,6 @@
     "id": "volkswagen",
     "name": "Volkswagen",
     "color": "#151F5D",
-    "difficulty": 2
-  },
-  {
-    "id": "vpbank",
-    "name": "Vpbank",
-    "color": "#009A4E",
     "difficulty": 2
   },
   {

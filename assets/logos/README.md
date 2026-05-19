@@ -21,7 +21,7 @@
 ## Khi nào dùng override
 
 Auto-detect có thể sai trong các trường hợp:
-- Logo nhiều màu → script đoán màu sai
+- Logo hợp lệ nhưng màu chính cần override theo brand guideline
 - Tên hiển thị muốn khác filename (vd: filename `x` nhưng muốn hiển thị `X (Twitter)`)
 - Muốn set độ khó
 
@@ -46,8 +46,21 @@ Key là `id` (= tên file không có `.svg`). Chỉ cần ghi field nào muốn 
 
 - **Định dạng:** SVG (không hỗ trợ PNG/JPG)
 - **Tên file:** chữ thường + gạch ngang (không có khoảng trắng, dấu, ký tự đặc biệt)
-- **Nội dung:** logo bất kỳ — multi-color cũng được (game dùng CSS filter để chuyển trắng đen)
+- **Nội dung:** single-color brand asset only. Brand identity thực tế nhiều màu (Pepsi, Google, BMW, TPBank, FPT...) không đưa vào pool.
+- **Ưu tiên symbol-only:** nếu brand có cả symbol và wordmark, dùng symbol/icon. Nếu chưa tìm được SVG symbol-only sạch thì để `Pending` trong `BRANDS_TRACKING.csv`, không dùng lockup/wordmark tạm.
+- **Fill:** root `<svg>` phải có `fill="#RRGGBB"` là màu chính thức dùng để đố trong game. Không để nhiều `fill`, `stroke`, gradient, style block, embedded raster image.
 - **Kích thước:** không giới hạn, game tự scale
+
+## Audit trước khi commit
+
+Chạy:
+
+```bash
+node scripts/build-brands.mjs
+node scripts/audit-brands.mjs
+```
+
+Kết quả hợp lệ: `flaggedCount: 0`. Nếu có flag như `missing-file`, `multi-hex-in-file`, `raster-image`, `style-block`, `root-fill-vs-json` thì sửa hoặc loại brand khỏi pool.
 
 ## Lưu ý
 

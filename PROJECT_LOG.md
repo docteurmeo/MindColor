@@ -430,12 +430,57 @@ Content vibe lock — note rule trong `README.md` để session sau không lùi 
 - `css/style.css` — `@keyframes pop-in-scale` override cho `.final-score.webgl-score` (fix flash)
 - `js/scoring.js` — rewrite hue analysis + 10 industry categories với tone mass-market
 
+### Session 8.5 — Full brand audit cleanup (2026-05-19)
+
+User yêu cầu double-check toàn bộ brand theo 4 trục: logo/màu mới nhất, symbol-only nếu brand có cả symbol + chữ, brand guideline single-color vs multi-color, và lỗi SVG trống/không hiện.
+
+**Kết quả audit cơ học ban đầu:**
+- `data/brands.json` và `assets/logos/*.svg` khớp 111/111, không thiếu file.
+- Flag phát hiện:
+  - `tpbank`: JSON color `#FBB413` lệch root fill `#5E308E`, SVG chứa nhiều màu purple/orange/yellow.
+  - `vietcombank`: SVG có embedded raster image base64 + `<use>`, rủi ro mask/render.
+  - `pizza-hut`: SVG còn stroke màu phụ `#C70307`.
+  - `marvel`: SVG còn style block/metadata thừa.
+- Đối chiếu Simple Icons current data cho nhóm Simple Icons: phần lớn màu khớp. `pepsi`, `nintendo`, `xbox` không resolve rõ qua Simple Icons hiện tại nên coi là asset thủ công/cần kiểm riêng.
+
+**Quyết định cleanup:**
+- Loại khỏi pool bằng cách xoá SVG:
+  - `fpt` — brand guideline chính hãng yêu cầu logo 3 màu.
+  - `tpbank` — identity thực tế purple/orange/yellow, không hợp single-color game.
+  - `pepsi` — current Pepsi globe/identity multi-color.
+  - `red-bull` — bull mark thực tế red/yellow.
+  - `lacoste` — asset hiện tại là wordmark-only; cần crocodile symbol clean SVG.
+  - `vietnam-airlines` — asset hiện tại là wordmark-only; cần lotus symbol clean SVG.
+  - `vpbank` — asset hiện tại là full lockup; cần symbol-only SVG + color confirmation.
+  - `vietcombank` — asset hiện tại có embedded raster; cần clean vector symbol/logo asset.
+- Giữ nhưng sửa:
+  - `dove`: đổi sang symbol-only dove, màu Dove gold `#D5B470`.
+  - `heineken`: đổi sang red star-only `#E30613`, bỏ wordmark xanh.
+  - `marvel`: xoá style block/metadata thừa.
+  - `pizza-hut`: xoá stroke màu phụ, còn single root fill `#EE3424`.
+- Thêm override display name: `ACB`, `DC Comics`, `MobiFone`, `NIVEA`, `realme`, `UNIQLO`, `VietJet`, `VinaPhone`, `VNG`, `vivo`.
+
+**Audit tool mới:**
+- `scripts/audit-brands.mjs` đọc `data/brands.json` + `assets/logos/*.svg`, flag:
+  - missing file / no `<svg>` / no viewBox / no shape tags
+  - `<text>`, `<image>`, `<style>`
+  - nhiều hex trong file
+  - root fill lệch JSON
+  - nhiều fill attrs
+  - aspect ratio để hỗ trợ phát hiện wordmark/lockup
+
+**Kết quả sau cleanup:**
+- `node scripts/build-brands.mjs` rebuild pool còn **103 brand**.
+- `node scripts/audit-brands.mjs` trả `total: 103`, `flaggedCount: 0`.
+- `BRANDS_TRACKING.csv` summary hiện tại: Done 103, Skipped 27, Pending 49, Missing 22.
+- Rule mới được lock trong README chính và `assets/logos/README.md`: single-color only, ưu tiên symbol-only, không dùng lockup/wordmark tạm nếu chưa có symbol clean.
+
 ## Trạng thái hiện tại
 
 **Đã có:**
 - ✅ Home screen (mobile + desktop logo variants) — logo WebGL color field
 - ✅ Classic mode 10 round
-- ✅ **111 brand single-color** (sau audit multi-color identity của Session 8)
+- ✅ **103 brand single-color** (sau audit symbol-only / multi-color cleanup Session 8.5)
 - ✅ WebGL color field FX (regl.js + GLSL fragment shader) — logo Home + số % Final
 - ✅ Quip industry-specific mass-market vibe (rewrite Session 8, không jargon design/dev/cinephile)
 - ✅ Color picker Box + Hue (responsive, square trên mọi viewport)
@@ -481,7 +526,7 @@ mindcolor/
 │   ├── mindcolor-logo.svg           # Logo 2-line (mobile/portrait)
 │   ├── mindcolor-logo-desktop.svg   # Logo 1-line (desktop/landscape)
 │   └── logos/                       # Drop SVG vào đây
-│       ├── *.svg                    # 66 brand
+│       ├── *.svg                    # 103 brand hiện active
 │       ├── _overrides.json          # Override display name
 │       └── README.md
 ├── scripts/
@@ -489,12 +534,13 @@ mindcolor/
 │   ├── normalize-svg.mjs            # Clean SVG (viewBox + single fill + strip bg shape)
 │   ├── fetch-brands.mjs             # Batch pipeline Wikimedia search + download + normalize
 │   ├── brand-batch-{a..e}.json      # Manifest mẫu cho 5 batch đã chạy
+│   ├── audit-brands.mjs             # Audit SVG missing/rỗng/multi-color/raster/style/root fill lệch
 │   └── update-csv*.mjs              # Bulk-update BRANDS_TRACKING.csv
 ├── .github/workflows/
 │   └── build-brands.yml             # Auto-build on push to assets/logos/
 ├── server.js                        # Local dev server (Node thuần)
 ├── serve.bat                        # Windows launcher
-├── BRANDS_TRACKING.csv              # Tracking 113 brand (63 foreign + 50 VN)
+├── BRANDS_TRACKING.csv              # Tracking brand pool + skipped/pending/missing
 ├── PROJECT_LOG.md                   # File này
 └── README.md
 ```
@@ -522,7 +568,7 @@ mindcolor/
 
 - **Session 9:** Share grid + Share card PNG — enable button trên Final, wire `share.js` lên UI
 - **Session 10:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày, share grid riêng "Daily #N"
-- **Phase content:** ~30 brand `Pending` còn lại (trademark-restricted, cần download manual từ press kit từng brand)
+- **Phase content:** 49 brand `Pending` + 22 `Missing` còn lại (trademark-restricted hoặc cần SVG symbol-only/manual từ press kit từng brand)
 - **Phase polish:** Domain, OG meta tags, favicon, SEO, analytics (Plausible / Umami)
 - **Phase optional:** Sound effects, haptic feedback mobile
 

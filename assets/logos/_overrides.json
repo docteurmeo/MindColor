@@ -72,5 +72,15 @@
   "kfc":            { "name": "KFC" },
   "lg":             { "name": "LG" },
   "oppo":           { "name": "OPPO" },
-  "playstation":    { "name": "PlayStation" }
+  "playstation":    { "name": "PlayStation" },
+  "acb":            { "name": "ACB" },
+  "dc":             { "name": "DC Comics" },
+  "mobifone":       { "name": "MobiFone" },
+  "nivea":          { "name": "NIVEA" },
+  "realme":         { "name": "realme" },
+  "uniqlo":         { "name": "UNIQLO" },
+  "vietjet":        { "name": "VietJet" },
+  "vinaphone":      { "name": "VinaPhone" },
+  "vng":            { "name": "VNG" },
+  "vivo":           { "name": "vivo" }
 }
