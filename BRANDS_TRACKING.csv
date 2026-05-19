@@ -30,7 +30,7 @@ mozilla,Mozilla,Foreign,Tech,Done,Simple Icons
 netflix,Netflix,Foreign,Media,Done,Simple Icons
 netlify,Netlify,Foreign,Tech,Done,Simple Icons
 nvidia,NVIDIA,Foreign,Tech,Done,Simple Icons
-paypal,PayPal,Foreign,Finance,Done,Simple Icons
+paypal,PayPal,Foreign,Finance,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 pinterest,Pinterest,Foreign,Tech,Done,Simple Icons
 razer,Razer,Foreign,Tech,Done,Simple Icons
 reddit,Reddit,Foreign,Tech,Done,Simple Icons
@@ -93,7 +93,7 @@ the-coffee-house,The Coffee House,Vietnam,F&B,Missing,Manual download from theco
 cong-caphe,Cong Ca Phe,Vietnam,F&B,Missing,Manual download from congcaphe.com
 katinat,Katinat,Vietnam,F&B,Missing,Manual download from katinat.vn
 vietcombank,Vietcombank,Vietnam,Banking,Done,Wikimedia Commons (Vietcombank logo fixed #007749)
-bidv,BIDV,Vietnam,Banking,Done,Wikimedia Commons (Logo BIDV #008C44)
+bidv,BIDV,Vietnam,Banking,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 techcombank,Techcombank,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
 vpbank,VPBank,Vietnam,Banking,Done,Wikimedia Commons (VPBank logo #009A4E)
 mbbank,MB Bank,Vietnam,Banking,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
@@ -123,16 +123,16 @@ hermes,Hermes,Foreign,Fashion,Pending,Simple Icons slug points to wrong brand (l
 unilever,Unilever,Foreign,FMCG,Done,Simple Icons
 red-bull,Red Bull,Foreign,Beverage,Done,Simple Icons
 kfc,KFC,Foreign,F&B,Done,Simple Icons
-burger-king,Burger King,Foreign,F&B,Done,Simple Icons
+burger-king,Burger King,Foreign,F&B,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 paramount,Paramount,Foreign,Entertainment,Done,Simple Icons
 playstation,PlayStation,Foreign,Gaming,Done,Simple Icons
-google,Google,Foreign,Tech,Done,Simple Icons
+google,Google,Foreign,Tech,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 meta,Meta,Foreign,Tech,Done,Simple Icons
 lg,LG,Foreign,Tech,Done,Simple Icons
 oppo,OPPO,Foreign,Tech,Done,Simple Icons
 vivo,Vivo,Foreign,Tech,Done,Simple Icons
-bmw,BMW,Foreign,Auto,Done,Simple Icons
-audi,Audi,Foreign,Auto,Done,Simple Icons
+bmw,BMW,Foreign,Auto,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
+audi,Audi,Foreign,Auto,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 hyundai,Hyundai,Foreign,Auto,Done,Simple Icons
 yamaha,Yamaha,Foreign,Auto,Done,Simple Icons
 nike,Nike,Foreign,Fashion,Skipped,Simple Icons (monochrome)
@@ -180,14 +180,14 @@ carlsberg,Carlsberg,Foreign,Beverage,Pending,Not on Wikimedia (trademark/restric
 monster-energy,Monster Energy,Foreign,Beverage,Pending,Not on Wikimedia (trademark/restricted) — try official press kit
 sting,Sting,Vietnam,Beverage,Pending,Not on Simple Icons — find SVG elsewhere
 pizza-hut,Pizza Hut,Foreign,F&B,Done,Wikimedia Commons (Pizza Hut 2025 #EE3424)
-dominos,Domino's Pizza,Foreign,F&B,Done,Wikimedia Commons (Dominos pizza logo #E31837)
-subway,Subway,Foreign,F&B,Done,Wikimedia Commons (Subway 2016 logo #008C15)
+dominos,Domino's Pizza,Foreign,F&B,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
+subway,Subway,Foreign,F&B,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 lotteria,Lotteria,Foreign,F&B,Done,Wikimedia Commons (Lotteria logo 2024 #EC1C24)
-jollibee,Jollibee,Foreign,F&B,Done,Wikimedia Commons (Jollibee Foods Corporation #E11932)
+jollibee,Jollibee,Foreign,F&B,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 disney,Disney,Foreign,Entertainment,Done,VectorLogoZone (Disney signature #1A1F71 navy)
 marvel,Marvel,Foreign,Entertainment,Done,Wikimedia Commons (Marvel logo 2000-2012 #ED1D24)
 warner-bros,Warner Bros,Foreign,Entertainment,Pending,Not on Simple Icons — find SVG elsewhere
-pixar,Pixar,Foreign,Entertainment,Done,Wikimedia Commons (Pixar logo cropped #0090D5)
+pixar,Pixar,Foreign,Entertainment,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 universal,Universal,Foreign,Entertainment,Pending,Not on Simple Icons — find SVG elsewhere
 dc,DC Comics,Foreign,Entertainment,Done,Wikimedia Commons (DC Comics logo #0067B1)
 nintendo,Nintendo,Foreign,Gaming,Done,Wikimedia Commons (Nintendo.svg #E60012)
@@ -195,7 +195,7 @@ xbox,Xbox,Foreign,Gaming,Done,Wikimedia Commons (Xbox logo 2019 #107C10)
 microsoft,Microsoft,Foreign,Tech,Skipped,VLZ has 4-color squares — not single-color (game requires single color per brand)
 amazon,Amazon,Foreign,E-commerce,Done,VectorLogoZone (Amazon icon, smile arrow #FF9900)
 realme,Realme,Foreign,Tech,Done,Wikimedia Commons (Realme 7 logo #FFC900)
-lazada,Lazada,Foreign,E-commerce,Done,Wikimedia Commons (Lazada 2019 #0E1A8B)
+lazada,Lazada,Foreign,E-commerce,Skipped,Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game
 circle-k,Circle K,Foreign,Retail,Pending,Not on Simple Icons — find SVG elsewhere
 family-mart,FamilyMart,Foreign,Retail,Pending,Not on Simple Icons — find SVG elsewhere
 gs25,GS25,Foreign,Retail,Pending,Not on Simple Icons — find SVG elsewhere

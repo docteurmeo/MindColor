@@ -318,6 +318,18 @@ html[data-theme="dark"]  .theme-toggle-label.label-light { opacity: 0; }
   height: clamp(72px, 20dvh, 200px);
   overflow: hidden;
 }
+/* Override pop-in: skip the opacity track so overlay var(--bg) stays fully
+   opaque throughout the entrance — otherwise the canvas color flashes
+   through the semi-transparent overlay during fade-in. */
+.final-score.webgl-score {
+  animation: pop-in-scale 700ms var(--ease-spring) 120ms both;
+}
+@keyframes pop-in-scale {
+  0%   { transform: scale(.6);  }
+  60%  { transform: scale(1.08); }
+  100% { transform: scale(1);   }
+}
+
 .webgl-score canvas[data-webgl-color],
 .webgl-score-overlay {
   position: absolute;

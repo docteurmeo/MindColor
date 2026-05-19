@@ -36,21 +36,9 @@
     "difficulty": 2
   },
   {
-    "id": "audi",
-    "name": "Audi",
-    "color": "#BB0A30",
-    "difficulty": 2
-  },
-  {
     "id": "behance",
     "name": "Behance",
     "color": "#1769FF",
-    "difficulty": 2
-  },
-  {
-    "id": "bidv",
-    "name": "Bidv",
-    "color": "#008C44",
     "difficulty": 2
   },
   {
@@ -63,18 +51,6 @@
     "id": "bitcoin",
     "name": "Bitcoin",
     "color": "#F7931A",
-    "difficulty": 2
-  },
-  {
-    "id": "bmw",
-    "name": "BMW",
-    "color": "#0066B1",
-    "difficulty": 2
-  },
-  {
-    "id": "burger-king",
-    "name": "Burger King",
-    "color": "#D62300",
     "difficulty": 2
   },
   {
@@ -132,12 +108,6 @@
     "difficulty": 2
   },
   {
-    "id": "dominos",
-    "name": "Dominos",
-    "color": "#E31837",
-    "difficulty": 2
-  },
-  {
     "id": "dove",
     "name": "Dove",
     "color": "#0073C6",
@@ -177,12 +147,6 @@
     "id": "fpt",
     "name": "Fpt",
     "color": "#EE7423",
-    "difficulty": 2
-  },
-  {
-    "id": "google",
-    "name": "Google",
-    "color": "#4285F4",
     "difficulty": 2
   },
   {
@@ -246,12 +210,6 @@
     "difficulty": 2
   },
   {
-    "id": "jollibee",
-    "name": "Jollibee",
-    "color": "#E11932",
-    "difficulty": 2
-  },
-  {
     "id": "kfc",
     "name": "KFC",
     "color": "#F40027",
@@ -267,12 +225,6 @@
     "id": "lacoste",
     "name": "Lacoste",
     "color": "#1C8740",
-    "difficulty": 2
-  },
-  {
-    "id": "lazada",
-    "name": "Lazada",
-    "color": "#FF9200",
     "difficulty": 2
   },
   {
@@ -378,12 +330,6 @@
     "difficulty": 2
   },
   {
-    "id": "paypal",
-    "name": "PayPal",
-    "color": "#002991",
-    "difficulty": 2
-  },
-  {
     "id": "pepsi",
     "name": "Pepsi",
     "color": "#004B93",
@@ -393,12 +339,6 @@
     "id": "pinterest",
     "name": "Pinterest",
     "color": "#BD081C",
-    "difficulty": 2
-  },
-  {
-    "id": "pixar",
-    "name": "Pixar",
-    "color": "#0090D5",
     "difficulty": 2
   },
   {
@@ -513,12 +453,6 @@
     "id": "stripe",
     "name": "Stripe",
     "color": "#635BFF",
-    "difficulty": 2
-  },
-  {
-    "id": "subway",
-    "name": "Subway",
-    "color": "#008C15",
     "difficulty": 2
   },
   {

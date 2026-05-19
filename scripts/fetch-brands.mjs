@@ -129,7 +129,8 @@ function normalize(raw, brandColor, brandName) {
   svgOpen = svgOpen.replace(/\sfill="[^"]*"/gi, "");
   s = s.replace(/<svg\b[^>]*>/, svgOpen);
 
-  // Strip full-viewBox <rect> backgrounds (Nintendo bug).
+  // Strip full-viewBox background shapes (Nintendo rect, Nivea circle).
+  // Detects <rect>, <circle>, <ellipse> that cover ≥95% of viewBox area.
   const vbMatch = s.match(/viewBox="([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)"/);
   if (vbMatch) {
     const vbW = parseFloat(vbMatch[3]);
@@ -137,11 +138,18 @@ function normalize(raw, brandColor, brandName) {
     s = s.replace(/<rect\b[^>]*?\/>/gi, (m) => {
       const w = m.match(/\bwidth="([\d.]+)"/);
       const h = m.match(/\bheight="([\d.]+)"/);
-      if (w && h) {
-        const rw = parseFloat(w[1]);
-        const rh = parseFloat(h[1]);
-        if (rw >= vbW * 0.95 && rh >= vbH * 0.95) return "";
-      }
+      if (w && h && parseFloat(w[1]) >= vbW * 0.95 && parseFloat(h[1]) >= vbH * 0.95) return "";
+      return m;
+    });
+    s = s.replace(/<circle\b[^>]*?\/>/gi, (m) => {
+      const r = m.match(/\br="([\d.]+)"/);
+      if (r && parseFloat(r[1]) >= Math.min(vbW, vbH) * 0.45) return "";
+      return m;
+    });
+    s = s.replace(/<ellipse\b[^>]*?\/>/gi, (m) => {
+      const rx = m.match(/\brx="([\d.]+)"/);
+      const ry = m.match(/\bry="([\d.]+)"/);
+      if (rx && ry && parseFloat(rx[1]) >= vbW * 0.45 && parseFloat(ry[1]) >= vbH * 0.45) return "";
       return m;
     });
   }

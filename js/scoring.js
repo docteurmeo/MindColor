@@ -364,56 +364,56 @@ const Scoring = (() => {
     },
     gaming: {
       match: [
-        "Hai chỉ số khớp — chắc setup phòng bạn có ít nhất 3 món gắn LED hệ {brand}.",
-        "Chroma + value bám sát — đây là level đã từng cài game của {brand} trong launch day không cần đọc patch note.",
+        "Hai chỉ số khớp — chắc setup phòng bạn có ít nhất 3 món gắn LED ăn theo hệ {brand}.",
+        "Chroma + value bám sát — level cày game {brand} từ ngày ra mắt không cần đọc patch note hỏi bạn bè.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} dưới ánh LED RGB phòng gaming chứ không phải official press kit.",
-        "Độ rực lệch {absSat}% — vibe {brand} đang chạy trong stream của một creator chỉnh saturation +50.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} dưới ánh LED RGB phòng gaming chứ không phải press kit chuẩn.",
+        "Độ rực lệch {absSat}% — vibe {brand} trong stream của creator chỉnh saturation lên cho lung linh.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} của bạn xuất hiện ở cảnh boss fight phòng tối, không phải splash screen.",
-        "Độ sáng off {absLight}% — đây là {brand} sau 6 tiếng cày game, võng mạc đã bị ám tone phòng tối.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} ở cảnh boss fight phòng tối, không phải splash screen sáng.",
+        "Độ sáng off {absLight}% — đây là {brand} sau 6 tiếng cày game khuya, mắt đã bị ám tone phòng tối.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, đây là skin custom mod của một fan trên Nexus chứ không phải IP chính chủ.",
-        "Trượt cả 2 trục — phiên bản này nhìn như fanart của {brand} trên DeviantArt thời 2012.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, đây là skin mod fan-made chứ không phải IP chính chủ.",
+        "Trượt cả 2 trục — phiên bản này nhìn như fanart cộng đồng vẽ lại {brand}, không phải art chính thức.",
       ],
     },
     "stream-video": {
       match: [
-        "Hai chỉ số khớp — chắc bạn đã pause intro {brand} đủ chậm để đếm cả số khung hình rồi.",
-        "Chroma + value bám brand — kiểu người mở app {brand} ngay khi vừa rửa mặt buổi tối.",
+        "Hai chỉ số khớp — bạn thuộc dạng cuối ngày mở {brand} lên là phản xạ, không cần đắn đo coi gì.",
+        "Chroma + value bám brand — chắc tài khoản {brand} bạn xem đủ phim để 'because you watched' luôn đúng gu.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — phiên bản {brand} của bạn giống banner autoplay sau khi xem xong 1 series 10 tập.",
-        "Độ rực lệch {absSat}% — đây là {brand} trên TV đang bật chế độ \"Movie\" thay vì \"Standard\".",
+        "Chroma {sDir} brand {absSat}% — phiên bản {brand} qua banner autoplay sau khi xem xong cả series 10 tập liền.",
+        "Độ rực lệch {absSat}% — đây là {brand} trên TV bật chế độ 'Movie' hoặc 'Vivid' chứ không phải mặc định.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — vibe {brand} trên màn laptop bật night light gần 100%.",
-        "Độ sáng off {absLight}% — kiểu mở {brand} lúc tắt đèn, ánh sáng từ TV nhuộm cả tường.",
+        "Value lệch {absLight}% ({lDir}) — vibe {brand} trên laptop bật night light gần 100% lúc cày phim khuya.",
+        "Độ sáng off {absLight}% — kiểu mở {brand} lúc tắt đèn phòng, ánh sáng từ TV hắt lên tường nhuộm tone.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, intro {brand} bị áp nhầm LUT của một phim noir thập niên 70.",
-        "Trượt cả 2 trục — đây là {brand} bản người xem ngủ gật 4 tiếng, mở mắt ra ám tone hết.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, intro {brand} qua bản phim tải lậu chất lượng 480p.",
+        "Trượt cả 2 trục — đây là {brand} bản người xem ngủ gật 4 tiếng, mở mắt ra tone ám hết.",
       ],
     },
     "stream-audio": {
       match: [
-        "Hai chỉ số khớp — Spotify Wrapped của bạn chắc top 0.1% listener của {brand}.",
-        "Chroma + value bám sát — kiểu mở app {brand} đầu tiên ngay khi cắm tai nghe.",
+        "Hai chỉ số khớp — bạn mở {brand} đầu tiên ngay khi vừa cắm tai nghe lên xe.",
+        "Chroma + value bám sát — chắc Wrapped cuối năm của bạn đứng top fan của vài nghệ sĩ trên {brand}.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — vibe {brand} bị nhuộm theo album cover Lana Del Rey bạn đang nghe.",
-        "Độ rực lệch {absSat}% — đây là {brand} ở chế độ Now Playing fullscreen, gradient lan ra tất cả.",
+        "Chroma {sDir} brand {absSat}% — vibe {brand} bị nhuộm theo cover album bạn đang nghe lúc đó.",
+        "Độ rực lệch {absSat}% — đây là {brand} ở chế độ phát toàn màn hình, gradient lan ra ám hết.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — đây là {brand} sau khi bạn nhìn equalizer 2 tiếng, võng mạc đã bị bias.",
-        "Độ sáng off {absLight}% — vibe {brand} mở trong chế độ ban đêm, mọi thứ chùng xuống nửa tông.",
+        "Value lệch {absLight}% ({lDir}) — đây là {brand} qua màn điện thoại chế độ ban đêm, mọi thứ chùng xuống.",
+        "Độ sáng off {absLight}% — vibe {brand} mở trong widget khóa màn hình lúc nghe nhạc trên giường.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} bản remix lofi 24/7 livestream YouTube.",
-        "Trượt cả 2 trục — phiên bản này giống cover một podcast indie hơn là app gốc của {brand}.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} bản share trên story bị Instagram nén tone.",
+        "Trượt cả 2 trục — phiên bản này nhìn như icon app reup ở store giả lập hơn là app chính chủ.",
       ],
     },
     social: {
@@ -472,128 +472,128 @@ const Scoring = (() => {
     },
     saas: {
       match: [
-        "Hai chỉ số khớp — bạn mở {brand} mỗi ngày như uống nước, đến mức favicon in vào võng mạc rồi.",
-        "Chroma + value bám brand — level đã từng tự custom theme {brand} bằng userstyle.",
+        "Hai chỉ số khớp — bạn mở {brand} mỗi ngày đủ để biết icon nằm chính giữa hay lệch phải trên thanh tab.",
+        "Chroma + value bám sát — level dân văn phòng thật sự, mở {brand} là phản xạ chứ không cần nghĩ.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} thu nhỏ thành favicon tab Chrome lúc bạn mở 47 tab.",
-        "Độ rực lệch {absSat}% — vibe {brand} của một dashboard chế độ compact, mọi thứ teo lại 60%.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} thu nhỏ thành favicon tab trình duyệt lúc bạn mở cả chục tab.",
+        "Độ rực lệch {absSat}% — vibe {brand} qua ảnh chụp màn hình share team Zalo đã nén bitrate.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua VS Code theme Dracula bật 14 tiếng/ngày.",
-        "Độ sáng off {absLight}% — đây là {brand} trên màn coding lúc 2h sáng deadline.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua màn hình laptop chế độ dark mode lúc làm muộn.",
+        "Độ sáng off {absLight}% — đây là {brand} trên màn dim 30% khi bạn họp xong tắt đèn nghỉ giải lao.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} sau khi user cài Dark Reader rồi nhớ nhầm bản gốc.",
-        "Trượt cả 2 trục — phiên bản {brand} bạn vừa render giống một skin Stylus tự custom hơn là UI official.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} qua một bản tutorial cũ chụp 4 năm trước.",
+        "Trượt cả 2 trục — phiên bản này giống một extension bên thứ ba đổi theme hơn là giao diện chính chủ {brand}.",
       ],
     },
     creative: {
       match: [
-        "Hai chỉ số khớp — designer thứ thiệt, hoặc ít nhất là người check {brand} trước cả khi check inbox.",
-        "Chroma + value bám brand — level người đã từng upload portfolio lên {brand} và bị từ chối phần \"work history\".",
+        "Hai chỉ số khớp — designer thứ thiệt, hoặc ít nhất là người mở {brand} mỗi ngày để xem inspiration.",
+        "Chroma + value bám brand — level người đã từng up portfolio lên {brand} và biết feed home hôm nay đang hot tone gì.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — kiểu này client của bạn sẽ reply email \"em xem lại tone giúp anh nhé\".",
-        "Độ rực lệch {absSat}% — đây là {brand} dưới một gradient overlay style featured shot ngàn like.",
+        "Chroma {sDir} brand {absSat}% — kiểu này sếp sẽ reply \"em xem lại tone giúp anh nhé\" trên Zalo.",
+        "Độ rực lệch {absSat}% — đây là {brand} sau khi bạn pass qua một filter Instagram trước khi đăng story.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua moodboard có overlay 40% navy ở trên cùng.",
-        "Độ sáng off {absLight}% — vibe {brand} chụp screenshot trong dark mode rồi paste vào Figma frame trắng.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua màn Macbook chỉnh độ sáng 40% trong phòng tối.",
+        "Độ sáng off {absLight}% — vibe {brand} chụp screenshot trong dark mode rồi paste lên slide nền trắng.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một \"unofficial rebrand\" trên Dribbble tag #conceptual.",
-        "Trượt cả 2 trục — phiên bản này nhìn như một bài kiểm tra tốt nghiệp ngành Graphic Design, không phải brand thật.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một bản rebrand nháp của fresher chưa qua review của sếp.",
+        "Trượt cả 2 trục — phiên bản này nhìn như bài tập trên trường, chưa đạt chuẩn brand thật.",
       ],
     },
     finance: {
       match: [
-        "Hai chỉ số khớp — bạn thuộc tệp người mở app {brand} trước cả khi chải răng buổi sáng.",
-        "Chroma + value bám sát — level người đã chụp screenshot portfolio {brand} khoe story Instagram.",
+        "Hai chỉ số khớp — bạn thuộc dạng nhớ rõ thẻ {brand} của mình mặt trước in màu gì.",
+        "Chroma + value bám sát — chắc bạn quẹt {brand} đủ nhiều để nhớ luôn cả font số trên thẻ.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — vibe {brand} của một ngày market đỏ rực toàn candle long.",
-        "Độ rực lệch {absSat}% — đây là {brand} sau một tuần FOMO, võng mạc bạn đã bị ám tone bull market.",
+        "Chroma {sDir} brand {absSat}% — vibe {brand} qua banner quảng cáo ở quầy ATM nắng chiếu xiên.",
+        "Độ rực lệch {absSat}% — đây là {brand} qua biển hiệu chi nhánh ngân hàng đã treo 5 năm chưa thay.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} của bạn ở chế độ dark mode app banking lúc 3h sáng check tỉ giá.",
-        "Độ sáng off {absLight}% — đây là {brand} qua màn hình điện thoại lúc trader đang trade trên giường, một mí mắt đã sụp.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} ở chế độ dark mode app ngân hàng lúc 11h đêm.",
+        "Độ sáng off {absLight}% — đây là {brand} qua màn điện thoại bật night light lúc check số dư.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} sau một đêm flash crash, ai cũng ám tone hết.",
-        "Trượt cả 2 trục — phiên bản {brand} của bạn giống screenshot một app scam được share trên Telegram group hơn là brand thật.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} qua ảnh chụp thẻ úp lên bàn ánh đèn vàng.",
+        "Trượt cả 2 trục — phiên bản {brand} của bạn giống một app scam clone hơn là brand thật.",
       ],
     },
     telco: {
       match: [
-        "Hai chỉ số khớp — bạn xài SIM {brand} đủ lâu để biết tổng đài tự động đọc câu nào nhanh câu nào chậm.",
-        "Chroma + value bám sát — level đã trả hoá đơn {brand} đủ 60 tháng liên tục, status loyal.",
+        "Hai chỉ số khớp — bạn xài SIM {brand} đủ lâu để thuộc luôn cả số tổng đài chăm sóc khách hàng.",
+        "Chroma + value bám sát — level người đã đóng cước {brand} liên tục 5 năm, status khách hàng VIP.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} qua tem dán SIM card đã đi qua 3 lần đổi máy.",
-        "Độ rực lệch {absSat}% — vibe {brand} của một biển hiệu cửa hàng đại lý cấp 3 ngoài tỉnh.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} qua tem dán SIM cũ đi theo bạn qua 3 đời điện thoại.",
+        "Độ rực lệch {absSat}% — vibe {brand} qua biển hiệu cửa hàng đại lý ngoài tỉnh đã phai nắng.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} dưới biển hiệu bật đèn LED trắng quá tay.",
-        "Độ sáng off {absLight}% — đây là {brand} qua tờ rơi gói cước in trên máy đời cũ, mực đã hơi nhạt.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} dưới biển hiệu bật đèn LED trắng quá tay buổi tối.",
+        "Độ sáng off {absLight}% — đây là {brand} qua tờ rơi gói cước in giấy mỏng đã phai mực.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} bản tỉnh chưa kịp cập nhật brand guideline 2 phiên bản.",
-        "Trượt cả 2 trục — phiên bản này nhìn như một quầy bán SIM trong nhà chờ xe khách, không phải store {brand} chuẩn.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, {brand} bản tỉnh lẻ chưa kịp cập nhật brand mới.",
+        "Trượt cả 2 trục — phiên bản này nhìn như quầy bán SIM trong nhà chờ xe khách, không phải store {brand} chuẩn.",
       ],
     },
     travel: {
       match: [
-        "Hai chỉ số khớp — bạn book {brand} đủ chuyến để được hệ thống tự upgrade VIP mà không cần đăng ký.",
-        "Chroma + value bám sát — level người để lại review 5 sao kèm 4 ảnh cho mỗi tài xế {brand}.",
+        "Hai chỉ số khớp — bạn đặt {brand} đủ nhiều để hệ thống tự upgrade VIP mà chưa cần đăng ký gì.",
+        "Chroma + value bám sát — chắc bạn để lại review 5 sao kèm 4 ảnh cho gần như mọi chuyến qua {brand}.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} qua áo đồng phục shipper sau ca giao 8 tiếng nắng gắt.",
-        "Độ rực lệch {absSat}% — vibe {brand} của sticker dán trên xe đối tác chạy app, không phải app icon official.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} qua áo đồng phục tài xế sau ca chạy 10 tiếng nắng gắt.",
+        "Độ rực lệch {absSat}% — vibe {brand} của sticker dán trên kính ô tô đối tác đã phai sau 2 mùa mưa.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua đèn báo trước cửa hàng đối tác buổi tối.",
-        "Độ sáng off {absLight}% — đây là {brand} ở chế độ in-app khi bạn đặt xe đêm 2h sáng về nhà.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua biển hiệu cửa hàng đối tác buổi tối ánh đèn vàng.",
+        "Độ sáng off {absLight}% — đây là {brand} ở chế độ trong app khi bạn đặt xe lúc 2h sáng về nhà.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một chi nhánh {brand} ở tỉnh lẻ chưa được brand refresh từ hồi mới ra mắt.",
-        "Trượt cả 2 trục — phiên bản {brand} của bạn giống giấc mơ về chuyến đi bạn book nháp xong huỷ.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, chi nhánh {brand} tỉnh lẻ chưa kịp brand refresh.",
+        "Trượt cả 2 trục — phiên bản {brand} của bạn giống nhớ lại chuyến đi từ 5 năm trước, tone đã mờ đi.",
       ],
     },
     fashion: {
       match: [
-        "Hai chỉ số khớp — bạn thuộc dạng đã thử áo {brand} đủ size để biết size nào đẹp khi mặc cao ngang đầu gối.",
-        "Chroma + value bám brand — level người đã so giá {brand} giữa outlet, store chính, và Vinted.",
+        "Hai chỉ số khớp — bạn thuộc dạng thử áo {brand} đủ size để biết hãng này lên đồ chuẩn hơn hay hụt size.",
+        "Chroma + value bám brand — level người đã so giá {brand} giữa outlet, store chính và app secondhand.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} qua áo seasonal sale đã giặt 30 lần, không phải look runway.",
-        "Độ rực lệch {absSat}% — vibe {brand} của một campaign capsule chỉ chạy ở Trung Đông, không có ở Việt Nam.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} qua áo bán sale đã giặt 30 lần, không phải đồ runway nguyên seal.",
+        "Độ rực lệch {absSat}% — vibe {brand} của một capsule chỉ chạy thị trường nước ngoài, chưa về Việt Nam.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua biển hiệu store buổi tối ánh đèn warm 2700K.",
-        "Độ sáng off {absLight}% — đây là {brand} qua một lookbook chụp golden hour ở Lisbon, lệch hết bias.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua biển hiệu store buổi tối ánh đèn vàng warm.",
+        "Độ sáng off {absLight}% — đây là {brand} qua lookbook chụp giờ chiều ánh mặt trời nghiêng, tone đã ám.",
       ],
       bothOff: [
         "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, đây là {brand} bản chợ Bến Thành, font giống mà tone bay xa.",
-        "Trượt cả 2 trục — phiên bản này hợp với một streetwear no-name copy lại form hơn là {brand} chính chủ.",
+        "Trượt cả 2 trục — phiên bản này hợp với một streetwear no-name copy form hơn là {brand} chính chủ.",
       ],
     },
     cosmetics: {
       match: [
-        "Hai chỉ số khớp — bạn thuộc dạng đứng trước counter {brand} đủ lâu để được SA hỏi \"chị làm da lâu chưa\".",
-        "Chroma + value bám brand — level người đã collect đủ travel-size {brand} qua các chuyến công tác.",
+        "Hai chỉ số khớp — bạn đứng trước counter {brand} đủ lâu để được nhân viên gọi tên dòng quen.",
+        "Chroma + value bám brand — level người đã sưu tầm đủ travel-size {brand} qua mỗi chuyến đi xa.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} qua một video review của beauty blogger filter Lightroom preset Pink Glow.",
-        "Độ rực lệch {absSat}% — vibe {brand} của hộp packaging đã ở trên kệ counter dưới đèn LED 6 tháng.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} qua video review của beauty blogger đã chỉnh filter cho hồng hào hơn.",
+        "Độ rực lệch {absSat}% — vibe {brand} của hộp đã nằm trên kệ tủ kính 6 tháng dưới đèn LED.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua một TVC quay studio ánh sáng beauty trắng pure.",
-        "Độ sáng off {absLight}% — đây là {brand} ở hộp đã bóc xài dở, bao bì hơi nhăn so với vỏ chưa khui.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua TVC studio ánh sáng trắng pure cho da căng bóng.",
+        "Độ sáng off {absLight}% — đây là {brand} ở hộp đã bóc xài, bao bì hơi nhăn so với vỏ nguyên seal.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, đây là {brand} dupe Trung Quốc bán livestream Shopee 199k freeship.",
-        "Trượt cả 2 trục — phiên bản này nhìn như {brand} bị fake bằng cách scan vỏ thật rồi in lại không đúng giấy.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, đây là {brand} dupe livestream Shopee 199k freeship.",
+        "Trượt cả 2 trục — phiên bản này nhìn như {brand} fake scan vỏ thật rồi in lại không đúng giấy.",
       ],
     },
     fmcg: {
@@ -634,20 +634,20 @@ const Scoring = (() => {
     },
     fastfood: {
       match: [
-        "Hai chỉ số khớp — bạn thuộc menu {brand} hơn thuộc lịch họp công ty, order khỏi cần app.",
-        "Chroma + value bám brand — level người đã ăn {brand} đủ để hiểu cake nào hot, cake nào đáng tránh.",
+        "Hai chỉ số khớp — bạn thuộc menu {brand} đến mức nhân viên chưa hỏi xong là bạn đọc đúng combo luôn.",
+        "Chroma + value bám brand — level người ăn {brand} đủ để biết món nào ngon món nào pass.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} qua biển hiệu cửa hàng đã phơi nắng 5 mùa hè ở mặt tiền quận 1.",
-        "Độ rực lệch {absSat}% — vibe {brand} của bao bì hộp burger đã ngấm dầu cheese sốt salsa.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} qua biển hiệu mặt tiền đường lớn đã phơi nắng 5 mùa hè.",
+        "Độ rực lệch {absSat}% — vibe {brand} của hộp giấy gói đồ ăn về đã ngấm dầu thấm sang lớp ngoài.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua biển bật đèn neon 11h đêm sau giờ làm về muộn.",
-        "Độ sáng off {absLight}% — đây là {brand} trong app order ở chế độ dark, mọi thứ trầm hơn nửa tông.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua biển bật đèn neon 11h đêm sau giờ tan ca về muộn.",
+        "Độ sáng off {absLight}% — đây là {brand} trong app đặt đồ ăn ở chế độ dark, tone trầm hơn nửa nấc.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một quán nhượng quyền cấp 3 ở tỉnh chưa được audit brand năm nay.",
-        "Trượt cả 2 trục — phiên bản này nhìn như một quán đặt tên na ná {brand}, font ăn theo nhưng tone không vượt qua được vòng QC.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một quán nhượng quyền ở tỉnh chưa được audit brand năm nay.",
+        "Trượt cả 2 trục — phiên bản này nhìn như quán đặt tên na ná {brand}, font ăn theo nhưng tone bay xa.",
       ],
     },
     entertainment: {
@@ -688,20 +688,20 @@ const Scoring = (() => {
     },
     os: {
       match: [
-        "Hai chỉ số khớp — bạn cầm điện thoại {brand} đủ lâu để mò ra cả setting ẩn không có trong tutorial.",
-        "Chroma + value bám brand — power user thực thụ, thuộc cả màu của boot screen lẫn animation fingerprint.",
+        "Hai chỉ số khớp — bạn cầm điện thoại {brand} đủ lâu để mò ra cả setting ẩn mà tutorial không nhắc.",
+        "Chroma + value bám brand — power user thực thụ, thuộc luôn màu boot screen và animation mở khoá.",
       ],
       satOff: [
-        "Chroma {sDir} brand {absSat}% — đây là {brand} qua icon launcher tự custom theme \"Neon\" trên Play Store.",
-        "Độ rực lệch {absSat}% — vibe {brand} của một version cũ 2 đời, trước khi hãng refresh palette.",
+        "Chroma {sDir} brand {absSat}% — đây là {brand} qua icon launcher tự cài theme từ store, không còn vibe mặc định.",
+        "Độ rực lệch {absSat}% — vibe {brand} của version cũ 2 đời, trước khi hãng refresh bộ icon.",
       ],
       lightOff: [
-        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua wallpaper dark mode mặc định lúc Always-On.",
-        "Độ sáng off {absLight}% — đây là {brand} trên màn điện thoại bị auto-brightness giảm còn 20% giữa rạp tối.",
+        "Value lệch {absLight}% ({lDir}) — phiên bản {brand} qua wallpaper dark mode mặc định lúc màn hình tự sáng nhẹ.",
+        "Độ sáng off {absLight}% — đây là {brand} trên màn điện thoại bị auto-giảm còn 20% giữa rạp chiếu phim tối.",
       ],
       bothOff: [
-        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một bản custom ROM cộng đồng modder XDA tự build.",
-        "Trượt cả 2 trục — phiên bản này nhìn như một fork community của {brand} chứ không phải bản gốc do team hãng release.",
+        "Lệch kép {sDir} {absSat}% / {lDir} {absLight}% — mood {mood}, một bản ROM cộng đồng tự build chia sẻ trên forum.",
+        "Trượt cả 2 trục — phiên bản này nhìn như một bản chế cộng đồng chứ không phải bản chính chủ hãng release.",
       ],
     },
   };
@@ -752,41 +752,41 @@ const Scoring = (() => {
 
     if (hueD < 5) {
       hueLines.push(
-        `Hue gần như khớp tuyệt đối — sai số chỉ ${hueD.toFixed(1)}° trên vòng hue 360°, mức mà ngay cả các tool calibrate màu chuyên dụng cũng coi là "match".`,
-        `Tông màu rơi đúng vào dải ${bName} của brand với độ lệch dưới 5° — tức là ở khoảng mà mắt người bình thường gần như không phân biệt được khác biệt.`,
-        `Bạn neo đúng centroid hue của brand (chênh ${hueD.toFixed(1)}°), cho thấy não đã ghi nhớ vị trí chính xác của màu này trên color wheel.`,
+        `Tông trúng gần như tuyệt đối — sai chỉ ${hueD.toFixed(1)}° trên bánh xe màu 360°. Mắt thường không phân biệt nổi mức này.`,
+        `Bạn neo đúng tông ${bName} của brand, lệch dưới 5°. Não bạn đã ghi đúng vị trí màu này.`,
+        `Hue khớp gần như hoàn hảo (${hueD.toFixed(1)}°) — kiểu nhìn logo cái là não bật ngay đúng màu.`,
       );
     } else if (hueD < 12) {
-      const dirText = shift.dir === "cw" ? `ngả nhẹ về phía ${neighborHue(bh, "cw")}` : `ngả nhẹ về phía ${neighborHue(bh, "ccw")}`;
+      const dirText = shift.dir === "cw" ? `ngả nhẹ phía ${neighborHue(bh, "cw")}` : `ngả nhẹ phía ${neighborHue(bh, "ccw")}`;
       hueLines.push(
-        `Hue lệch ~${Math.round(hueD)}° — bạn đang ${dirText} so với ${bName} chuẩn của brand. Đây là sai số rất nhỏ, gần ngưỡng JND (Just-Noticeable Difference) khoảng 10° trên hue wheel.`,
-        `Tông nằm cùng họ ${bName} nhưng bị kéo ${dirText} một chút. Trong workflow thực tế, sai số ${Math.round(hueD)}° vẫn nằm trong dung sai của hầu hết spec brand guideline.`,
-        `Bạn chọn cùng nhánh ${bName} với brand, nhưng dịch ${Math.round(hueD)}° (${dirText}) — đủ để designer khó tính nhận ra trên monitor calibrate, nhưng người dùng đại trà sẽ không phân biệt.`,
+        `Hue lệch ~${Math.round(hueD)}° — bạn ${dirText} so với ${bName} chuẩn. Sai nhẹ thôi, mắt người thường khó bắt.`,
+        `Cùng họ ${bName} với brand nhưng kéo ${dirText} một chút. Vẫn trong khoảng chấp nhận được.`,
+        `Bạn chọn đúng nhánh ${bName}, chỉ dịch ${Math.round(hueD)}° (${dirText}). Designer khó tính mới phát hiện, còn user thường thì không.`,
       );
     } else if (hueD < 25) {
       const dirText = shift.dir === "cw" ? neighborHue(bh, "cw") : neighborHue(bh, "ccw");
       hueLines.push(
-        `Hue lệch ${Math.round(hueD)}° về phía ${dirText} — đã vượt ngưỡng JND, mắt thường có thể nhận ra hai màu thuộc hai "tâm" khác nhau dù vẫn cùng họ.`,
-        `Bạn chọn một biến thể ${uName} pha ${dirText}, trong khi brand neo ở ${bName} thuần. Độ lệch ${Math.round(hueD)}° thường bị bắt lỗi trong quy trình QA màu in.`,
         `Tông bị "drift" ${Math.round(hueD)}° sang ${dirText} — đây là lỗi phổ biến khi não nhớ màu theo cảm giác (warm/cool) thay vì hue chính xác.`,
+        `Bạn pick ${uName} pha chút ${dirText}, brand thì là ${bName} thuần. Lệch ${Math.round(hueD)}° — mắt người vẫn bắt được khác biệt.`,
+        `Cùng họ ${bName} với brand nhưng lệch ${Math.round(hueD)}°. Cảm giác như nhớ đúng vibe nhưng sai một chút sắc độ.`,
       );
     } else if (hueD < 50) {
       hueLines.push(
-        `Hue lệch ${Math.round(hueD)}° — bạn đã chuyển sang nhánh ${uName}, trong khi brand thuộc nhánh ${bName}. Khoảng cách này tương đương việc nhầm "đỏ-cam" với "vàng" trên color wheel.`,
-        `Bạn rẽ hướng sang ${uName} (chênh ${Math.round(hueD)}° so với ${bName} của brand) — đây là sai số đủ lớn để branding team yêu cầu chỉnh sửa nếu xuất hiện trong asset chính thức.`,
-        `Cách brand color tới ${Math.round(hueD)}° trên hue wheel: brand neo ở ${bName}, bạn pick ở vùng ${uName}. Có thể bạn nhớ logo qua màu của campaign cũ thay vì palette hiện tại.`,
+        `Hue lệch ${Math.round(hueD)}° — bạn rẽ sang ${uName}, brand là ${bName}. Như nhầm "đỏ-cam" với "vàng" trên bánh xe màu vậy.`,
+        `Lệch ${Math.round(hueD)}° là khá xa — có thể bạn đang nhớ logo qua một campaign cũ hoặc lẫn với một brand khác.`,
+        `Cách brand ${Math.round(hueD)}° trên bánh xe màu: brand neo ở ${bName}, bạn pick ở ${uName}. Đủ để bị bắt lỗi nếu đem in.`,
       );
     } else if (hueD < 90) {
       hueLines.push(
-        `Hue lệch tới ${Math.round(hueD)}° — bạn chọn ${uName}, brand là ${bName}. Hai màu này thuộc hai phía khác nhau của color wheel và cho cảm giác hoàn toàn khác về temperature.`,
-        `Khoảng cách hue ${Math.round(hueD)}° là rất lớn — gần với mức "complementary mismatch" (~120°). Khả năng cao bạn đang lẫn brand này với một brand khác có palette gần giống.`,
-        `Bạn rời hẳn vùng ${bName} của brand sang vùng ${uName}. Lệch ${Math.round(hueD)}° thường xảy ra khi trí nhớ thị giác mã hoá màu theo "mood" thay vì hue cụ thể.`,
+        `Hue lệch tới ${Math.round(hueD)}° — bạn chọn ${uName}, brand là ${bName}. Hai bên đối lập nhau trên bánh xe, cảm giác hoàn toàn khác.`,
+        `Lệch ${Math.round(hueD)}° là rất xa — khả năng cao bạn đang lẫn brand này với một brand khác có màu na ná.`,
+        `Bạn rời hẳn vùng ${bName} sang ${uName}. Cỡ này là trí nhớ chỉ giữ được "mood" chứ không nhớ màu cụ thể nữa.`,
       );
     } else {
       hueLines.push(
-        `Hue lệch ${Math.round(hueD)}° — gần như đối nghịch trên color wheel. Bạn chọn ${uName} (temperature: ${uTemp}), brand thuộc ${bName} (temperature: ${bTemp}).`,
-        `Cách brand ${Math.round(hueD)}° là khoảng tương đương đối lập màu (complementary range). Đây không phải sai số nhớ — đây là confuse hoàn toàn với brand khác.`,
-        `Bạn pick ở phía ${uTemp} của wheel, brand neo ở phía ${bTemp} — lệch ${Math.round(hueD)}°, tương đương việc trả lời "đỏ" khi đáp án là "xanh dương".`,
+        `Hue lệch ${Math.round(hueD)}° — gần như đối nghịch trên bánh xe màu. Bạn pick ${uName} (${uTemp}), brand thì ${bName} (${bTemp}).`,
+        `Cách brand tới ${Math.round(hueD)}° — không phải nhớ sai, đây là lẫn hoàn toàn với brand khác rồi.`,
+        `Bạn pick phía ${uTemp} của bánh xe, brand ở phía ${bTemp} — như trả lời "đỏ" khi đáp án là "xanh dương" vậy.`,
       );
     }
 
