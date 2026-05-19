@@ -300,29 +300,161 @@ Source pen dùng **regl.js** (~25KB minified) + fragment shader GLSL ~30 dòng. 
 - `js/ui.js` — `animateFinalScore` + `renderFinal` gọi `MCWebGL.updateScoreMask`
 - `.gitignore` — NEW
 
+### Session 8 — Brand pool expansion + multi-color audit + quip mass-market rewrite
+
+**8.1 — BRANDS_TRACKING.csv encoding fix**
+
+User mở CSV trong Excel → cột F (notes) bị mojibake. Excel mặc định Windows-1252, không tự detect UTF-8 nếu thiếu BOM. Quyết định chuyển toàn bộ notes sang English — bền hơn BOM hack, không cần dặn user import wizard.
+
+**8.2 — Pilot batch (9 brand)**
+
+User chốt pilot 10 brand trước khi scale: 5 global (Pepsi, Nintendo, Microsoft, Amazon, Disney) + 5 VN (Vietcombank, Viettel, MoMo, VinFast, Vinamilk).
+
+- VectorLogoZone (`https://www.vectorlogo.zone/logos/<slug>/<slug>-icon.svg`) cover global brands phổ biến: Pepsi, Microsoft, Amazon, Disney
+- Wikimedia Commons API cover VN brands: search `?action=query&list=search&srsearch=<brand>+filetype:svg&srnamespace=6` → lấy filename → query `imageinfo` để lấy direct URL
+- Wikimedia rate limit nghiệt: file downloads từ `upload.wikimedia.org` cần delay ≥10s, không thì 429
+- MoMo không có trên Wikimedia → swap sang Vietnam Airlines
+- Microsoft skip vì 4-color squares (rule single-color)
+- 9/10 thành công
+
+Tạo **`scripts/normalize-svg.mjs`** xử lý SVG download xuống:
+- Strip XML decl, comments, metadata, Inkscape/sodipodi namespaces
+- Strip `<style>` blocks, CSS `fill:` trong style attr, per-element `fill` (giữ `fill="none"` cho cut-outs)
+- Force `fill="<brandHex>"` trên root `<svg>` (cascade xuống mọi shape)
+- Đặt `<title>` chuẩn
+- Detect full-viewBox `<rect>` background (Nintendo case) → strip
+
+**8.3 — Fix 20 brand `#888888` fallback (Session 6 dirt)**
+
+Sau pilot, user chơi thử báo BMW/Paramount màu `#888888` (gray xám). Rà soát thấy 20 brand từ Session 6 expansion đều fallback `#888888`. Cause: Simple Icons CDN đổi behavior — giờ trả SVG **không có** `fill=` attribute (dùng `currentColor`). Build script không extract được màu → fallback.
+
+Fix: re-fetch từ `cdn.simpleicons.org/<slug>` (giờ trả SVG có `fill="<brandHex>"` baked in). 6 slug không match đơn giản phải đoán lại:
+
+| Brand | Slug Simple Icons thật |
+|---|---|
+| burger-king | `burgerking` |
+| hm | `handm` |
+| new-balance | `newbalance` |
+| paramount | `paramountplus` |
+| red-bull | `redbull` |
+| yamaha | `yamahacorporation` |
+
+**8.4 — Edge cases bắt được khi re-fetch**
+
+- **Nintendo render thành hình chữ nhật**: SVG Wikimedia có `<rect>` full viewBox làm background. CSS mask dùng alpha → rect chiếm hết mask area. Fix: xoá rect element, chỉ giữ path chữ "Nintendo". Sync logic vào `normalize-svg.mjs` (full-viewBox shape detection).
+- **Puma monochrome**: Simple Icons đổi `puma` sang `#242B2F` (gần đen). Re-download từ Wikimedia "Puma-logo-(text)", recolor `#DC0817` (Puma red chính thức).
+- **Hermes wrong entity**: Simple Icons slug `hermes` → Hermes logistics/ERP brand (xanh `#0091CD`), không phải fashion Hermès (cam). Xoá khỏi pool, mark Pending — Wikimedia rate-limit nên không retry được trong session.
+- **Title-case xấu**: build script dùng `deriveName` naive title-case → "Bmw" / "Hm" / "Kfc" / "Lg" / "Oppo" / "Playstation". Thêm `_overrides.json` entries: BMW / H&M / KFC / LG / OPPO / PlayStation.
+
+**8.5 — Batch scale-up qua Wikimedia (37 brand mới)**
+
+Tạo **`scripts/fetch-brands.mjs`** — pipeline tự động đầy đủ:
+- Đọc manifest JSON: `[{id, name, search, color, file?}]`
+- Search Commons API → score filename theo heuristic (require search keywords trong filename; +3 nếu "logo", +2 nếu "wordmark", +2 nếu year-stamped recent; −5 "old/former/historic"; −3 "outline/monochrome/black"; −5 "city/district/province"; −2 "seal/crest/flag")
+- Disqualify match nếu không có keyword nào trong filename (Wikimedia full-text search trả false match khi brand name xuất hiện trong file description)
+- Per-brand specify `"file": "Foo.svg"` để bypass search khi cần
+- Download file với UA, retry 1 lần trên 429 sau 30s, throttle 12s giữa brands
+- Inline normalize (cùng logic `normalize-svg.mjs`)
+
+5 batches chạy (A–E):
+- **A** global: marvel, pizza-hut, dominos, subway, heineken, xbox, dc, pixar (8/10; carlsberg/monster-energy không có file đúng entity trên Commons)
+- **B** cosmetics/F&B: lotteria, clinique, nivea, dove, shiseido, lacoste, jollibee, lazada, realme (9/10; laneige không có)
+- **C** VN banks: bidv, vpbank, acb, tpbank, vietjet (5/10; techcombank, mbbank, sacombank, vib, agribank không có — trademark restricted)
+- **D** VN telco/tech: vinaphone, mobifone, vng, fpt (4/6; vnpt, tiki không có)
+- **E** VN retail/F&B: vingroup, highlands-coffee (2/8; vincom, vinhomes, vinpearl, phuc-long, masan không có)
+
+Bug bắt được trong batch flow:
+- **Monster Energy** match nhầm "6 icon B (Hungary).svg" và "Logo Die Monster AG.svg" (company Đức) → cải tiến filter: require keyword trong filename
+- **Carlsberg** match "Ny Carlsberg Glyptotek logo.svg" (bảo tàng) → cùng problem
+- **Vietnam Airlines** initial pilot dùng "Vietnam Airlines 2015 wordmark.svg" — wordmark thuần text, không có symbol lotus. Acceptable cho game vì color matters.
+- **Marvel** version 2000-2012 (search prioritize year), không phải logo hiện hành. Vẫn nhận diện được.
+
+**8.6 — Multi-color audit (user-triggered cleanup)**
+
+User test in-game báo: BIDV là logo cũ, Nivea không hiện chữ. Rà soát phát hiện:
+- **Nivea**: SVG có `<circle r="250">` (= full 500×500 viewBox) làm background. CSS mask alpha → toàn vòng tròn opaque, nuốt path chữ "NIVEA" bên trong. Fix: xoá circle element. Cập nhật `normalize-svg.mjs` + `fetch-brands.mjs` detect full-viewBox `<rect>` / `<circle>` / `<ellipse>` (≥95% area cho rect; r ≥ 45% min dimension cho circle; rx/ry ≥ 45% viewBox cho ellipse).
+- **BIDV**: Re-fetch "Logo Bidv mới.svg" (mới = new) → có 3 fills `#21409A` / `#ED1D24` / `#FFFFFF` (multi-color). Game không hỗ trợ → loại.
+- **PayPal**: User chỉ thẳng "PayPal thực tế có 2 màu nên cũng phải loại". Đặt thành rule chung: rà soát toàn bộ pool, brand nào identity thực tế là multi-color → loại.
+
+User confirm danh sách loại sau khi mình đề xuất 17 brand + 6 borderline:
+- **Loại (11)**: paypal, google, bmw, audi, burger-king, bidv, pixar, subway, dominos, jollibee, lazada
+- **Giữ (theo user explicit)**: visa, amazon, ford, whatsapp, snapchat, youtube, twitch, mcdonalds, honda, toyota, starbucks, tesla
+
+CSV mark `Skipped` cho 11 brand bị loại với reason "Multi-color brand identity (real-life logo uses 2+ colors) — not suitable for single-color guessing game".
+
+Pool: 122 → 111.
+
+**8.7 — Fix flash final score**
+
+User báo: khi vào final result, thấy "nháy" 1 container màu full trước khi WebGL nằm gọn trong số `%`.
+
+Root cause: `pop-in` keyframes của `.final-score` dùng `opacity: 0 → 1` + scale. Trong khi opacity < 1, overlay div `background: var(--bg)` cũng semi-transparent → canvas WebGL bên dưới rò ra trước khi overlay đủ opaque để che (canvas chỉ hiện qua hole của mask khi overlay fully opaque).
+
+Fix: tạo `@keyframes pop-in-scale` chỉ animate transform (không opacity), override cho `.final-score.webgl-score`. Overlay luôn 100% opaque ngay từ frame đầu → không leak canvas color. Animation entrance vẫn có hiệu ứng pop vì page-level `screen-enter` đã handle fade.
+
+**8.8 — Quip mass-market rewrite**
+
+User feedback: comment chi tiết một số brand chưa sát industry, một số quá khó hiểu với thị trường đại trà.
+
+Audit + rewrite **hue analysis** (6 buckets × 3 variants) + **10 industry categories** trong `scoring.js`:
+
+| Phần | Vấn đề | Sửa |
+|---|---|---|
+| Hue analysis | "JND (Just-Noticeable Difference)", "centroid hue", "complementary mismatch", "QA màu in" — color science jargon | Cụm phổ thông: "bánh xe màu", "warm/cool", "đem in", "trí nhớ thị giác" |
+| finance | "FOMO bull market", "flash crash", "candle long" — crypto/trading | Thẻ ngân hàng, ATM, app banking 11h đêm |
+| saas | "VS Code Dracula theme bật 14 tiếng", "47 tab Chrome", "Dark Reader", "userstyle" — dev-only | Văn phòng chung: dark mode laptop, Zalo share screenshot, extension đổi theme |
+| creative | "Dribbble featured shot ngàn like", "Figma frame trắng", "moodboard 40% navy overlay" — designer-only | Sếp reply Zalo "xem lại tone", filter Instagram, slide nền trắng |
+| stream-audio | "album cover Lana Del Rey", "lofi 24/7 livestream YouTube", "equalizer 2 tiếng võng mạc bias" — music-nerd | Tai nghe, Wrapped cuối năm, widget khoá màn nghe nhạc trên giường |
+| stream-video | "LUT phim noir thập niên 70", "auto-brightness 20% rạp tối" — cinephile | Cày phim khuya, TV mode "Movie", bản tải lậu 480p |
+| telco | "tổng đài tự động đọc câu nào nhanh câu nào chậm" — over-specific | Tổng đài CSKH, đại lý ngoài tỉnh phai nắng |
+| travel | "áo đồng phục shipper sau ca giao 8 tiếng" — nhầm sang delivery | Tài xế, kính ô tô đối tác, app đặt xe 2h sáng |
+| fastfood | KFC "ăn để hiểu cake nào hot, cake nào đáng tránh" — KFC không có cake | "Món nào ngon món nào pass" |
+| gaming | "fanart trên DeviantArt thời 2012", "Nexus mod" — niche | "Fanart cộng đồng vẽ lại", "skin mod fan-made" |
+| fashion | "Vinted", "lookbook golden hour Lisbon", "campaign Trung Đông" | "App secondhand", "giờ chiều ánh nghiêng", "thị trường nước ngoài chưa về VN" |
+| cosmetics | "filter Lightroom preset Pink Glow" | "Beauty blogger chỉnh filter cho hồng hào" |
+| os | "ROM modder XDA tự build", "wallpaper dark mode Always-On" | "ROM cộng đồng forum", "màn tự sáng nhẹ" |
+
+Giữ nguyên (đã OK): food, ecommerce, beverage, social, retail, entertainment, fmcg.
+
+Content vibe lock — note rule trong `README.md` để session sau không lùi về jargon/niche.
+
+### Files thay đổi/thêm trong Session 8
+- `BRANDS_TRACKING.csv` — translate all notes EN, status update từng brand (Done/Skipped/Pending với reason rõ)
+- `scripts/normalize-svg.mjs` — NEW, reusable SVG cleaner
+- `scripts/fetch-brands.mjs` — NEW, batch pipeline Wikimedia + normalize
+- `scripts/brand-batch-{a,b,c,d,e}.json` — manifest cho 5 batch
+- `scripts/update-csv.mjs` + `update-csv-removed.mjs` — helper bulk-update CSV
+- `assets/logos/*.svg` — 37 brand mới + xoá 11 multi-color + 2 wrong-brand
+- `assets/logos/_overrides.json` — thêm VinFast, Vietnam Airlines, BMW (sau xoá), H&M, KFC, LG, OPPO, PlayStation
+- `data/brands.json` — auto-rebuild, 111 brand
+- `css/style.css` — `@keyframes pop-in-scale` override cho `.final-score.webgl-score` (fix flash)
+- `js/scoring.js` — rewrite hue analysis + 10 industry categories với tone mass-market
+
 ## Trạng thái hiện tại
 
 **Đã có:**
 - ✅ Home screen (mobile + desktop logo variants) — logo WebGL color field
 - ✅ Classic mode 10 round
-- ✅ 86 brand single-color (66 cũ + 20 mở rộng global/VN)
+- ✅ **111 brand single-color** (sau audit multi-color identity của Session 8)
 - ✅ WebGL color field FX (regl.js + GLSL fragment shader) — logo Home + số % Final
-- ✅ ~112 quip industry-specific đa dạng, không lặp pattern
+- ✅ Quip industry-specific mass-market vibe (rewrite Session 8, không jargon design/dev/cinephile)
 - ✅ Color picker Box + Hue (responsive, square trên mọi viewport)
 - ✅ Logo CSS-mask tinting (arbitrary colors)
 - ✅ Delta-E CIEDE2000 scoring + feedback Việt suồng sã
-- ✅ Final screen với rank + comment dân dã
+- ✅ Final screen với rank + comment dân dã (hết flash WebGL leak khi pop-in)
 - ✅ Share grid text (Wordle-style)
 - ✅ Share card PNG (1200×630 OG image)
 - ✅ Play again / Back home
 - ✅ SVG-driven brand system + auto-build CI
-- ✅ Figma pixel-perfect light theme
+- ✅ Pipeline batch-fetch brand từ Wikimedia (`fetch-brands.mjs`) + normalize (`normalize-svg.mjs`)
+- ✅ Figma pixel-perfect light theme + dark mode
 - ✅ Viewport-native responsive (mobile 320 → desktop 4K) — result screen dùng `dvh` cho fluid sizing
 - ✅ Local dev server (Node)
 
 **Chưa có:**
 - ❌ Daily Challenge (5 brand cố định/ngày + lịch 365 ngày)
-- ❌ 47 brand VN còn lại (đã có tracking CSV với source URL)
+- ❌ ~30 brand VN/global còn `Pending` (trademark-restricted trên Wikimedia — cần download manual từ press kit)
+- ❌ Hermes (fashion) — Wikimedia rate-limit khi retry, defer
 - ❌ Domain riêng
 - ❌ OG meta tags + favicon
 - ❌ Analytics
@@ -353,7 +485,11 @@ mindcolor/
 │       ├── _overrides.json          # Override display name
 │       └── README.md
 ├── scripts/
-│   └── build-brands.mjs             # Node script chạy bởi Action
+│   ├── build-brands.mjs             # Node script chạy bởi Action — sinh brands.json
+│   ├── normalize-svg.mjs            # Clean SVG (viewBox + single fill + strip bg shape)
+│   ├── fetch-brands.mjs             # Batch pipeline Wikimedia search + download + normalize
+│   ├── brand-batch-{a..e}.json      # Manifest mẫu cho 5 batch đã chạy
+│   └── update-csv*.mjs              # Bulk-update BRANDS_TRACKING.csv
 ├── .github/workflows/
 │   └── build-brands.yml             # Auto-build on push to assets/logos/
 ├── server.js                        # Local dev server (Node thuần)
@@ -384,9 +520,9 @@ mindcolor/
 
 ## Roadmap còn lại
 
-- **Session 8:** Share grid + Share card PNG — enable button trên Final, wire `share.js` lên UI
-- **Session 9:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày, share grid riêng "Daily #N"
-- **Phase content:** 47 brand VN còn lại (có tracking trong `BRANDS_TRACKING.csv`)
+- **Session 9:** Share grid + Share card PNG — enable button trên Final, wire `share.js` lên UI
+- **Session 10:** Daily Challenge — 5 brand cố định/ngày, lịch 365 ngày, share grid riêng "Daily #N"
+- **Phase content:** ~30 brand `Pending` còn lại (trademark-restricted, cần download manual từ press kit từng brand)
 - **Phase polish:** Domain, OG meta tags, favicon, SEO, analytics (Plausible / Umami)
 - **Phase optional:** Sound effects, haptic feedback mobile
 
